@@ -157,7 +157,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 		{ 
 			 _acService.SendTurnipPriceList(Context.Guild.GetUsersAsync().Result.ToList(), Context);
 		}
-		[Command("freg"), Summary("See list of registered town names. Each name has an id for easy reference.")]
+		[Command("freg"), Summary("Allows the user to register a fruit as being grown in their town.")]
 		public async Task RegisterFruit([Remainder,Summary("Fruit to register. Valid fruits are <Apple|Cherry|Coconut|Orange|Peach|Pear>" )]string fruitName)
 		{
 			string message = "";
