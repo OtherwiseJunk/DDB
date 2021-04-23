@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: PushNuget
 
 # Controls when the action will run. 
 on:
@@ -14,6 +14,8 @@ jobs:
   nugetPublish:
     runs-on: ubuntu-latest
     steps:
+      - name: Debugging Shit cuz Im a n00b
+        run: ls
       - name: Publish NuGet
         uses: brandedoutcast/publish-nuget@v2.5.5
         with:
