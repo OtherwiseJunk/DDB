@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Debugging Shit cuz Im a n00b
-        run: ls
+        run: cd $${{$GITHUB_WORKSPACE}} && ls
       - name: Publish NuGet
         uses: brandedoutcast/publish-nuget@v2.5.5
         with:
-          PROJECT_FILE_PATH: DDB.csproj
+          PROJECT_FILE_PATH: ${{$GITHUB_WORKSPACE}}/DDB.csproj
           NUGET_KEY: ${{secrets.NUGET_KEY}}
