@@ -65,7 +65,7 @@ namespace DartsDiscordBots.Permissions
 					return Task.FromResult(PreconditionResult.FromSuccess());
 				}
 			}			
-			return Task.FromResult(PreconditionResult.FromError("I don't see any Squaddies here. Did you create the role?"));
+			return Task.FromResult(PreconditionResult.FromError($"I don't see any {RoleName} here. Did you create the role?"));
 		}
 	}
 }
