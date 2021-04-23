@@ -6,8 +6,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>0.7.6</Version>
+    <Version>0.7.7</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
+    <AssemblyVersion>0.7.7.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
