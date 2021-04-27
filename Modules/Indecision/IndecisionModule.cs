@@ -12,6 +12,7 @@ namespace DartsDiscordBots.Modules.Indecision
 	public class IndecisionModule : ModuleBase
 	{
         IMessageReliabilityService _messenger { get; set; }
+        public int MAXDICEVALUE = 1000;
 
         public IndecisionModule(IMessageReliabilityService messenger)
 		{
@@ -63,6 +64,11 @@ namespace DartsDiscordBots.Modules.Indecision
                     arguments = new List<string>(arguments[0].Split('+'));
                     if (int.TryParse(arguments[0], out sides))
                     {
+                        if(sides > MAXDICEVALUE)
+						{
+                            await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
+                            return;
+						}
                         var dice = new Dice(sides);
                         var temp = dice.Roll();
                         if (int.TryParse(arguments[1], out modifier))
@@ -86,6 +92,11 @@ namespace DartsDiscordBots.Modules.Indecision
                     arguments = new List<string>(arguments[0].Split('-'));
                     if (int.TryParse(arguments[0], out sides))
                     {
+                        if (sides > MAXDICEVALUE)
+                        {
+                            await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
+                            return;
+                        }
                         var dice = new Dice(sides);
                         var temp = dice.Roll();
                         if (int.TryParse(arguments[1], out modifier))
@@ -109,6 +120,11 @@ namespace DartsDiscordBots.Modules.Indecision
                 {
                     if (int.TryParse(arguments[0], out sides))
                     {
+                        if (sides > MAXDICEVALUE)
+                        {
+                            await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
+                            return;
+                        }
                         var dice = new Dice(sides);
 
                         sb.AppendLine(string.Format("Rolled one d{0} and got a total of {1}",sides, dice.Roll()));
@@ -129,6 +145,16 @@ namespace DartsDiscordBots.Modules.Indecision
                         arguments = new List<string>(arguments[1].Split('+'));
                         if (int.TryParse(arguments[0], out sides))
                         {
+                            if (sides > MAXDICEVALUE)
+                            {
+                                await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
+                                return;
+                            }
+                            if(times > MAXDICEVALUE)
+							{
+                                await Context.Channel.SendMessageAsync("Sorry, I don't have that much time to be rolling bones.");
+                                return;
+                            }
                             var dice = new Dice(sides);
                             var temp = dice.Roll(times);
                             if (int.TryParse(arguments[1], out modifier))
@@ -153,6 +179,16 @@ namespace DartsDiscordBots.Modules.Indecision
                         arguments = new List<string>(arguments[1].Split('-'));
                         if (int.TryParse(arguments[0], out sides))
                         {
+                            if (sides > MAXDICEVALUE)
+                            {
+                                await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
+                                return;
+                            }
+                            if (times > MAXDICEVALUE)
+                            {
+                                await Context.Channel.SendMessageAsync("Sorry, I don't have that much time to be rolling bones.");
+                                return;
+                            }
                             var dice = new Dice(sides);
                             var temp = dice.Roll(times);
                             if (int.TryParse(arguments[1], out modifier))
@@ -174,6 +210,16 @@ namespace DartsDiscordBots.Modules.Indecision
                     {
                         if (int.TryParse(arguments[1], out sides))
                         {
+                            if (sides > MAXDICEVALUE)
+                            {
+                                await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
+                                return;
+                            }
+                            if (times > MAXDICEVALUE)
+                            {
+                                await Context.Channel.SendMessageAsync("Sorry, I don't have that much time to be rolling bones.");
+                                return;
+                            }
                             var dice = new Dice(sides);
                             var temp = dice.Roll(times);
                             sb.AppendLine(string.Format("Rolled {0} d{1} and got a total of {2}", times, sides, temp.Total));
