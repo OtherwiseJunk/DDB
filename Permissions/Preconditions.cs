@@ -9,16 +9,16 @@ namespace DartsDiscordBots.Permissions
 {
     public class RequireChannelAttribute : PreconditionAttribute
     {
-        public string ChannelId;
-        public RequireChannelAttribute(string channelId)
+        public ulong[] ChannelIds;
+        public RequireChannelAttribute(ulong[] channelIds)
         {
-            ChannelId = channelId;
+            ChannelIds = channelIds;
         }
 
 		public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
 		{
 
-			if (context.Channel.Id.ToString() == ChannelId)
+			if (ChannelIds.Contains(context.Channel.Id))
 			{
 				return Task.FromResult(PreconditionResult.FromSuccess());
 			}				
@@ -30,15 +30,15 @@ namespace DartsDiscordBots.Permissions
 
     public class RequireGuildAttribute : PreconditionAttribute
     {        
-        public string GuildId;
-        public RequireGuildAttribute(string guildId)
+        public ulong[] GuildIds;
+        public RequireGuildAttribute(ulong[] guildIds)
         {
-            GuildId = guildId;
+            GuildIds = guildIds;
         }
 
 		public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
 		{
-			if (context.Guild.Id.ToString() == GuildId) {
+			if (GuildIds.Contains(context.Guild.Id)) {
 				return Task.FromResult(PreconditionResult.FromSuccess());
 			}				
 			return Task.FromResult(PreconditionResult.FromError("That command is not available on this channel."));
