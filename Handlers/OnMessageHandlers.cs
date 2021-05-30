@@ -30,11 +30,6 @@ namespace DartsDiscordBots.Handlers
 				{
 					await context.Channel.SendMessageAsync(BotUtilities.BuildDetailedCommandInfo(commandPrefix, (commandFromName ?? commandFromNameWithGroup)));
 				}
-				if (commandFromModuleGroup == null && commandFromName == null && commandFromNameWithGroup == null)
-				{
-					await context.Message.AddReactionAsync(new Emoji("😕"));
-				}
-
 			}
 		}
 	}
