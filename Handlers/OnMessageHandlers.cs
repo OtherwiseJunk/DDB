@@ -15,7 +15,7 @@ namespace DartsDiscordBots.Handlers
 			var message = messageParam as SocketUserMessage;
 			if (message == null) return;
 			int argPos = 0;
-			if (!message.HasCharPrefix(commandPrefix, ref argPos) && !false) return;
+			if (!message.HasCharPrefix(commandPrefix, ref argPos) || messageParam.Author.IsBot) return;
 			var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);
 			if (!result.IsSuccess)
 			{
