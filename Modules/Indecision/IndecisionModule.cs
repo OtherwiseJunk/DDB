@@ -2,6 +2,7 @@
 using DartsDiscordBots.Utilities;
 using Discord;
 using Discord.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,9 +46,9 @@ namespace DartsDiscordBots.Modules.Indecision
 				}
 			}
             MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-            await _messenger.SendMessageToChannel($"Rolling list: [`{string.Join("`,`", choices)}]`", Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), ",");
-            await _messenger.SendMessageToChannel(choices.GetRandom(), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
-		}
+            await _messenger.SendMessageToChannel($"Rolling list: [`{string.Join("`,`", choices)}]`{Environment.NewLine}Winner:`{choices.GetRandom()}`", Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), ",");           
+
+        }
 
         [Command("roll"), Summary("Roll XdY+/-Z dice.")]
         public async Task Roll([Remainder, Summary("What to roll. Can indicate the number of dice to roll, the number of sides on those dice, and a positive or negative modifier to add to the results. 3d6+2 would roll 3 6-sided dice and add 2 to the final result.")] string rollString)
