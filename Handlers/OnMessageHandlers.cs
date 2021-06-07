@@ -29,6 +29,7 @@ namespace DartsDiscordBots.Handlers
 				if (commandFromNameWithGroup != null || commandFromName != null)
 				{
 					await context.Channel.SendMessageAsync(BotUtilities.BuildDetailedCommandInfo(commandPrefix, (commandFromName ?? commandFromNameWithGroup)));
+					await context.Channel.SendMessageAsync(result.ErrorReason);
 				}
 			}
 		}
