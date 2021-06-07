@@ -18,6 +18,7 @@ namespace DartsDiscordBots.Modules.Help
         {
             _service = service;
 			_config = config;
+            _provider = provider;
         }
 
         [Command("help"),Summary("Display a list of all commands")]
