@@ -3,6 +3,7 @@ using Discord;
 using Discord.Commands;
 using System.Threading.Tasks;
 using DartsDiscordBots.Modules.Help.Interfaces;
+using System;
 
 namespace DartsDiscordBots.Modules.Help
 {
@@ -34,7 +35,7 @@ namespace DartsDiscordBots.Modules.Help
                 string description = null;
                 foreach (var cmd in module.Commands)
                 {
-                    var result = await cmd.CheckPreconditionsAsync(Context);
+                    var result = await cmd.CheckPreconditionsAsync(Context, (IServiceProvider) _service);
                     if (result.IsSuccess)
                         description += $"{prefix}{cmd.Aliases.First()}\n";
                 }
