@@ -8,10 +8,11 @@
     <Company />
     <Version>0.8.3</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>0.8.3.0</AssemblyVersion>
+    <AssemblyVersion>0.8.4.0</AssemblyVersion>
     <PackageReleaseNotes>Update the Guild and Channel preconditions to accept an array of ulongs, instead of a single string.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <FileVersion>0.8.4.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
