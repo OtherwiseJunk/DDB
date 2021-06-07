@@ -11,9 +11,10 @@ namespace DartsDiscordBots.Modules.Help
     {
         private readonly CommandService _service;
 		private readonly IHelpConfig _config;
+        private readonly IServiceProvider _provider;
         
 
-        public HelpModule(CommandService service, IHelpConfig config)
+        public HelpModule(CommandService service, IHelpConfig config, IServiceProvider provider)
         {
             _service = service;
 			_config = config;
@@ -35,7 +36,7 @@ namespace DartsDiscordBots.Modules.Help
                 string description = null;
                 foreach (var cmd in module.Commands)
                 {
-                    var result = await cmd.CheckPreconditionsAsync(Context, (IServiceProvider) _service);
+                    var result = await cmd.CheckPreconditionsAsync(Context, _provider);
                     if (result.IsSuccess)
                         description += $"{prefix}{cmd.Aliases.First()}\n";
                 }
