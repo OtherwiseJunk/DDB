@@ -11,7 +11,7 @@ namespace DartsDiscordBots.Utilities
 		{
 			return char.ToUpper(value[0]) + value.Substring(1).ToLower();
 		}
-        private static Random _random = new Random();
+        private static Random _random = new Random(Guid.NewGuid().GetHashCode());
 
         public static T GetRandom<T>(this IList<T> items)
         {
