@@ -11,20 +11,20 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-		public static async Task EmbedPagingHandler(SocketReaction reaction, IMessage msg, SocketSelfUser currentUser, string embedTitle, Action<IMessage,IServiceProvider,int> updateEmbedLogic, IServiceProvider serviceProvider)
+		public static async Task EmbedPagingHandler(SocketReaction reaction, IMessage message, SocketSelfUser currentUser, string embedTitle, Func<IMessage, IServiceProvider,int,Embed> getUpdatedEmbed, IServiceProvider serviceProvider)
 		{
 			//We only allow page changes for the first five minutes of a message.
-			if ((DateTime.Now - msg.Timestamp.DateTime).Minutes >= 5)
+			if ((DateTime.Now - message.Timestamp.DateTime).Minutes >= 5)
 			{
 				return;
 			}
 			//We only care about messages the bot has sent.
-			if (msg.Author.Id != currentUser.Id)
+			if (message.Author.Id != currentUser.Id)
 			{
 				return;
 			}
 			//We only care about about messages with 1 embed.
-			if (msg.Embeds.Count != 1)
+			if (message.Embeds.Count != 1)
 			{
 				return;
 			}
@@ -34,7 +34,7 @@ namespace DartsDiscordBots.Handlers
 				return;
 			}
 			//Finally, we only care about the embed with our specific title
-			IEmbed embed = msg.Embeds.First();
+			IEmbed embed = message.Embeds.First();
 			if (embed.Title != embedTitle)
 			{
 				return;
@@ -47,14 +47,20 @@ namespace DartsDiscordBots.Handlers
 				//Only bother if we're not on the first page.
 				if (currentPage > 0)
 				{
-					_ = updateEmbedLogic(msg, serviceProvider, currentPage);
+					_ = ((IUserMessage)message).ModifyAsync(msg =>
+					{
+						msg.Embed = getUpdatedEmbed(message, serviceProvider, currentPage);
+					});
 				}
-				_ = msg.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
+				_ = message.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
 			}
 			if (reaction.Emote.Name == SharedConstants.RightArrowEmoji)
 			{
-				_ = updateEmbedLogic(msg,serviceProvider, currentPage);
-				_ = msg.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
+				_ = ((IUserMessage)message).ModifyAsync(msg =>
+				{
+					msg.Embed = getUpdatedEmbed(message, serviceProvider, currentPage);
+				});
+				_ = message.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
 			}
 		}
 	}
