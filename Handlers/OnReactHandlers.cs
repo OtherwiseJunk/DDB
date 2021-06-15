@@ -11,7 +11,7 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-		public static async Task EmbedPagingHandler(SocketReaction reaction, IMessage message, SocketSelfUser currentUser, string embedTitle, Func<IMessage, IServiceProvider,int,Embed> getUpdatedEmbed, IServiceProvider serviceProvider)
+		public static async Task EmbedPagingHandler(SocketReaction reaction, IMessage message, SocketSelfUser currentUser, string embedTitle, Func<IMessage, IServiceProvider,int,bool,Embed> getUpdatedEmbed, IServiceProvider serviceProvider)
 		{
 			//We only allow page changes for the first five minutes of a message.
 			if ((DateTime.Now - message.Timestamp.DateTime).Minutes >= 5)
@@ -47,18 +47,20 @@ namespace DartsDiscordBots.Handlers
 				//Only bother if we're not on the first page.
 				if (currentPage > 0)
 				{
+					Embed newEmbed = getUpdatedEmbed(message, serviceProvider, currentPage, false);
 					_ = ((IUserMessage)message).ModifyAsync(msg =>
 					{
-						msg.Embed = getUpdatedEmbed(message, serviceProvider, currentPage);
+						msg.Embed = newEmbed;
 					});
 				}
 				_ = message.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
 			}
 			if (reaction.Emote.Name == SharedConstants.RightArrowEmoji)
 			{
+				Embed newEmbed = getUpdatedEmbed(message, serviceProvider, currentPage, true);
 				_ = ((IUserMessage)message).ModifyAsync(msg =>
 				{
-					msg.Embed = getUpdatedEmbed(message, serviceProvider, currentPage);
+					msg.Embed = newEmbed;
 				});
 				_ = message.RemoveReactionAsync(reaction.Emote, reaction.User.Value);
 			}

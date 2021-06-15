@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
@@ -69,6 +70,18 @@ namespace DartsDiscordBots.Utilities
 			StringBuilder sb = new StringBuilder();
 			sb.Append($"`{parameter.Name.ToPascalCase()} (Optional:{parameter.IsOptional}, Multiple:{parameter.IsMultiple}, Remainder of Message: {parameter.IsRemainder})` - {parameter.Summary}");
 			return sb.ToString();
+		}
+
+		public static string GetDisplayNameForUser(IGuildUser user)
+		{
+			if (user != null)
+			{
+				return user.Nickname ?? user.Username;
+			}
+			else
+			{
+				return "A sexy, unknowable stranger";
+			}
 		}
 	}	
 }
