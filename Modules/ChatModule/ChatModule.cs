@@ -19,10 +19,17 @@ namespace DartsDiscordBots.Modules.Chat
 		}
 
 		[Command("8ball"), Summary("Ask the bot a true or false question.")]
-		public async Task Send8BallResponse([Remainder, Summary("The question!")] string question= "")
+		public async Task Send8BallResponse([Remainder, Summary("The question!")] string question = "")
 		{
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(ResponseCollections._8BallResponses.GetRandom(), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(ResponseCollections.EightBallResponses.GetRandom(), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+		}
+
+		[Command("gifball"), Summary("Ask the bot a true or false question. Responds with a gif!")]
+		public async Task SendGifBallResponse([Remainder, Summary("The question!")] string question = "")
+		{
+			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
+			await _messenger.SendMessageToChannel(ResponseCollections.GifBallResponses.GetRandom(), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
 		}
 
 		[Command("clap")]
