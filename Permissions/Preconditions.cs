@@ -59,12 +59,32 @@ namespace DartsDiscordBots.Permissions
 			IRole role = context.Guild.Roles.FirstOrDefault(r => r.Name.ToLower() == RoleName.ToLower());
 			if(role != null)
 			{
+				return Task.FromResult(PreconditionResult.FromSuccess());
+			}			
+			return Task.FromResult(PreconditionResult.FromError($"I don't see any {RoleName} here. Did you create the role?"));
+		}
+	}
+
+	public class RequireRoleMembership : PreconditionAttribute
+	{
+		public string RoleName;
+
+		public RequireRoleMembership(string roleName)
+		{
+			RoleName = roleName;
+		}
+
+		public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
+		{
+			IRole role = context.Guild.Roles.FirstOrDefault(r => r.Name.ToLower() == RoleName.ToLower());
+			if (role != null)
+			{
 				List<IGuildUser> users = context.Guild.GetUsersAsync().Result.Where(u => u.RoleIds.Contains(role.Id)).ToList();
 				if (users.Count > 0)
 				{
 					return Task.FromResult(PreconditionResult.FromSuccess());
 				}
-			}			
+			}
 			return Task.FromResult(PreconditionResult.FromError($"I don't see any {RoleName} here. Did you create the role?"));
 		}
 	}
