@@ -25,7 +25,7 @@ namespace DartsDiscordBots.Modules.ServerManagement
 		}
 
 		[Command("avatar"), Summary("get mentioned user's avatar")]
-		public async Task Avatar([Summary("An @Mention of a user in the chat. Leave blank for your own avatar.")]IUser? MentionedUser)
+		public async Task Avatar([Summary("An @Mention of a user in the chat. Leave blank for your own avatar.")]IUser? MentionedUser = null)
 		{
 			IUser user = Context.User;
 			if (MentionedUser != null)

@@ -6,13 +6,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>0.10.0.2</Version>
+    <Version>1.00</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>0.10.0.2</AssemblyVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <PackageReleaseNotes>Fix issues with the embed paging handler</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>0.10.0.2</FileVersion>
+    <FileVersion>1.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
