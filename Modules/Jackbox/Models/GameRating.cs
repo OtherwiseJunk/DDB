@@ -9,8 +9,8 @@ namespace DartsDiscordBots.Modules.Jackbox.Models
 	public class GameRating
 	{
 		[Key]
-		int RatingId { get; set; }
-		ulong DiscordUserId { get; set; }
+		public int RatingId { get; set; }
+		public ulong DiscordUserId { get; set; }
 		public int Rating { get { return Rating; } set
 			{
 				if(value > 5)
