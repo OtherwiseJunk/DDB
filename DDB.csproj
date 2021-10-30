@@ -6,13 +6,14 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>1.00</Version>
+    <Version>2.00</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <PackageReleaseNotes>Fix issues with the embed paging handler</PackageReleaseNotes>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <PackageReleaseNotes>Breaking change to Message Reliability Service which should simplify use.
+Added Jackbox Module that provides functionality for voting on games, ranking games, getting game descriptions, and setting custom descriptions, voting emoji, and player descriptions for each guild.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>1.0.0.0</FileVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
