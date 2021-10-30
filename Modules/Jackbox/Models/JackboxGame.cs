@@ -11,6 +11,7 @@ namespace DartsDiscordBots.Modules.Jackbox.Models
 	{
 		[Key]
 		public int ID { get; set; }
+		public ulong DiscordGuildId { get; set; }
 		public string Name {get;set;}
 		public string PlayerName { get; set; }
 		public string Description { get; set; }
