@@ -64,7 +64,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			{
 				message = "Sorry, someone has already claimed this name! Try again.";
 			}
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("tornps"), Summary("Get the tornps picture")]
 		public async Task Tornps()
@@ -92,7 +92,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 				}
 			}
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 
 		[Command("tweek"), Summary("Get your prices for the week. Goes back to the previous Sunday,  and will only show the days prices if executed on a Sunday.")]
@@ -116,7 +116,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 				}
 			}
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 
 		[Command("hemi"), Summary("Set your hemisphere, either to North or South.")]
@@ -138,19 +138,19 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = NoRegisteredTownResponse;
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("list"), Summary("See list of registered town names. Each name has an id for easy reference.")]
 		public async Task ListTowns()
 		{
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(_acService.GetTownList(Context.Guild.GetUsersAsync().Result.ToList()), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), Environment.NewLine);					
+			await _messenger.SendMessageToChannel(_acService.GetTownList(Context.Guild.GetUsersAsync().Result.ToList()), Context.Message, Environment.NewLine);					
 		}
 		[Command("flist"), Summary("See list of each registered town's fruit.")]
 		public async Task ListTownsFruits()
 		{
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(_acService.GetFruitList(Context.Guild.GetUsersAsync().Result.ToList()), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), Environment.NewLine);
+			await _messenger.SendMessageToChannel(_acService.GetFruitList(Context.Guild.GetUsersAsync().Result.ToList()), Context.Message, Environment.NewLine);
 		}
 		[Command("tlist"), Summary("See list of registered turnip prices.")]
 		public async Task ListTownsTurnipPrices()
@@ -178,7 +178,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			}
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("sell"), Summary("Register your daily turnip sell price. Will reset at Midnight ET, and Noon ET. Not usable on Sundays")]
 		public async Task RegisterTurnipSellPrice([Remainder, Summary("Sell price to register. Must be between 15 and 800 bells.")]int price)
@@ -215,7 +215,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else  message = "Sorry, I can't set sell prices on Sundays. Wonder why that is "+Emote.Parse(IsathonkEmote);
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("buy"), Summary("Register your daily turnip sell price. Will reset at Midnight ET. Only usable on Sundays")]
 		public async Task RegisterTurnipBuyPrice([Remainder, Summary("Sell price to register. Must be between 90 and 110 bells.")]int price)
@@ -249,7 +249,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = "Sorry, I can't set buy prices when it isn't Sunday. I wonder why that is " + Emote.Parse(IsathonkEmote);
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("msg"), Summary("Have the discord bot send a message to the mayor of the town. Mostly anonymous to those outside your Discord Guild, you'll be represented as the mayor of your town.")]
 		public async Task Message([Summary("The town to message")]string town, [Remainder, Summary("The message")]string msg)
@@ -307,7 +307,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = NoRegisteredTownResponse;
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("wrem"), Summary("Removes the item from your wishlist.")]
 		public async Task RemoveWishlistItem([Summary("The name or ID of the item to remove from your Wishlist."), Remainder]string item) {
@@ -327,12 +327,12 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = NoRegisteredTownResponse;
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("wishlist"), Alias("wlist"), Summary("Lists out the items on each towns wishlist.")]
 		public async Task GetWishlist() {
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(_acService.GetWishlist(Context.Guild.GetUsersAsync().Result.ToList()), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(_acService.GetWishlist(Context.Guild.GetUsersAsync().Result.ToList()), Context.Message, " ");
 		}
 		[Command("open"),  Summary("Marks your town as open in the town list. You can optionally provide a dodocode so non-switch friends can join.")]
 		public async Task OpenTownBorder([Summary("The Dodo Code needed to visit your town. Optional."), Remainder]string dodoCode = null) {
@@ -345,7 +345,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = NoRegisteredTownResponse;
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("close"), Summary("Marks your town as closed in the town list.")]
 		public async Task CloseTownBorder() {
@@ -358,7 +358,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = NoRegisteredTownResponse;
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 		[Command("nreg"), Summary("Registers your towns native fruit, which is shown in the fruit list.")]
 		public async Task RegisterNativeFruit([Summary("The name of your native fruit."), Remainder]string fruitName)
@@ -379,7 +379,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = NoRegisteredTownResponse;
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}
 
 		[Command("namereg"), Summary("Registers your real name, will be displayed in any of the town lists in place of your discord username.")]
@@ -394,7 +394,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 			else message = NoRegisteredTownResponse;
 
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 		}				
 	}
 }

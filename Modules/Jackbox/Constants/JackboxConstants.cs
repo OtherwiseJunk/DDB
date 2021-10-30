@@ -7,126 +7,51 @@ using System.Text;
 
 namespace DartsDiscordBots.Modules.Jackbox
 {
-	public class JackboxConstants
+	public static class JackboxConstants
 	{
-		int JackboxMaxVersion { get; set; } = 8;
-		List<JackboxGame> DefaultGameData = new List<JackboxGame>
+		static int JackboxMaxVersion { get; set; } = 8;
+		static List<JackboxGame> DefaultGameData = new List<JackboxGame>
 		{
-			new JackboxGame{ID = 1, Name = "You Don't Know Jack 2015", PlayerName = "Know-It-Alls", Description = "", JackboxVersion = 1, MinPlayers = 1, MaxPlayers =4, VotingEmoji = new Emoji(":smirk:"), HasAudience = false, Ratings = new List<GameRating>()}
+			new JackboxGame{ID = 1, Name = "You Don't Know Jack 2015", PlayerName = "Know-It-Alls", Description = "The comedy trivia sensation returns with hundreds of new questions that you can tackle on a night in by yourself or when you’re joined by friends.", JackboxVersion = 1, MinPlayers = 1, MaxPlayers = 4, VotingEmoji = new Emoji(":smirk:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 2, Name = "Fibbage XL", PlayerName = "$#%!ing LIars", Description = "The hilarious bluffing game, convince your friends that you know the answers to odd trivia questions OR aim to win the Thumbs Cup with the funniest answer.", JackboxVersion = 1, MinPlayers = 2, MaxPlayers = 8, VotingEmoji = new Emoji(":liar:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 3, Name = "Drawful", PlayerName = "Doodlers", Description = "The first installment of the wildly popular drawing game allows you to draw bizarre doodles on your phone or tablet.", JackboxVersion = 1, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":pencil:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 4, Name = "Word Spud", PlayerName = "Potatos", Description = "Test your vocabulary chops in the racy-as-you-want-it-to-be fill-in-the-blank word game.", JackboxVersion = 1, MinPlayers = 2, MaxPlayers = 8, VotingEmoji = new Emoji(":potato:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 5, Name = "Lie Swatter", PlayerName = "Fly Killers", Description = "Need a game for a big group? Grab yourself or a crowd and play true-or-false with a timer. Don’t get swatted in this wacky fact-filled game! Grab the original Jackbox Party Pack to experience the storied Jackbox Games franchises in their first form.", JackboxVersion = 1, MinPlayers = 1, MaxPlayers = 100, VotingEmoji = new Emoji(":fly:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 6, Name = "Fibbage 2", PlayerName = "$#%!ing LIars", Description = "The runaway hit bluffing game with over 500 brand-new questions, more than 2x the original! Plus new features, like the deFIBrillator!", JackboxVersion = 2, MinPlayers = 2, MaxPlayers = 8, VotingEmoji = new Emoji(":confused:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 7, Name = "Bidiots", PlayerName = "Spenders", Description = "The absurd art auction game where you draw right there on your phone or tablet. Outbid your opponents for weird art pieces – drawn by players themselves – and win this strangely competitive auction game! Don’t be a bidiot!", JackboxVersion = 2, MinPlayers = 3, MaxPlayers = 6, VotingEmoji = new Emoji(":money_mouth:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 8, Name = "Bomb Corp.", PlayerName = "Defusers", Description = "The bomb-defusing nailbiter of a party game! As interns at Bomb Corp., you must defuse random bombs in the office in order to keep your jobs. You’ll probably die, but it’ll be good work experience!", JackboxVersion = 2, MinPlayers = 1, MaxPlayers = 4, VotingEmoji = new Emoji(":bomb:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 9, Name = "Earwax", PlayerName = "Q-Tippers", Description = "The hear-larious sound-effects game that will leave you up to your ears in laughter! Cow moo? Huge explosion? Or tiny fart? Which to choose?", JackboxVersion = 2, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":ear:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 10, Name = "Quiplash XL", PlayerName = "EXTRA LARGE Funny People", Description = "The say-anything, gut-busting game, which includes everything in Quiplash, Quip Pack 1, AND over 100 brand-new prompts!", JackboxVersion = 2, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":joy:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 11, Name = "Quiplash 2", PlayerName = "Funny People", Description = "The say-anything sequel, a head-to-head battle of the wits as you give hilarious responses to quirky prompts while everyone else votes for their favorite!", JackboxVersion = 3, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":laughing:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 12, Name = "Triva Murder Party", PlayerName = "Soon-To-Be-Corpses", Description = "A deadly quiz show where you match wits with a trivia-obsessed killer.", JackboxVersion = 3, MinPlayers = 1, MaxPlayers = 8, VotingEmoji = new Emoji(":scream:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 13, Name = "Gusspionage", PlayerName = "Undercover Guessers", Description = "The brain-battering data-mining guessing game. Answer questions like 'What percentage of people are stomache sleepers?'", JackboxVersion = 3, MinPlayers = 2, MaxPlayers = 8, VotingEmoji = new Emoji(":spy:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 14, Name = "Tee K.O.", PlayerName = "Silk-screeners", Description = "The t-shirt slugfest where you battle your custom t-shirts to the death! Features Drawing", JackboxVersion = 3, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":shirt:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 15, Name = "Fakin' It", PlayerName = "BIG PHONIES", Description = "One of your friends has something to hide in this sneaky game for tricksters.", JackboxVersion = 3, MinPlayers = 3, MaxPlayers = 6, VotingEmoji = new Emoji(":japanese_goblin:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 16, Name = "Fibbage 3", PlayerName = "$#%!ing LIars", Description = "The blanking fun sequel with all-new question types and the game mode Fibbage: Enough About You where you guess the weird facts about your friends.", JackboxVersion = 4, MinPlayers = 2, MaxPlayers = 8, VotingEmoji = new Emoji(":face_with_raised_eyebrow:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 17, Name = "Survive the Internet", PlayerName = "NEETs", Description = "The web-based frame game where you twist your friends’ “online” comments in hilarious ways.", JackboxVersion = 4, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":desktop:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 18, Name = "Monster Seeking Monsters", PlayerName = "Hot Abominations", Description = "The spooky date-a-thon where you message and date fellow monsters with special powers. Social Deduction Game", JackboxVersion = 4, MinPlayers = 3, MaxPlayers = 7, VotingEmoji = new Emoji(":purple_heart:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 19, Name = "Bracketeering", PlayerName = "Mad Marchers", Description = "The deranged debate match where you place smart bets on stupid arguments", JackboxVersion = 4, MinPlayers = 3, MaxPlayers = 16, VotingEmoji = new Emoji(":medal:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 20, Name = "Civic Doodle", PlayerName = "Drawers", Description = "The one-up art game where you compete to improve the town murals.", JackboxVersion = 4, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":paintbrush:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 21, Name = "You Dont Know Jack: Full Stream", PlayerName = "Know-It-Alls", Description = "The classic pop-culture trivia mash-up returns, full of wild new surprises.", JackboxVersion = 5, MinPlayers = 1, MaxPlayers = 8, VotingEmoji = new Emoji(":nerd:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 22, Name = "Split the Room", PlayerName = "Trolls", Description = "The what-if game, create strange and divisive hypothetical situations.", JackboxVersion = 5, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":cat:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 23, Name = "Patently Stupid", PlayerName = "Idiots", Description = "The competitive drawing, create odd inventions to solve bizzare problems. Features Drawing", JackboxVersion = 5, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":blue_square:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 24, Name = "Mad Verse City", PlayerName = "Rappers", Description = "The lyric-writing game, channel your inner MC as a rap battling robot", JackboxVersion = 5, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":microphone:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 25, Name = "Zeeple Dome", PlayerName = "Abductees", Description = "The deadliest game show in the Crab Nebula! Fling yourself at bloodthirsty aliens to win millions of Zubabucks! Manual Dexterity Required.", JackboxVersion = 5, MinPlayers = 1, MaxPlayers = 6, VotingEmoji = new Emoji(":alien:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 26, Name = "Trivia Murder Party 2", PlayerName = "Soon-To-Be-Corpses", Description = "Try to survive the bizarre new minigames against a trivia-obessed killer.", JackboxVersion = 6, MinPlayers = 1, MaxPlayers = 8, VotingEmoji = new Emoji(":dagger:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 27, Name = "Role Models", PlayerName = "Impressionable Youths", Description = "The offbeat personality test game, find out who you really are. (Or at least what your friends think of you.)", JackboxVersion = 6, MinPlayers = 3, MaxPlayers = 6, VotingEmoji = new Emoji(":bar_chart:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 28, Name = "Joke Boat", PlayerName = "Comedians", Description = "The comedy contest, Craft one-liners for a cruise ship talent show.", JackboxVersion = 6, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":rowboat:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 29, Name = "Dictionarium", PlayerName = "Wordcrafters", Description = "The weird word circus, may the funniest definition win.", JackboxVersion = 6, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":blue_book:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 30, Name = "Push The Button", PlayerName = "Button-Pushers", Description = "The hidden identity game, can you discover the aliens in time? Social Deduction/Lying Game", JackboxVersion = 6, MinPlayers = 4, MaxPlayers = 10, VotingEmoji = new Emoji(":black_square_button:"), HasAudience = false, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 31, Name = "Talking Points", PlayerName = "Pundits", Description = "The on-the-spot public-speaking game, give a speech responding to picture slides you’ve never seen before or be the Assistant and approve pictures as fast as you can. Just keep talking whether it makes sense or not.", JackboxVersion = 7, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":loud_sound:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 32, Name = "Blather 'Round", PlayerName = "Blathermouths", Description = "The pop culture guessing game, describe your secret prompt with a very limited vocabulary and hope that someone can figure it out in time. It’s a “GOOD” “FUN TIME” “EXPERIENCE.”", JackboxVersion = 7, MinPlayers = 2, MaxPlayers = 6, VotingEmoji = new Emoji(":tongue:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 33, Name = "The Devils and the Details", PlayerName = "Devils", Description = "The collaborative chaos game, you’re a family of devils working together to survive in suburbia. Can you handle the daily torture of human life?", JackboxVersion = 7, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":imp:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 34, Name = "Champ'd Up", PlayerName = "Champs", Description = "The drawing fighting game, create absurd characters that will battle over unusual titles. Can you take down the heavy favorite? Features Drawing", JackboxVersion = 7, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":muscle:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 35, Name = "Quiplash 3", PlayerName = "Funny People", Description = "The say-anything threequel, a head-to-head battle of the wits as you give hilarious responses to quirky prompts while everyone else votes for their favorite!", JackboxVersion = 7, MinPlayers = 3, MaxPlayers = 8, VotingEmoji = new Emoji(":rofl:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 36, Name = "Drawful Animate", PlayerName = "Underpaid Animators", Description = "It’s alive! The guessing game with terrible drawings and hilariously wrong answers makes a dynamic return. In this revamped title, players create looping, two-frame animations based on weird and random titles.", JackboxVersion = 8, MinPlayers = 3, MaxPlayers = 10, VotingEmoji = new Emoji(":pencil2:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 37, Name = "The Wheel of Enormous Proportions", PlayerName = "Wonderers", Description = "Trivia has never been so large! A fantastic, mystical wheel challenges you with a variety of trivia prompts. Winners are awarded slices of the Wheel’s face with a chance to win big with each nail-biting spin. In the end, one player will have their most burning question answered by the great Wheel.", JackboxVersion = 8, MinPlayers = 2, MaxPlayers = 8, VotingEmoji = new Emoji(":pie:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 38, Name = "Job Job", PlayerName = "Employees", Description = "Use other people’s words to create unique and funny answers to classic job interview questions. Go head to head to see who scores the job!", JackboxVersion = 8, MinPlayers = 3, MaxPlayers = 10, VotingEmoji = new Emoji(":moneybag:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 39, Name = "The Poll Mine", PlayerName = "Miners", Description = "A survey game that’s all about YOU! Split into teams and see who can escape from the witch’s lair! Players individually rank their choices to a difficult question, then must guess how the group answered as a whole. How well do you know your friends?!", JackboxVersion = 8, MinPlayers = 2, MaxPlayers = 10, VotingEmoji = new Emoji(":pick:"), HasAudience = true, Ratings = new List<GameRating>()},
+			new JackboxGame{ID = 40, Name = "Lie Swatter", PlayerName = "Detective/Murderers", Description = "A social deduction game where everyone is both a murderer and a detective. Players doodle all the clues, hiding a letter from their name in the weapon drawings. Can you solve murders while trying to get away with your own?", JackboxVersion = 8, MinPlayers = 4, MaxPlayers = 8, VotingEmoji = new Emoji(":mag:"), HasAudience = true, Ratings = new List<GameRating>()},
 		};
-
-		public List<JackboxGame> JackboxOneGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
-				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
-				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
-				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
-				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
-			};
-		public List<JackboxGame> JackboxTwoGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("Fibbage 2", "$#%!ing Liars", "", 2, 2, 8, new Emoji(":confused:"), false),
-				new JackboxGame("Bidiots", "Spenders", "", 2, 3,6, new Emoji(":money_mouth:"), false),
-				new JackboxGame("Bomb Corp.", "Defusers", "", 2, 1, 4, new Emoji(":bomb:"), false),
-				new JackboxGame("Earwax", "Q-Tippers", "", 2, 3, 8, new Emoji(":ear:"), false),
-				new JackboxGame("Quiplash XL", "EXTRA LARGE funny people", "", 2, 3, 8, new Emoji(":joy:"), false),
-			};
-		public List<JackboxGame> JackboxThreeGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("Quiplash 2", "Funny People", "", 3, 3, 8, new Emoji(":laughing:"), false),
-				new JackboxGame("Triva Murder Party", "Soon-To-Be-Corpses", "", 3, 1,8, new Emoji(":scream:"), false),
-				new JackboxGame("Gusspionage", "Undercover Guessers", "", 3, 2, 8, new Emoji(":spy:"), false),
-				new JackboxGame("Tee K.O.", "Silk-screeners", "", 3, 3, 8, new Emoji(":shirt:"), false),
-				new JackboxGame("Fakin' It", "BIG PHONIES", "", 3, 3, 6, new Emoji(":japanese_goblin:"), false),
-			};
-		public List<JackboxGame> JackboxFourGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
-				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
-				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
-				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
-				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
-
-				":face_with_raised_eyebrow: Fibbage 3 (2-8 $#%!ing LIars)",
-				":desktop: Survive the Internet (3-8 NEETs)",
-				":purple_heart: Monster Seeking Monsters (3-7 Hot Abominations)",
-				":medal: Bracketeering (3-16 Mad Marchers)",
-				":paintbrush: Civic Doodle (3-8 Drawers)"
-			};
-		public List<JackboxGame> JackboxFiveGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
-				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
-				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
-				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
-				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
-
-				":nerd: You Dont Know Jack: Full Stream (1-8 Know-It-Alls)",
-				":cat: Split the Room (3-8 Trolls)",
-				":blue_square: Patently Stupid (3-8 Idiots)",
-				":microphone: Mad Verse City (3-8 Rappers)",
-				":alien: Zeeple Dome (1-6 Abductees) (No Audience)"
-			};
-		public List<JackboxGame> JackboxSixGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
-				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
-				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
-				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
-				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
-
-				":dagger: Trivia Murder Party 2 (1-8 Soon-To-Be-Corpses)",
-				":bar_chart: Role Models (3-6 Impressionable Youths)",
-				":rowboat: Joke Boat (3-8 Comedians)",
-				":blue_book: Dictionarium (3-8 Wordcrafters)",
-				":black_square_button: Push The Button (4-10 Button-Pushers) (No Audience)"
-			};
-
-		public List<JackboxGame> JackboxSevenGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
-				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
-				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
-				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
-				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
-
-				":loud_sound: Talking Points (3-8 Pundits)",
-				":tongue: Blather 'Round (2-6 Blathermouths)",
-				":imp: The Devils and the Details (3-8 Devils)",
-				":muscle: Champ'd Up (3-8 Champs)",
-				":rofl: Quiplash 3 (3-8 Funny People)"
-			};
-
-		public List<JackboxGame> JackboxEightGames { get; set; } = new List<JackboxGame>()
-			{
-				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
-				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
-				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
-				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
-				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
-
-				":pencil2: Drawful Animate (3-10 Underpaid Animators)",
-				":pie: The Wheel of Enormous Proportions (2-8 Wonderers)",
-				":moneybag: Job Job (3-10 Employees)",
-				":pick: The Poll Mine (2-10 Miners)",
-				":mag: Weapons Drawn (4-8 Detective/Murderers"
-			};
-		public Dictionary<int, List<JackboxGame>> JackboxGameListByNumber { get; set; }
-		int IJackboxConstants.JackboxMaxVersion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-		public JackboxConstants()
-		{
-			JackboxGameListByNumber = new Dictionary<int, List<JackboxGame>>()
-			{
-				{ 1, JackboxOneGames},
-				{ 2, JackboxTwoGames},
-				{ 3, JackboxThreeGames},
-				{ 4, JackboxFourGames},
-				{ 5, JackboxFiveGames},
-				{ 6, JackboxSixGames},
-				{ 7, JackboxSevenGames},
-				{ 8, JackboxEightGames }
-			};
-		}
 	}
 }

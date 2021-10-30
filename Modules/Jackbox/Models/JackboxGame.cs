@@ -24,7 +24,7 @@ namespace DartsDiscordBots.Modules.Jackbox.Models
 			string emote = VotingEmoji as Emote != null ? VotingEmoji.ToString() : (VotingEmoji as Emoji).Name;
 			string audienceText = HasAudience ? "" : "(No Audience)";
 			double rating = Ratings.Select(r => r.Rating).Average();
-			return $"{emote} {Name} ({MinPlayers}-{MaxPlayers} {PlayerName}) {audienceText} Rating:{rating} ({Ratings.Count} votes)";
+			return $"{emote} {Name} ({MinPlayers}-{MaxPlayers} {PlayerName}) {audienceText} Rating:{rating} ({Ratings.Count} votes) Jackbox Version: {JackboxVersion}";
 		}
 		public List<GameRating> Ratings { get; set; }
 	}

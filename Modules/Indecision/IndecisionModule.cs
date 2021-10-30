@@ -46,7 +46,7 @@ namespace DartsDiscordBots.Modules.Indecision
 				}
 			}
             MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-            await _messenger.SendMessageToChannel($"Rolling list: [`{string.Join("`,`", choices)}]`{Environment.NewLine}Winner:`{choices.GetRandom()}`", Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), ",");           
+            await _messenger.SendMessageToChannel($"Rolling list: [`{string.Join("`,`", choices)}]`{Environment.NewLine}Winner:`{choices.GetRandom()}`", Context.Message, ",");           
 
         }
 
@@ -235,7 +235,7 @@ namespace DartsDiscordBots.Modules.Indecision
                 }
             }
             MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-            await _messenger.SendMessageToChannel(sb.ToString(), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), ",");
+            await _messenger.SendMessageToChannel(sb.ToString(), Context.Message, ",");
         }
     }
 }

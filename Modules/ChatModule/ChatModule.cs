@@ -22,14 +22,14 @@ namespace DartsDiscordBots.Modules.Chat
 		public async Task Send8BallResponse([Remainder, Summary("The question!")] string question = "")
 		{
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(ResponseCollections.EightBallResponses.GetRandom(), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(ResponseCollections.EightBallResponses.GetRandom(), Context.Message, " ");
 		}
 
 		[Command("gifball"), Summary("Ask the bot a true or false question. Responds with a gif!")]
 		public async Task SendGifBallResponse([Remainder, Summary("The question!")] string question = "")
 		{
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(ResponseCollections.GifBallResponses.GetRandom(), Context.Channel, reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(ResponseCollections.GifBallResponses.GetRandom(), Context.Message, " ");
 		}
 
 		[Command("clap")]
@@ -39,7 +39,7 @@ namespace DartsDiscordBots.Modules.Chat
 			string user = (Context.Message.Author as IGuildUser).Nickname ?? Context.Message.Author.Username;
 			string message = SharedConstants.ReplacedMessageFormat(user, Clapify(msg));
 
-			await _messenger.SendMessageToChannel(message, Context.Channel, Context.Message.Reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 			await Context.Message.DeleteAsync();
 		}
 
@@ -50,7 +50,7 @@ namespace DartsDiscordBots.Modules.Chat
 			string user = (Context.Message.Author as IGuildUser).Nickname ?? Context.Message.Author.Username;
 			string message = SharedConstants.ReplacedMessageFormat(user, Mockify(msg));
 
-			await _messenger.SendMessageToChannel(message, Context.Channel, Context.Message.Reference, new List<ulong>(Context.Message.MentionedUserIds), " ");
+			await _messenger.SendMessageToChannel(message, Context.Message, " ");
 			await Context.Message.DeleteAsync();
 		}
 
