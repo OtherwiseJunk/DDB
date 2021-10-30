@@ -9,8 +9,8 @@ namespace DartsDiscordBots.Modules.Jackbox.Interfaces
 	public interface IJackboxService
 	{
 		public int[] ParseVersionList(string versionList, ICommandContext context);
-		public JackboxGame GetGameDetailsForGuild(ulong discordServerId, string gameName);
-		public List<JackboxGame> GetGamelistForGuild(ulong discordServerId, int[] versionList);
+		public JackboxGame GetGameDetailsForGuild(ulong discordGuildId, string gameName);
+		public List<JackboxGame> GetGamelistForGuild(ulong discordGuildId, int[] versionList);
 		public List<GameRating> GetPlayerGameRatings(ulong discordUserId);
 		public GameRating GetPlayerGameRating(ulong discordUserId, string gameName);		
 		public GameRating SetPlayerGameRating(ulong discordUserId, string gameName, int rating);
