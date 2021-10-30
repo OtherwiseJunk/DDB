@@ -9,6 +9,7 @@ namespace DartsDiscordBots.Modules.Jackbox
 {
 	public static class JackboxConstants
 	{
+		public static string ParsingIntError = "Sorry, I was unable to parse one of those Jackbox Version numbers.";
 		public static int JackboxMaxVersion { get; set; } = 8;
 		public static ulong DefaultDiscordGuildId { get; set; } = 0;
 		public static List<JackboxGame> DefaultGameData = new List<JackboxGame>

@@ -17,8 +17,7 @@ namespace DartsDiscordBots.Modules.Jackbox
 	{		
 		IJackboxService _jb { get; set; }
 		MessageReliabilityService _messenger { get; set; }
-
-		static string ParsingIntError = "Sorry, I was unable to parse one of those Jackbox Version numbers.";
+		
 		const string AllVersions = "1,2,3,4,5,6,7,8";
 
 		public JackboxModule(IJackboxService jackboxService, MessageReliabilityService messenger)
