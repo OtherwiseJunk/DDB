@@ -1,56 +1,80 @@
 ﻿using DartsDiscordBots.Modules.Jackbox.Interfaces;
+using DartsDiscordBots.Modules.Jackbox.Models;
+using Discord;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DartsDiscordBots.Modules.Jackbox
 {
-	public class JackboxConstants : IJackboxConstants
+	public class JackboxConstants
 	{
-		int JackboxMaxVersion { get; set; } = 7;
+		int JackboxMaxVersion { get; set; } = 8;
+		List<JackboxGame> DefaultGameData = new List<JackboxGame>
+		{
+			new JackboxGame{ID = 1, Name = "You Don't Know Jack 2015", PlayerName = "Know-It-Alls", Description = "", JackboxVersion = 1, MinPlayers = 1, MaxPlayers =4, VotingEmoji = new Emoji(":smirk:"), HasAudience = false, Ratings = new List<GameRating>()}
+		};
 
-		public List<string> JackboxOneGames { get; set; } = new List<string>()
+		public List<JackboxGame> JackboxOneGames { get; set; } = new List<JackboxGame>()
 			{
-				":smirk: You Don't Know Jack 2015 (1-4 Know-It-Alls) (No Audience)",
-				":liar: Fibbage XL (2-8 $#%!ing Liars) (No Audience)",
-				":pencil: Drawful (3-8 Doodlers) (No Audience)",
-				":potato: Word Spud (2-8 Potatos) (No Audience)",
-				":fly: Lie Swatter (1-100 Insects) (No Audience)",
+				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
+				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
+				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
+				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
+				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
 			};
-		public List<string> JackboxTwoGames { get; set; } = new List<string>()
+		public List<JackboxGame> JackboxTwoGames { get; set; } = new List<JackboxGame>()
 			{
-				":confused: Fibbage 2 (2-8 $#%!ing Liars)",
-				":money_mouth: Bidiots (3-6 Big Spenders) (No Audience)",
-				":bomb: Bomb Corp. (1-4 Defusers) (No Audience)",
-				":ear: Earwax (3-8 Q-Tippers)",
-				":joy: Quiplash XL (3-8 EXTRA LARGE funny people)"
+				new JackboxGame("Fibbage 2", "$#%!ing Liars", "", 2, 2, 8, new Emoji(":confused:"), false),
+				new JackboxGame("Bidiots", "Spenders", "", 2, 3,6, new Emoji(":money_mouth:"), false),
+				new JackboxGame("Bomb Corp.", "Defusers", "", 2, 1, 4, new Emoji(":bomb:"), false),
+				new JackboxGame("Earwax", "Q-Tippers", "", 2, 3, 8, new Emoji(":ear:"), false),
+				new JackboxGame("Quiplash XL", "EXTRA LARGE funny people", "", 2, 3, 8, new Emoji(":joy:"), false),
 			};
-		public List<string> JackboxThreeGames { get; set; } = new List<string>()
+		public List<JackboxGame> JackboxThreeGames { get; set; } = new List<JackboxGame>()
 			{
-				":laughing: Quiplash 2 (3-8 Funny People)",
-				":scream: Triva Murder Party (1-8 Soon-To-Be-Corpses)",
-				":spy: Gusspionage (2-8 Undercover Guessers)",
-				":shirt: Tee K.O. (3-8 Silk-screeners)",
-				":japanese_goblin: Fakin' It (3-6 BIG PHONIES)"
+				new JackboxGame("Quiplash 2", "Funny People", "", 3, 3, 8, new Emoji(":laughing:"), false),
+				new JackboxGame("Triva Murder Party", "Soon-To-Be-Corpses", "", 3, 1,8, new Emoji(":scream:"), false),
+				new JackboxGame("Gusspionage", "Undercover Guessers", "", 3, 2, 8, new Emoji(":spy:"), false),
+				new JackboxGame("Tee K.O.", "Silk-screeners", "", 3, 3, 8, new Emoji(":shirt:"), false),
+				new JackboxGame("Fakin' It", "BIG PHONIES", "", 3, 3, 6, new Emoji(":japanese_goblin:"), false),
 			};
-		public List<string> JackboxFourGames { get; set; } = new List<string>()
+		public List<JackboxGame> JackboxFourGames { get; set; } = new List<JackboxGame>()
 			{
+				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
+				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
+				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
+				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
+				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
+
 				":face_with_raised_eyebrow: Fibbage 3 (2-8 $#%!ing LIars)",
 				":desktop: Survive the Internet (3-8 NEETs)",
 				":purple_heart: Monster Seeking Monsters (3-7 Hot Abominations)",
 				":medal: Bracketeering (3-16 Mad Marchers)",
 				":paintbrush: Civic Doodle (3-8 Drawers)"
 			};
-		public List<string> JackboxFiveGames { get; set; } = new List<string>()
+		public List<JackboxGame> JackboxFiveGames { get; set; } = new List<JackboxGame>()
 			{
+				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
+				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
+				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
+				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
+				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
+
 				":nerd: You Dont Know Jack: Full Stream (1-8 Know-It-Alls)",
 				":cat: Split the Room (3-8 Trolls)",
 				":blue_square: Patently Stupid (3-8 Idiots)",
 				":microphone: Mad Verse City (3-8 Rappers)",
 				":alien: Zeeple Dome (1-6 Abductees) (No Audience)"
 			};
-		public List<string> JackboxSixGames { get; set; } = new List<string>()
+		public List<JackboxGame> JackboxSixGames { get; set; } = new List<JackboxGame>()
 			{
+				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
+				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
+				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
+				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
+				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
+
 				":dagger: Trivia Murder Party 2 (1-8 Soon-To-Be-Corpses)",
 				":bar_chart: Role Models (3-6 Impressionable Youths)",
 				":rowboat: Joke Boat (3-8 Comedians)",
@@ -58,20 +82,41 @@ namespace DartsDiscordBots.Modules.Jackbox
 				":black_square_button: Push The Button (4-10 Button-Pushers) (No Audience)"
 			};
 
-		public List<string> JackboxSevenGames { get; set; } = new List<string>()
+		public List<JackboxGame> JackboxSevenGames { get; set; } = new List<JackboxGame>()
 			{
+				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
+				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
+				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
+				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
+				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
+
 				":loud_sound: Talking Points (3-8 Pundits)",
 				":tongue: Blather 'Round (2-6 Blathermouths)",
 				":imp: The Devils and the Details (3-8 Devils)",
 				":muscle: Champ'd Up (3-8 Champs)",
 				":rofl: Quiplash 3 (3-8 Funny People)"
 			};
-		public Dictionary<int, List<string>> JackboxGameListByNumber { get; set; }
+
+		public List<JackboxGame> JackboxEightGames { get; set; } = new List<JackboxGame>()
+			{
+				new JackboxGame("You Don't Know Jack 2015", "Know-It-Alls", "", 1, 1, 4, new Emoji(":smirk:"), false),
+				new JackboxGame("Fibbage XL", "$#%!ing Liars", "", 1, 2,8, new Emoji(":liar:"), false),
+				new JackboxGame("Drawful", "Doodlers", "", 1, 3, 8, new Emoji(":pencil:"), false),
+				new JackboxGame("Word Spud", "Potatos", "", 1, 2, 8, new Emoji(":potato:"), false),
+				new JackboxGame("Lie Swatter", "Insects", "", 1, 1, 100, new Emoji(":fly:"), false),
+
+				":pencil2: Drawful Animate (3-10 Underpaid Animators)",
+				":pie: The Wheel of Enormous Proportions (2-8 Wonderers)",
+				":moneybag: Job Job (3-10 Employees)",
+				":pick: The Poll Mine (2-10 Miners)",
+				":mag: Weapons Drawn (4-8 Detective/Murderers"
+			};
+		public Dictionary<int, List<JackboxGame>> JackboxGameListByNumber { get; set; }
 		int IJackboxConstants.JackboxMaxVersion { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 		public JackboxConstants()
 		{
-			JackboxGameListByNumber = new Dictionary<int, List<string>>()
+			JackboxGameListByNumber = new Dictionary<int, List<JackboxGame>>()
 			{
 				{ 1, JackboxOneGames},
 				{ 2, JackboxTwoGames},
@@ -80,8 +125,8 @@ namespace DartsDiscordBots.Modules.Jackbox
 				{ 5, JackboxFiveGames},
 				{ 6, JackboxSixGames},
 				{ 7, JackboxSevenGames},
+				{ 8, JackboxEightGames }
 			};
-
 		}
 	}
 }
