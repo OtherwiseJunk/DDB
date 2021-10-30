@@ -19,10 +19,13 @@ namespace DartsDiscordBots.Services
 			_logger = logger;
 		}*/
 
-		public async Task SendMessageToChannel(string messageContent, IChannel channel, MessageReference referencedMessage, List<ulong> mentionedUserIds, string seperatingCharacter)
+		public async Task SendMessageToChannel(string messageContent, IMessage msg, string seperatingCharacter)
 		{
-			IMessageChannel socketChannel = (IMessageChannel)channel;
+			MessageReference referencedMessage = msg.Reference ?? new MessageReference(msg.Id);
+			IMessageChannel socketChannel = (IMessageChannel)msg.Channel;
+			List<ulong> mentionedUserIds = new List<ulong>(msg.MentionedUserIds);
 			List<string> messages;
+
 			AllowedMentions allowMentions = (mentionedUserIds.Count > 0) ? AllowedMentions.All : AllowedMentions.None;
 
 			if (messageContent.Length > MAX_MESSAGE_LENGTH)
