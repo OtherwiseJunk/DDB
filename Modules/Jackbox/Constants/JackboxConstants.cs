@@ -9,8 +9,8 @@ namespace DartsDiscordBots.Modules.Jackbox
 {
 	public static class JackboxConstants
 	{
-		static int JackboxMaxVersion { get; set; } = 8;
-		static List<JackboxGame> DefaultGameData = new List<JackboxGame>
+		public static int JackboxMaxVersion { get; set; } = 8;
+		public static List<JackboxGame> DefaultGameData = new List<JackboxGame>
 		{
 			new JackboxGame{ID = 1, Name = "You Don't Know Jack 2015", PlayerName = "Know-It-Alls", Description = "The comedy trivia sensation returns with hundreds of new questions that you can tackle on a night in by yourself or when you’re joined by friends.", JackboxVersion = 1, MinPlayers = 1, MaxPlayers = 4, VotingEmoji = new Emoji(":smirk:"), HasAudience = false, Ratings = new List<GameRating>()},
 			new JackboxGame{ID = 2, Name = "Fibbage XL", PlayerName = "$#%!ing LIars", Description = "The hilarious bluffing game, convince your friends that you know the answers to odd trivia questions OR aim to win the Thumbs Cup with the funniest answer.", JackboxVersion = 1, MinPlayers = 2, MaxPlayers = 8, VotingEmoji = new Emoji(":liar:"), HasAudience = false, Ratings = new List<GameRating>()},
