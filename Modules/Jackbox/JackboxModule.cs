@@ -123,12 +123,18 @@ namespace DartsDiscordBots.Modules.Jackbox
 			}
 
 		[Command("emoji"), Alias("e")]
-			public async Task ChangeGameVotingEmoji(string gameName, IEmote emote)
+			public async Task ChangeGameVotingEmoji(string gameName, string emote)
 			{
+				Emoji emoji = new Emoji(emote);
+				if(emoji == null)
+				{
+					await Context.Channel.SendMessageAsync("Sorry, I was unable to parse that emote.");
+					return;
+				}
 				JackboxGame game = _jb.GetGameDetailsForGuild(Context.Guild.Id, gameName);
 				if(game != null)
 				{
-					_jb.SetGameVotingEmojiForGuild(Context.Guild.Id, gameName, emote);
+					_jb.SetGameVotingEmojiForGuild(Context.Guild.Id, gameName, );
 				}
 				await Context.Channel.SendMessageAsync(game != null ? $"Ok, I've modified the guild's voting emoji for {gameName}" : $"Sorry, unable to find a game by the name `{gameName}`");
 			}
@@ -155,3 +161,4 @@ namespace DartsDiscordBots.Modules.Jackbox
 		}
 	}
 }
+/
