@@ -161,4 +161,3 @@ namespace DartsDiscordBots.Modules.Jackbox
 		}
 	}
 }
-/
