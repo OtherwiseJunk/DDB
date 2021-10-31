@@ -91,6 +91,14 @@ namespace DartsDiscordBots.Modules.Jackbox
 			[Command]
 			public async Task RateGame([Summary("Name of the game to rate")] string gameName, [Summary("Your 1-5 point rating. Values out of range will be rounded off to either 1 or 5.")] int rating)
 			{
+				if(rating > 5)
+				{
+					rating = 5;
+				}
+				if(rating < 1)
+				{
+					rating = 1;
+				}
 				JackboxGame game = _jb.GetGameDetailsForGuild(Context.Guild.Id, gameName);
 				if(game != null)
 				{

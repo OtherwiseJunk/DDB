@@ -11,20 +11,7 @@ namespace DartsDiscordBots.Modules.Jackbox.Models
 		[Key]
 		public int RatingId { get; set; }
 		public ulong DiscordUserId { get; set; }
-		public int Rating { get { return Rating; } set
-			{
-				if(value > 5)
-				{
-					Rating = 5;
-				}else if(value < 1)
-				{
-					Rating = 1;
-				}
-				else
-				{
-					Rating = value;
-				}
-			} }
+		public int Rating { get; set; }
 
 		public int JackboxGameId { get; set; }
 		public JackboxGame JackboxGame { get; set; }
