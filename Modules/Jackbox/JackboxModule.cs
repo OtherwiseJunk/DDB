@@ -134,7 +134,7 @@ namespace DartsDiscordBots.Modules.Jackbox
 				JackboxGame game = _jb.GetGameDetailsForGuild(Context.Guild.Id, gameName);
 				if(game != null)
 				{
-					_jb.SetGameVotingEmojiForGuild(Context.Guild.Id, gameName, );
+					_jb.SetGameVotingEmojiForGuild(Context.Guild.Id, gameName, emoji);
 				}
 				await Context.Channel.SendMessageAsync(game != null ? $"Ok, I've modified the guild's voting emoji for {gameName}" : $"Sorry, unable to find a game by the name `{gameName}`");
 			}
