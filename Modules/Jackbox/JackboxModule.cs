@@ -1,6 +1,7 @@
 ﻿using DartsDiscordBots.Modules.Jackbox.Interfaces;
 using DartsDiscordBots.Modules.Jackbox.Models;
 using DartsDiscordBots.Services;
+using DartsDiscordBots.Services.Interfaces;
 using DartsDiscordBots.Utilities;
 using Discord;
 using Discord.Commands;
@@ -16,11 +17,11 @@ namespace DartsDiscordBots.Modules.Jackbox
 	public class JackboxModule : ModuleBase
 	{		
 		IJackboxService _jb { get; set; }
-		MessageReliabilityService _messenger { get; set; }
+		IMessageReliabilityService _messenger { get; set; }
 		
 		const string AllVersions = "1,2,3,4,5,6,7,8";
 
-		public JackboxModule(IJackboxService jackboxService, MessageReliabilityService messenger)
+		public JackboxModule(IJackboxService jackboxService, IMessageReliabilityService messenger)
 		{
 			_jb = jackboxService;
 			_messenger = messenger;
@@ -49,9 +50,9 @@ namespace DartsDiscordBots.Modules.Jackbox
 		public class Random : ModuleBase
 		{
 			IJackboxService _jb { get; set; }
-			MessageReliabilityService _messenger { get; set; }
+			IMessageReliabilityService _messenger { get; set; }
 
-			public Random(IJackboxService jackbox, MessageReliabilityService messenger)
+			public Random(IJackboxService jackbox, IMessageReliabilityService messenger)
 			{
 				_jb = jackbox;
 				_messenger = messenger;
@@ -80,8 +81,8 @@ namespace DartsDiscordBots.Modules.Jackbox
 		public class Rate : ModuleBase
 		{
 			IJackboxService _jb { get; set; }
-			MessageReliabilityService _messenger { get; set; }
-			public Rate(IJackboxService jackboxService, MessageReliabilityService messenger)
+			IMessageReliabilityService _messenger { get; set; }
+			public Rate(IJackboxService jackboxService, IMessageReliabilityService messenger)
 			{
 				_jb = jackboxService;
 				_messenger = messenger;
