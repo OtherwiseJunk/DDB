@@ -267,7 +267,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 						sb.AppendLine(msg).AppendLine();
 						sb.AppendLine($"{SignOffs.GetRandom()},");
 						sb.AppendLine($"The {MayoralTitles.GetRandom()} Mayor of {fromTown.TownName}");
-						await Context.Client.GetUserAsync(toTown.MayorDiscordId).Result.GetOrCreateDMChannelAsync().Result.SendMessageAsync(sb.ToString());
+						await Context.Client.GetUserAsync(toTown.MayorDiscordId).Result.CreateDMChannelAsync().Result.SendMessageAsync(sb.ToString());
 					}
 					else
 					{
@@ -284,7 +284,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 						sb.AppendLine(msg).AppendLine();
 						sb.AppendLine($"{SignOffs.GetRandom()},");
 						sb.AppendLine($"The {MayoralTitles.GetRandom()} Mayor of {fromTown.TownName}");
-						await Context.Client.GetUserAsync(toTown.MayorDiscordId).Result.GetOrCreateDMChannelAsync().Result.SendMessageAsync(sb.ToString());
+						await Context.Client.GetUserAsync(toTown.MayorDiscordId).Result.CreateDMChannelAsync().Result.SendMessageAsync(sb.ToString());
 					}
 					else
 					{
