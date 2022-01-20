@@ -17,7 +17,7 @@ namespace DartsDiscordBots.Modules.Jackbox.Models
 		public JackboxGame JackboxGame { get; set; }
 		public override string ToString()
 		{
-			return $"{JackboxGame.Name} - {JackboxGame.Name} - User Rating: {Rating}";
+			return $"{JackboxGame.Name} - Jackbox {JackboxGame.JackboxVersion} - User Rating: {Rating}/5";
 		}
 	}
 }

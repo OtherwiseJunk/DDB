@@ -6,13 +6,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>2.1.1</Version>
+    <Version>2.1.2</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>2.1.1.0</AssemblyVersion>
-    <PackageReleaseNotes>Fix bug with default Jackbox Games (Weapons Drawn was showing as Lie Swatter)</PackageReleaseNotes>
+    <AssemblyVersion>2.1.2.0</AssemblyVersion>
+    <PackageReleaseNotes>Modify the ToString for Rankings</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>2.1.1.0</FileVersion>
+    <FileVersion>2.1.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
