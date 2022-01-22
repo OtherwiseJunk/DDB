@@ -6,13 +6,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>2.2.0</Version>
+    <Version>2.2.1</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>2.2.0.0</AssemblyVersion>
-    <PackageReleaseNotes>Modify the ToString for Rankings</PackageReleaseNotes>
+    <AssemblyVersion>2.2.1.0</AssemblyVersion>
+    <PackageReleaseNotes>Add GetAvatarForUser method to BotUtilities.
+
+will try and prioritize Guild avatars over regular user avatar</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>2.2.0.0</FileVersion>
+    <FileVersion>2.2.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

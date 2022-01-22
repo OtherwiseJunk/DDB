@@ -80,7 +80,7 @@ namespace DartsDiscordBots.Utilities
 			}
 			return defaultName;
 		}
-		public static string GetAVatarForUser(IGuildUser user, string defaultAvatarURL)
+		public static string GetAvatarForUser(IGuildUser user, string defaultAvatarURL)
 		{
 			if(user != null)
 			{
