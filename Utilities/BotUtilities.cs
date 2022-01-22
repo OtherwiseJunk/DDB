@@ -72,16 +72,26 @@ namespace DartsDiscordBots.Utilities
 			return sb.ToString();
 		}
 
-		public static string GetDisplayNameForUser(IGuildUser user)
+		public static string GetDisplayNameForUser(IGuildUser user, string defaultName = "A sexy, unknowable stranger")
 		{
 			if (user != null)
-			{
+			{			
 				return user.Nickname ?? user.Username;
 			}
-			else
+			return defaultName;
+		}
+		public static string GetAVatarForUser(IGuildUser user, string defaultAvatarURL)
+		{
+			if(user != null)
 			{
-				return "A sexy, unknowable stranger";
+				string avatarUrl = user.GetGuildAvatarUrl();
+				if (avatarUrl != null)
+				{
+					return avatarUrl;
+				}
+				return user.GetAvatarUrl();				
 			}
+			return defaultAvatarURL;
 		}
 	}	
 }
