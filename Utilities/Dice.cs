@@ -8,7 +8,7 @@ namespace DartsDiscordBots.Utilities
 {
     public class Dice
     {
-        private static Random _random = new Random();
+        private static Random _random = new Random(Guid.NewGuid().GetHashCode());
 
         int Sides { get; set; }
 
