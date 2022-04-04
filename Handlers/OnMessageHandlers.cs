@@ -17,15 +17,15 @@ namespace DartsDiscordBots.Handlers
 			if (message == null) return;
 			DateTime now = DateTime.Now;
 			Random rand = new Random(Guid.NewGuid().GetHashCode());
-			if(now.Month == 4 && now.Day == 1 && rand.Next(101) > 33)
+			int argPos = 0;
+			if (!message.HasCharPrefix(commandPrefix, ref argPos) || messageParam.Author.IsBot) return;
+			if (now.Month == 4 && now.Day == 1 && rand.Next(101) > 33)
 			{
 				await message.Channel.SendMessageAsync("Oh sure let me get that for you one sec...");
 				await message.Channel.SendMessageAsync(SharedConstants.FuckYouGifs.GetRandom());
 			}
 			else
 			{
-				int argPos = 0;
-				if (!message.HasCharPrefix(commandPrefix, ref argPos) || messageParam.Author.IsBot) return;
 				var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);
 				if (!result.IsSuccess)
 				{

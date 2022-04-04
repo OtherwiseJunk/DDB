@@ -89,7 +89,11 @@ namespace DartsDiscordBots.Utilities
 				{
 					return avatarUrl;
 				}
-				return user.GetAvatarUrl();				
+				avatarUrl = user.GetAvatarUrl();
+				if (avatarUrl != null)
+				{
+					return user.GetAvatarUrl();
+				}							
 			}
 			return defaultAvatarURL;
 		}
