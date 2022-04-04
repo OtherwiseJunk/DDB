@@ -36,7 +36,7 @@ namespace DartsDiscordBots.Modules.Bot
 			await client.SetGameAsync(playing);
 		}
 
-		[Command("say"), Summary("Echos a message."), RequireOwner]
+		[Command("say"), Summary("Echos a message."), RequireOwner(Group = "Privileged"), RequireUserPermission(Discord.GuildPermission.Administrator, Group = "Privileged")]
 		public async Task Say([Remainder, Summary("The text to echo")] string echo)
 		{
 			// ReplyAsync is a method on ModuleBase
