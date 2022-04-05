@@ -96,7 +96,7 @@ namespace DartsDiscordBots.Modules.Audio
             var queries = searchQuery.Split(' ');
             foreach (var query in queries)
             {
-                var searchResponse = await _lavaNode.SearchAsync(Victoria.Responses.Search.SearchType.YouTube, query);
+                var searchResponse = await _lavaNode.SearchAsync(query);
                 if (searchResponse.LoadStatus == LoadStatus.LoadFailed ||
                     searchResponse.LoadStatus == LoadStatus.NoMatches)
                 {
