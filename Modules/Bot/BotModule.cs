@@ -8,6 +8,7 @@ namespace DartsDiscordBots.Modules.Bot
 {
 	public class BotModule : ModuleBase
 	{
+		public const string PrivilegedUserGroup = "Privileged";
 		public IBotInformation _info { get; set; }
 		[Command("listchnl"), RequireOwner]
 		public async Task listChannels()
@@ -36,7 +37,8 @@ namespace DartsDiscordBots.Modules.Bot
 			await client.SetGameAsync(playing);
 		}
 
-		[Command("say"), Summary("Echos a message."), RequireOwner(Group = "Privileged"), RequireUserPermission(Discord.GuildPermission.Administrator, Group = "Privileged")]
+		[Command("say"), Summary("Echos a message.")]
+		[RequireOwner(Group = PrivilegedUserGroup), RequireUserPermission(Discord.GuildPermission.Administrator, Group = PrivilegedUserGroup)]
 		public async Task Say([Remainder, Summary("The text to echo")] string echo)
 		{
 			// ReplyAsync is a method on ModuleBase
