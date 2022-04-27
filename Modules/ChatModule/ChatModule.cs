@@ -18,17 +18,15 @@ namespace DartsDiscordBots.Modules.Chat
 			_messenger = messageReliability;
 		}
 
-		[Command("8ball"), Summary("Ask the bot a true or false question.")]
+		[Command("8ball"), Alias("magicconch","conch","8conch"), Summary("Ask the bot a true or false question.")]
 		public async Task Send8BallResponse([Remainder, Summary("The question!")] string question = "")
 		{
-			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
 			await _messenger.SendMessageToChannel(ResponseCollections.EightBallResponses.GetRandom(), Context.Message, " ");
 		}
 
 		[Command("gifball"), Summary("Ask the bot a true or false question. Responds with a gif!")]
 		public async Task SendGifBallResponse([Remainder, Summary("The question!")] string question = "")
 		{
-			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
 			await _messenger.SendMessageToChannel(ResponseCollections.GifBallResponses.GetRandom(), Context.Message, " ");
 		}
 
@@ -36,10 +34,9 @@ namespace DartsDiscordBots.Modules.Chat
 		[Summary("Places a 👏 emoji in place of any spaces. Will delete the original message, but will include the triggering user's username.")]
 		public async Task Clap([Summary("The message to Clapify."), Remainder] string msg)
 		{
-			string user = (Context.Message.Author as IGuildUser).Nickname ?? Context.Message.Author.Username;
-			string message = SharedConstants.ReplacedMessageFormat(user, Clapify(msg));
+			string user = BotUtilities.GetDisplayNameForUser((IGuildUser)Context.Message.Author);
 
-			await _messenger.SendMessageToChannel(message, Context.Message, " ");
+			await _messenger.SendMessageToChannel(SharedConstants.ReplacedMessageFormat(user, Clapify(msg)), Context.Message, " ");
 			await Context.Message.DeleteAsync();
 		}
 

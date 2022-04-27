@@ -67,9 +67,7 @@ namespace DartsDiscordBots.Utilities
 
 		public static string BuildParameterInfo(ParameterInfo parameter)
 		{
-			StringBuilder sb = new StringBuilder();
-			sb.Append($"`{parameter.Name.ToPascalCase()} (Optional:{parameter.IsOptional}, Multiple:{parameter.IsMultiple}, Remainder of Message: {parameter.IsRemainder})` - {parameter.Summary}");
-			return sb.ToString();
+			return $"`{parameter.Name.ToPascalCase()} (Optional:{parameter.IsOptional}, Multiple:{parameter.IsMultiple}, Remainder of Message: {parameter.IsRemainder})` - {parameter.Summary}";
 		}
 
 		public static string GetDisplayNameForUser(IGuildUser user, string defaultName = "A sexy, unknowable stranger")
