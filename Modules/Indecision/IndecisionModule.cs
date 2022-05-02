@@ -74,7 +74,7 @@ namespace DartsDiscordBots.Modules.Indecision
                         var temp = dice.Roll();
                         if (int.TryParse(arguments[1], out modifier))
                         {
-                            sb.AppendLine(string.Format("Rolled one d{0} plus {1} and got a total of {2}", sides,modifier, temp + modifier));
+                            sb.AppendLine(string.Format("Rolled one `d{0}` plus `{1}` and got a total of `{2}`", sides,modifier, temp + modifier));
                         }
                         else
                         {
@@ -102,8 +102,8 @@ namespace DartsDiscordBots.Modules.Indecision
                         var temp = dice.Roll();
                         if (int.TryParse(arguments[1], out modifier))
                         {
-                            sb.AppendLine(string.Format("Rolled one d{0} plus {1} and got a total of {2}", sides, modifier, temp + modifier));
-                            sb.AppendLine(string.Format("Rolled one d{0} minus {1} and got a total of {2}", sides,modifier, temp - modifier));
+                            sb.AppendLine(string.Format("Rolled one `d{0}` plus `{1}` and got a total of `{2}`", sides, modifier, temp + modifier));
+                            sb.AppendLine(string.Format("Rolled one `d{0}` minus `{1}` and got a total of `{2}`", sides,modifier, temp - modifier));
                         }
                         else
                         {
@@ -128,7 +128,7 @@ namespace DartsDiscordBots.Modules.Indecision
                         }
                         var dice = new Dice(sides);
 
-                        sb.AppendLine(string.Format("Rolled one d{0} and got a total of {1}",sides, dice.Roll()));
+                        sb.AppendLine(string.Format("Rolled one `d{0}` and got a total of `{1}`",sides, dice.Roll()));
                     }
                     else
                     {
@@ -160,8 +160,8 @@ namespace DartsDiscordBots.Modules.Indecision
                             var temp = dice.Roll(times);
                             if (int.TryParse(arguments[1], out modifier))
                             {
-                                sb.AppendLine(string.Format("Rolled {0} d{1} plus {2} and got a total of {3}", times, sides, modifier, temp.Total + modifier));
-                                sb.AppendLine(string.Format("Individual Rolls: {0}",string.Join(",", temp.Rolls)));
+                                sb.AppendLine(string.Format("Rolled `{0}` `d{1}` plus `{2}` and got a total of `{3}`", times, sides, modifier, temp.Total + modifier));
+                                sb.AppendLine(string.Format("Individual Rolls: `[{0}]`",string.Join(",", temp.Rolls)));
                             }
                             else
                             {
@@ -194,8 +194,8 @@ namespace DartsDiscordBots.Modules.Indecision
                             var temp = dice.Roll(times);
                             if (int.TryParse(arguments[1], out modifier))
                             {
-                                sb.AppendLine(string.Format("Rolled {0} d{1} minus {2} and got a total of {3}", times, sides, modifier, temp.Total - modifier));
-                                sb.AppendLine(string.Format("Individual Rolls: {0}", string.Join(",", temp.Rolls)));
+                                sb.AppendLine(string.Format("Rolled `{0}` `d{1}` minus `{2}` and got a total of `{3}`", times, sides, modifier, temp.Total - modifier));
+                                sb.AppendLine(string.Format("Individual Rolls: `[{0}]`", string.Join(",", temp.Rolls)));
                             }
                             else
                             {
@@ -223,8 +223,8 @@ namespace DartsDiscordBots.Modules.Indecision
                             }
                             var dice = new Dice(sides);
                             var temp = dice.Roll(times);
-                            sb.AppendLine(string.Format("Rolled {0} d{1} and got a total of {2}", times, sides, temp.Total));
-                            sb.AppendLine(string.Format("Individual Rolls: {0}",string.Join(",", temp.Rolls)));							
+                            sb.AppendLine(string.Format("Rolled `{0}` `d{1}` and got a total of `{2}`", times, sides, temp.Total));
+                            sb.AppendLine(string.Format("Individual Rolls: `[{0}]`",string.Join(",", temp.Rolls)));							
                         }
                         else
                         {
