@@ -14,7 +14,13 @@ namespace DartsDiscordBots.Modules.NFT
     public class NFTModule : ModuleBase
     {
 		ImagingService _imaging { get; set; }
-		[Command("nft")]
+
+        public NFTModule(ImagingService imaging)
+        {
+            _imaging = imaging;
+        }
+
+        [Command("nft")]
 		[Summary("Generates an NFT for the user.")]
 		public async Task MakeNFT([Remainder] string mode = "")
 		{
