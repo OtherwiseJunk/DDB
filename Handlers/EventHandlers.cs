@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DartsDiscordBots.Handlers
 {
-    public class OnEventCreatedHandlers
+    public class EventHandlers
     {
         public static string EventUrlFormat = @"https://discord.com/events/{0}/{1}";
         public static void AnnounceNewEvent(SocketGuildEvent arg)
@@ -19,6 +19,21 @@ namespace DartsDiscordBots.Handlers
             {                
                 string eventMessage = $"{BotUtilities.GetDisplayNameForUser(arg.Creator)} has created a new event!{Environment.NewLine}{Environment.NewLine}{String.Format(EventUrlFormat, arg.Guild.Id, arg.Id)}";
                 announcementChnl.SendMessageAsync(eventMessage);
+            }
+        }
+        public static async void AnnounceNewEventStarted(SocketGuildEvent arg)
+        {
+            ITextChannel announcementChnl = (ITextChannel)arg.Guild.Channels.FirstOrDefault(c => c.Name.ToLower() == "announcements");            
+            if (announcementChnl != null)
+            {
+                string channelNameString = arg.Channel != null ? $" Join {arg.Channel.Name} now!" : String.Empty;
+                string mentionString = "";
+                foreach (IGuildUser user in (List<IGuildUser>)arg.GetUsersAsync(RequestOptions.Default))
+                {
+                    mentionString += user.Mention;
+                }
+                string eventMessage = $"{arg.Name} event has started!{channelNameString}{mentionString}";
+                _ = announcementChnl.SendMessageAsync(eventMessage);
             }
         }
     }
