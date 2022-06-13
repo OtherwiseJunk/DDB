@@ -1,5 +1,6 @@
 ﻿using DartsDiscordBots.Utilities;
 using Discord;
+using Discord.Rest;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace DartsDiscordBots.Handlers
             {
                 string channelNameString = arg.Channel != null ? $" Join {arg.Channel.Name} now!" : String.Empty;
                 string mentionString = "";
-                foreach (IGuildUser user in (List<IGuildUser>)arg.GetUsersAsync(RequestOptions.Default))
+                foreach (RestUser user in arg.GetUsersAsync(RequestOptions.Default).ToListAsync().Result)
                 {
                     mentionString += user.Mention;
                 }

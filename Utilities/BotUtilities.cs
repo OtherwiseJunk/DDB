@@ -72,8 +72,10 @@ namespace DartsDiscordBots.Utilities
 
 		public static string GetDisplayNameForUser(IGuildUser user, string defaultName = "A sexy, unknowable stranger")
 		{
+			Console.WriteLine($"[DDB] - Received Name Lookup Request. User object null? {user == null}");
 			if (user != null)
-			{			
+			{
+				Console.WriteLine($"[DDB] - Attempting to retrieve nickname for {user.Username}. Failing that will return username.");
 				return user.Nickname ?? user.Username;
 			}
 			return defaultName;
