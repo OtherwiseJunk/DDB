@@ -18,7 +18,6 @@ namespace DartsDiscordBots.Services
 		public static string SecretKey { get; set; }
 		public static string Url { get; set; }
 		public static string Bucket { get; set; }
-		public static ILogger Log { get; set; }
 		public static Random _rand { get; set; }
 
 		public ImagingService(string s3PublicKey, string s3SecretKey, string s3Url, string s3Bucket)
