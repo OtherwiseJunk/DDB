@@ -32,11 +32,11 @@ namespace DartsDiscordBots.Handlers
             {
                 string channelNameString = arg.Channel != null ? $" Join {arg.Channel.Name} now!" : String.Empty;
                 string mentionString = "";
-                List<RestUser> users = (List<RestUser>)arg.GetUsersAsync(RequestOptions.Default);
-                Console.WriteLine($"[DDB] - Users list null? {users == null}. Users list empty? {users.Count == 0}");
-                foreach (var user in users)
+                await foreach (var users in arg.GetUsersAsync(RequestOptions.Default))
                 {
-                    mentionString += user.Mention;
+                    foreach (RestUser user in users) {
+                        mentionString += user.Mention;
+                    }                    
                 }
                 string eventMessage = $"{arg.Name} event has started!{channelNameString}{mentionString}";
                 _ = announcementChnl.SendMessageAsync(eventMessage);
