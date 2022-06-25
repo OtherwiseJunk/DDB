@@ -31,12 +31,12 @@ namespace DartsDiscordBots.Utilities
             if (announcementChnl != null)
             {
                 string channelNameString = arg.Channel != null ? $" Join {arg.Channel.Name} now!" : String.Empty;
-                string mentionString = await GetInterestedUsersMentioned(arg);
+                string mentionString = await GetInterestedUsersMentions(arg);
                 string eventMessage = $"{arg.Name} event has started!{channelNameString}{mentionString}";
                 _ = announcementChnl.SendMessageAsync(eventMessage);
             }
         }
-        public static async Task<string> GetInterestedUsersMentioned(IGuildScheduledEvent guildScheduledEvent)
+        public static async Task<string> GetInterestedUsersMentions(IGuildScheduledEvent guildScheduledEvent)
         {
             string mentionString = "";
             await foreach (var users in guildScheduledEvent.GetUsersAsync(RequestOptions.Default))
