@@ -29,10 +29,10 @@ namespace DartsDiscordBots.Modules.Jackbox
 
 		[Command]
 		[Summary("Gets the description of a game by name")]
-		public async Task GetJackboxGameDescription(string gameName)
+		public async Task GetJackboxGameDescription([Remainder()] string gameName)
 		{
 			JackboxGame game = _jb.GetGameDetailsForGuild(Context.Guild.Id, gameName);
-			await Context.Channel.SendMessageAsync(game != null ? game.ToString() : $"Sorry, unable to find a game by the name `{gameName}`");
+			await Context.Channel.SendMessageAsync(game != null ? game.VerboseString() : $"Sorry, unable to find a game by the name `{gameName}`");
 		}
 
 		[Command("vote"), Alias("v")]
