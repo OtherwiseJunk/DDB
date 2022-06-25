@@ -33,20 +33,42 @@ namespace DartsDiscordBots.Modules.Jackbox
 		{
 			JackboxGame game = _jb.GetGameDetailsForGuild(Context.Guild.Id, gameName);
 			await Context.Channel.SendMessageAsync(game != null ? game.VerboseString() : $"Sorry, unable to find a game by the name `{gameName}`");
+        }
+
+        [Group("vote"), Alias("v")]
+        public class Vote : ModuleBase
+        {
+            IJackboxService _jb { get; set; }
+            IMessageReliabilityService _messenger { get; set; }
+
+            public Vote(IJackboxService jackbox, IMessageReliabilityService messenger)
+            {
+                _jb = jackbox;
+                _messenger = messenger;
+            }
+
+            [Summary("Makes a jackbox poll, and will announce a winner after 5 mintues. User must provide a comma separated list of the jack.")]
+            public async Task JackboxVote([Summary("A comma seperated list of the versions of jackbox to make the list for")] string versions = AllVersions)
+            {
+                int[] versionList = _jb.ParseVersionList(versions, Context);
+                MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
+
+                List<JackboxGame> pollGameList = _jb.GetGamelistForGuild(Context.Guild.Id, versionList);
+                await _messenger.SendMessageToChannel(string.Join(Environment.NewLine, pollGameList), Context.Message, Environment.NewLine);
+            }
+
+			[Command("players"), Alias("playercount", "pc"), Name("Vote on Jackbox Game by Player Count")]
+			public async Task JackboxPlayerRandom(int playerCount, [Summary("A comma seperated list of the versions of jackbox to make the list for")] string versions = AllVersions)
+			{
+				int[] versionList = _jb.ParseVersionList(versions, Context);
+				List<JackboxGame> gameList = _jb.GetGamelistForGuild(Context.Guild.Id, versionList).Where(g => g.MinPlayers <= playerCount && g.MaxPlayers >= playerCount).ToList();
+
+				await _messenger.SendMessageToChannel(string.Join(Environment.NewLine, gameList), Context.Message, Environment.NewLine);
+			}
 		}
 
-		[Command("vote"), Alias("v")]
-		[Summary("Makes a jackbox poll, and will announce a winner after 5 mintues. User must provide a comma separated list of the jack.")]
-		public async Task JackboxVote([Summary("A comma seperated list of the versions of jackbox to make the list for")] string versions=AllVersions)
-		{
-			int[] versionList = _jb.ParseVersionList(versions, Context);
-			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
 
-			List<JackboxGame> pollGameList = _jb.GetGamelistForGuild(Context.Guild.Id, versionList);
-			await _messenger.SendMessageToChannel(string.Join(Environment.NewLine, pollGameList), Context.Message, Environment.NewLine);		
-		}
-
-		[Group("random"), Alias("rand","r")]
+        [Group("random"), Alias("rand","r")]
 		public class Random : ModuleBase
 		{
 			IJackboxService _jb { get; set; }
@@ -72,7 +94,7 @@ namespace DartsDiscordBots.Modules.Jackbox
 				int[] versionList = _jb.ParseVersionList(versions, Context);
 				List<JackboxGame> gameList = _jb.GetGamelistForGuild(Context.Guild.Id, versionList).Where(g => g.MinPlayers <= playerCount && g.MaxPlayers >= playerCount).ToList();
 
-				await _messenger.SendMessageToChannel(string.Join(Environment.NewLine, gameList), Context.Message, Environment.NewLine) ;
+				await _messenger.SendMessageToChannel(gameList.GetRandom().VerboseString(), Context.Message, Environment.NewLine) ;
 			}
 		}
 		
