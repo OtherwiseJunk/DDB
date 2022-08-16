@@ -6,11 +6,11 @@ namespace DartsDiscordBots.Constants
     {
         #region Strings
         public static string UnflippedTable = "┬─┬  ノ( º _ ºノ)";
-        public static string AngryUnflippedTable = "┬─┬  ノ(ಠ益ಠノ)";
+        public static string EnragedUnflippedTable = "┬─┬  ノ(ಠ益ಠノ)";
         public static string LeftDoubleUnflippedTable = "┬─┬  ノ(`Д´ノ)";
         public static string RightDoubleUnflippedTable = "(/¯`Д´ )/¯ ┬─┬";
         public static string DoubleTableFlip = "┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻";
-        public static string AngryTableFlip = "(ノಠ益ಠ)ノ彡┻━┻";
+        public static string EnragedTableFlip = "(ノಠ益ಠ)ノ彡┻━┻";
         #endregion
         #region String Formats
         public static string ReplacedMessageFormat(string username, string modifiedMessage) => $"**{username}:** {modifiedMessage}";

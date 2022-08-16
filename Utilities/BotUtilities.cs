@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using DartsDiscordBots.Constants;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System;
@@ -29,12 +30,12 @@ namespace DartsDiscordBots.Utilities
 				type = TableFlipType.Single;
                 return true;
             }
-            else if (msg == "(ノಠ益ಠ)ノ彡┻━┻")
+            else if (msg == EnragedTableFlip)
             {
 				type = TableFlipType.Enraged;
 				return true;
             }
-            else if (msg == "┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻")
+            else if (msg == DoubleTableFlip)
             {
 				type = TableFlipType.Double;
 				return true;
