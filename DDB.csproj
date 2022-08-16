@@ -6,13 +6,13 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>5.0.5</Version>
+    <Version>5.0.6</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>5.0.5</AssemblyVersion>
+    <AssemblyVersion>5.0.6</AssemblyVersion>
     <PackageReleaseNotes>Add alias for 8ball (magicconch, conch, 8conch). Add OnEventCreatedHandler for announcing newly created events in the #announcements channel. (Lookup by exact name). Misc refactors.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>5.0.5</FileVersion>
+    <FileVersion>5.0.6</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

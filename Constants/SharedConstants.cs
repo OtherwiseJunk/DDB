@@ -4,6 +4,14 @@ namespace DartsDiscordBots.Constants
 {
     public class SharedConstants
     {
+        #region Strings
+        public const string UnflippedTable = "┬─┬  ノ( º _ ºノ)";
+        public const string AngryUnflippedTable = "┬─┬  ノ(ಠ益ಠノ)";
+        public const string LeftDoubleUnflippedTable = "┬─┬  ノ(`Д´ノ)";
+        public const string RightDoubleUnflippedTable = "(/¯`Д´ )/¯ ┬─┬";
+        public const string DoubleTableFlip = "┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻";
+        public const string AngryTableFlip = "(ノಠ益ಠ)ノ彡┻━┻";
+        #endregion
         #region String Formats
         public static string ReplacedMessageFormat(string username, string modifiedMessage) => $"**{username}:** {modifiedMessage}";
         #endregion
@@ -142,6 +150,12 @@ namespace DartsDiscordBots.Constants
             Aggresive,
             Scalding,
             NavySeal
+        }
+        public enum TableFlipType
+        {
+            Single,
+            Double,
+            Enraged
         }
         #endregion
     }

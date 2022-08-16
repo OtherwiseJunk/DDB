@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using static DartsDiscordBots.Constants.SharedConstants;
 
 namespace DartsDiscordBots.Utilities
 {
@@ -20,18 +21,22 @@ namespace DartsDiscordBots.Utilities
 			return identificationRegex.IsMatch(message.Content) || message.MentionedUsers.FirstOrDefault(u => u.Id == botId) != null;
         }
 
-        public static bool isUserFlippingTable(string msg)
+        public static bool isUserFlippingTable(string msg, out TableFlipType? type)
         {
+			type = null;
             if (Regex.IsMatch(msg, @"[)ʔ）][╯ノ┛].+┻━┻"))
             {
+				type = TableFlipType.Single;
                 return true;
             }
             else if (msg == "(ノಠ益ಠ)ノ彡┻━┻")
             {
-                return true;
+				type = TableFlipType.Enraged;
+				return true;
             }
             else if (msg == "┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻")
             {
+				type = TableFlipType.Double;
 				return true;
 			}
 
