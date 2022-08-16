@@ -18,8 +18,27 @@ namespace DartsDiscordBots.Utilities
 		public static bool isMentioningMe(SocketMessage message, Regex identificationRegex, ulong botId)
 		{
 			return identificationRegex.IsMatch(message.Content) || message.MentionedUsers.FirstOrDefault(u => u.Id == botId) != null;
+        }
+
+        public static bool isUserFlippingTable(string msg)
+        {
+            if (Regex.IsMatch(msg, @"[)ʔ）][╯ノ┛].+┻━┻"))
+            {
+                return true;
+            }
+            else if (msg == "(ノಠ益ಠ)ノ彡┻━┻")
+            {
+                return true;
+            }
+            else if (msg == "┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻")
+            {
+				return true;
+			}
+
+			return false;
 		}
-		public static string BuildModuleInfo(char prefix, ModuleInfo module)
+
+        public static string BuildModuleInfo(char prefix, ModuleInfo module)
 		{
 			StringBuilder sb = new StringBuilder($"{module.Name} Module's commands:").AppendLine();
 			foreach (CommandInfo command in module.Commands)

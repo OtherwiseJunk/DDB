@@ -8,11 +8,11 @@
     <Company />
     <Version>5.0.4</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>5.0.4</AssemblyVersion>
+    <AssemblyVersion>5.0.5</AssemblyVersion>
     <PackageReleaseNotes>Add alias for 8ball (magicconch, conch, 8conch). Add OnEventCreatedHandler for announcing newly created events in the #announcements channel. (Lookup by exact name). Misc refactors.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>5.0.4</FileVersion>
+    <FileVersion>5.0.5</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
