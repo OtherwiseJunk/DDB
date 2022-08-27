@@ -36,9 +36,13 @@ namespace DartsDiscordBots.Handlers
 				log.Information($"Command success? {result.IsSuccess}");
                 if (!result.IsSuccess)
 				{
+					log.Information("Command processing failed. Attempting to get Command Information.");
 					CommandInfo commandFromModuleGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group}" == message.Content.ToLower());
-					CommandInfo commandFromNameWithGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group} {c.Name}" == message.Content.ToLower());
-					CommandInfo commandFromName = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Name}" == message.Content.ToLower());
+					log.Information($"Command Info from Module Group successfully found? {commandFromModuleGroup != null}");
+                    CommandInfo commandFromNameWithGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group} {c.Name}" == message.Content.ToLower());
+					log.Information($"Command Info With Name Group successfully found? {commandFromNameWithGroup != null}");
+                    CommandInfo commandFromName = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Name}" == message.Content.ToLower());
+					log.Information($"Command Info With Name successfully found? {commandFromName != null}");
 					if (commandFromModuleGroup != null)
 					{
 						await context.Channel.SendMessageAsync(HelpUtilities.BuildModuleInfo(commandPrefix, commandFromModuleGroup.Module));
