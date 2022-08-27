@@ -37,7 +37,7 @@ namespace DartsDiscordBots.Handlers
                 if (!result.IsSuccess)
                 {
                     log.Error($"Error Type: {result.Error}");
-					log.Error($"Error Reason: {result.ErrorReason}");
+					log.Information($"Error Reason: {result.ErrorReason}");
                     log.Information("Command processing failed. Attempting to get Command Information.");
 					CommandInfo commandFromModuleGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group}" == message.Content.ToLower());
 					log.Information($"Command Info from Module Group successfully found? {commandFromModuleGroup != null}");
