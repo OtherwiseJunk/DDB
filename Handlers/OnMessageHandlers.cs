@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using DartsDiscordBots.Constants;
+using Serilog;
 
 namespace DartsDiscordBots.Handlers
 {
@@ -13,32 +14,38 @@ namespace DartsDiscordBots.Handlers
 	{
 		public static async Task HandleCommandWithSummaryOnError(SocketMessage messageParam, CommandContext context, CommandService commandService, IServiceProvider serviceProvider, char commandPrefix)
 		{
+			ILogger log = (ILogger)serviceProvider.GetService(typeof(ILogger));
+			log.Information("Handling command. Casting messageParam as SocketUserMessage...");
 			var message = messageParam as SocketUserMessage;
 			if (message == null) return;
-			DateTime now = DateTime.Now;
-			Random rand = new Random(Guid.NewGuid().GetHashCode());
+			log.Information("Cast successful!");
 			int argPos = 0;
+			log.Information("Checking if we're talking to a bot...");
 			if (!message.HasCharPrefix(commandPrefix, ref argPos) || messageParam.Author.IsBot) return;
-			if (now.Month == 4 && now.Day == 1 && rand.Next(101) <= 33)
+			log.Information("We're not!");
+			if (BotUtilities.ShouldDoAprilFoolsShenanigans())
 			{
+				log.Information("Aw yeah, time for some April Fools Day Pranks!");
 				await message.Channel.SendMessageAsync("Oh sure let me get that for you one sec...");
 				await message.Channel.SendMessageAsync(SharedConstants.FuckYouGifs.GetRandom());
 			}
 			else
 			{
-				var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);
-				if (!result.IsSuccess)
+				log.Information("Attempting to execute command");
+                var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);
+				log.Information($"Command success? {result.IsSuccess}");
+                if (!result.IsSuccess)
 				{
 					CommandInfo commandFromModuleGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group}" == message.Content.ToLower());
 					CommandInfo commandFromNameWithGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group} {c.Name}" == message.Content.ToLower());
 					CommandInfo commandFromName = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Name}" == message.Content.ToLower());
 					if (commandFromModuleGroup != null)
 					{
-						await context.Channel.SendMessageAsync(BotUtilities.BuildModuleInfo(commandPrefix, commandFromModuleGroup.Module));
+						await context.Channel.SendMessageAsync(HelpUtilities.BuildModuleInfo(commandPrefix, commandFromModuleGroup.Module));
 					}
 					if (commandFromNameWithGroup != null || commandFromName != null)
 					{
-						await context.Channel.SendMessageAsync(BotUtilities.BuildDetailedCommandInfo(commandPrefix, (commandFromName ?? commandFromNameWithGroup)));
+						await context.Channel.SendMessageAsync(HelpUtilities.BuildDetailedCommandInfo(commandPrefix, (commandFromName ?? commandFromNameWithGroup)));
 						await context.Channel.SendMessageAsync(result.ErrorReason);
 					}
 				}

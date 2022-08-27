@@ -5,12 +5,19 @@ namespace DartsDiscordBots.Constants
     public class SharedConstants
     {
         #region Strings
+        #region String Constants
         public static string UnflippedTable = "┬─┬  ノ( º _ ºノ)";
         public static string EnragedUnflippedTable = "┬─┬  ノ(ಠ益ಠノ)";
         public static string LeftDoubleUnflippedTable = "┬─┬  ノ(`Д´ノ)";
         public static string RightDoubleUnflippedTable = "(/¯`Д´ )/¯ ┬─┬";
         public static string DoubleTableFlip = "┻━┻ ︵ヽ(`Д´)ﾉ︵ ┻━┻";
         public static string EnragedTableFlip = "(ノಠ益ಠ)ノ彡┻━┻";
+        #endregion
+        #region Regex Constants
+        public static string TableFlipRegex = @"[)ʔ）][╯ﾉノ┛].+┻━┻";
+        public static string EnragedTableFlipRegex = @"ಠ益ಠ[)ʔ）][╯ﾉノ┛].+┻━┻";
+        public static string DoubleTableFlipRegex = @"┻━┻.*[ヽ].*[)ʔ）][╯ﾉノ┛].+┻━┻";
+        #endregion
         #endregion
         #region String Formats
         public static string ReplacedMessageFormat(string username, string modifiedMessage) => $"**{username}:** {modifiedMessage}";
