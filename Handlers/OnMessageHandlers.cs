@@ -32,11 +32,13 @@ namespace DartsDiscordBots.Handlers
 			else
 			{
 				log.Information("Attempting to execute command");
-                var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);
-				log.Information($"Command success? {result.IsSuccess}");
+                var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);				
+                log.Information($"Command success? {result.IsSuccess}");
                 if (!result.IsSuccess)
-				{
-					log.Information("Command processing failed. Attempting to get Command Information.");
+                {
+                    log.Error($"Error Type: {result.Error}");
+					log.Error($"Error Reason: {result.ErrorReason}");
+                    log.Information("Command processing failed. Attempting to get Command Information.");
 					CommandInfo commandFromModuleGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group}" == message.Content.ToLower());
 					log.Information($"Command Info from Module Group successfully found? {commandFromModuleGroup != null}");
                     CommandInfo commandFromNameWithGroup = commandService.Commands.FirstOrDefault(c => $"{commandPrefix}{c.Module.Group} {c.Name}" == message.Content.ToLower());
