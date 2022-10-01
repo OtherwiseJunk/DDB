@@ -29,18 +29,18 @@ namespace DartsDiscordBots.Modules.Indecision
 				if (choice.EndsWith('+'))
 				{
 					int plusCount = choice.Count(cha => cha == '+');
-					ChoiceCountByName.Add(choice.Replace("+", string.Empty), ++plusCount);
+					ChoiceCountByName.Add(choice.Replace("+", string.Empty).Trim(), ++plusCount);
 				}
 				else
 				{
-					ChoiceCountByName.Add(choice, 1);
+					ChoiceCountByName.Add(choice.Trim(), 1);
 				}
 			}
 
 			choices = new List<string>();
-			foreach (string choiceName in ChoiceCountByName.Keys)
+			foreach ((string choiceName, int choiceCount) in ChoiceCountByName)
 			{
-				for (int i = 0; i < ChoiceCountByName[choiceName]; i++)
+				for (int i = 0; i < choiceCount; i++)
 				{
 					choices.Add(choiceName);
 				}
