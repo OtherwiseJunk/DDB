@@ -6,9 +6,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>6.1.1</Version>
+    <Version>6.1.2</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>6.1.1</AssemblyVersion>
+    <AssemblyVersion>6.1.2</AssemblyVersion>
     <PackageReleaseNotes>
 		Adds data for 5 new Jackbox Games: 
 		    🗑️Junktopia
@@ -20,7 +20,7 @@
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>6.1.1</FileVersion>
+    <FileVersion>6.1.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
