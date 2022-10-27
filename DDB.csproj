@@ -6,13 +6,20 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>6.0.4</Version>
+    <Version>6.1.0</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>6.0.4</AssemblyVersion>
-    <PackageReleaseNotes>Add alias for 8ball (magicconch, conch, 8conch). Add OnEventCreatedHandler for announcing newly created events in the #announcements channel. (Lookup by exact name). Misc refactors.</PackageReleaseNotes>
+    <AssemblyVersion>6.1.0</AssemblyVersion>
+    <PackageReleaseNotes>
+		Adds data for 5 new Jackbox Games: 
+		    🗑️Junktopia
+		    ➡️Quixort
+		    🧠Nonsensory
+		    🎥Roomerang
+			🥸Fibbage 4
+	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>6.0.4</FileVersion>
+    <FileVersion>6.1.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
