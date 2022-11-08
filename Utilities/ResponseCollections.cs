@@ -91,7 +91,6 @@ namespace DartsDiscordBots.Utilities
                 "https://tenor.com/view/confusion-turmoil-gif-4878626",
                 "https://tenor.com/view/dude-white-russian-confused-gif-12920711",
                 "https://tenor.com/view/confused-what-really-no-words-huh-gif-3316515",
-                "https://tenor.com/view/strangle-choking-frustrated-give-up-im-done-gif-12163201",
                 "https://tenor.com/search/it-is-very-confusing-gifs",
                 "https://tenor.com/view/friday-ice-cube-wtf-what-the-fuck-confused-gif-4180958",
                 "https://tenor.com/view/white-guy-blinking-drew-scanlon-what-whut-wat-gif-15689695",

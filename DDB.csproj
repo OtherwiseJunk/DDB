@@ -8,19 +8,13 @@
     <Company />
     <Version>6.1.3</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>6.1.3</AssemblyVersion>
+    <AssemblyVersion>6.1.4</AssemblyVersion>
     <PackageReleaseNotes>
-		Adds data for 5 new Jackbox Games: 
-		    🗑️Junktopia
-		    ➡️Quixort
-		    🧠Nonsensory
-		    🎥Roomerang
-			🥸Fibbage 4
-
+		Removed objectionable gifball response.
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>6.1.3</FileVersion>
+    <FileVersion>6.1.4</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
