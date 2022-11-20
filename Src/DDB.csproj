@@ -6,15 +6,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>6.2.0</Version>
+    <Version>6.2.1</Version>
     <Description>Collection of modules and utilties for Discord bots based on Discord.net</Description>
-    <AssemblyVersion>6.2.0</AssemblyVersion>
+    <AssemblyVersion>6.2.1</AssemblyVersion>
     <PackageReleaseNotes>
 		Add uWu Utilities
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>6.2.0</FileVersion>
+    <FileVersion>6.2.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
