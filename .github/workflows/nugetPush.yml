@@ -18,5 +18,5 @@ jobs:
       - name: Publish NuGet
         uses: alirezanet/publish-nuget@v3.0.0
         with:
-          PROJECT_FILE_PATH: DDB.csproj
+          PROJECT_FILE_PATH: Src/DDB.csproj
           NUGET_KEY: ${{secrets.NUGET_KEY}}
