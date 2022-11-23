@@ -27,7 +27,7 @@ namespace DartsDiscordBots.Modules.Audio
             _audioService = audioService;
         }
 
-        [Command("Join")]
+        [Command("Join", RunMode = RunMode.Async)]
         public async Task JoinAsync()
         {
             if (_lavaNode.HasPlayer(Context.Guild))
@@ -45,6 +45,7 @@ namespace DartsDiscordBots.Modules.Audio
 
             try
             {
+                _ = voiceState.VoiceChannel.ConnectAsync();
                 await _lavaNode.JoinAsync(voiceState.VoiceChannel, Context.Channel as ITextChannel);
                 await ReplyAsync($"Joined {voiceState.VoiceChannel.Name}!");
             }
@@ -72,6 +73,7 @@ namespace DartsDiscordBots.Modules.Audio
 
             try
             {
+                _ = voiceChannel.DisconnectAsync();
                 await _lavaNode.LeaveAsync(voiceChannel);
                 await ReplyAsync($"I've left {voiceChannel.Name}!");
             }
