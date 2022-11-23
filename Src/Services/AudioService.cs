@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Victoria;
-using Victoria.EventArgs;
+using Victoria.Node;
+using Victoria.Node.EventArgs;
+using Victoria.Player;
 
 namespace DartsDiscordBots.Services
 {
-	public sealed class AudioService
+    public sealed class AudioService
     {
         private readonly LavaNode _lavaNode;
         private readonly ILogger _logger;
@@ -22,121 +25,55 @@ namespace DartsDiscordBots.Services
             _logger = loggerFactory.CreateLogger<LavaNode>();
             _disconnectTokens = new ConcurrentDictionary<ulong, CancellationTokenSource>();
 
-            _lavaNode.OnLog += arg => {
-                _logger.Log(LogLevel.Trace, arg.Exception, arg.Message);
-                return Task.CompletedTask;
-            };
-
-            _lavaNode.OnPlayerUpdated += OnPlayerUpdated;
-            _lavaNode.OnStatsReceived += OnStatsReceived;
-            _lavaNode.OnTrackEnded += OnTrackEnded;
-            _lavaNode.OnTrackStarted += OnTrackStarted;
-            _lavaNode.OnTrackException += OnTrackException;
-            _lavaNode.OnTrackStuck += OnTrackStuck;
-            _lavaNode.OnWebSocketClosed += OnWebSocketClosed;
-
             VoteQueue = new HashSet<ulong>();
+
+            _lavaNode.OnTrackEnd += OnTrackEndAsync;
+            _lavaNode.OnTrackStart += OnTrackStartAsync;
+            _lavaNode.OnStatsReceived += OnStatsReceivedAsync;
+            _lavaNode.OnUpdateReceived += OnUpdateReceivedAsync;
+            _lavaNode.OnWebSocketClosed += OnWebSocketClosedAsync;
+            _lavaNode.OnTrackStuck += OnTrackStuckAsync;
+            _lavaNode.OnTrackException += OnTrackExceptionAsync;
         }
 
-        private Task OnPlayerUpdated(PlayerUpdateEventArgs arg)
+        private static Task OnTrackExceptionAsync(TrackExceptionEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
         {
-            _logger.LogInformation($"Track update received for {arg.Track.Title}: {arg.Position}");
+            arg.Player.Vueue.Enqueue(arg.Track);
+            return arg.Player.TextChannel.SendMessageAsync($"{arg.Track} has been requeued because it threw an exception.");
+        }
+
+        private static Task OnTrackStuckAsync(TrackStuckEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
+        {
+            arg.Player.Vueue.Enqueue(arg.Track);
+            return arg.Player.TextChannel.SendMessageAsync($"{arg.Track} has been requeued because it got stuck.");
+        }
+
+        private Task OnWebSocketClosedAsync(WebSocketClosedEventArg arg)
+        {
+            _logger.LogCritical($"{arg.Code} {arg.Reason}");
             return Task.CompletedTask;
         }
 
-        private Task OnStatsReceived(StatsEventArgs arg)
+        private Task OnStatsReceivedAsync(StatsEventArg arg)
         {
-            _logger.LogInformation($"Lavalink has been up for {arg.Uptime}.");
+            _logger.LogInformation(JsonSerializer.Serialize(arg));
             return Task.CompletedTask;
         }
 
-        private async Task OnTrackStarted(TrackStartEventArgs arg)
+        private static Task OnUpdateReceivedAsync(UpdateEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
         {
-            if (!_disconnectTokens.TryGetValue(arg.Player.VoiceChannel.Id, out var value))
-            {
-                return;
-            }
-
-            if (value.IsCancellationRequested)
-            {
-                return;
-            }
-
-            value.Cancel(true);
-            await arg.Player.TextChannel.SendMessageAsync("Auto disconnect has been cancelled!");
+            return arg.Player.TextChannel.SendMessageAsync(
+                $"Player update received: {arg.Position}/{arg.Track?.Duration}");
         }
 
-        private async Task OnTrackEnded(TrackEndedEventArgs args)
+        private static Task OnTrackStartAsync(TrackStartEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
         {
-            if (!args.Reason.ShouldPlayNext())
-            {
-                return;
-            }
-
-            var player = args.Player;
-            if (!player.Queue.TryDequeue(out var queueable))
-            {
-                await player.TextChannel.SendMessageAsync("Queue completed! Please add more tracks to rock n' roll!");
-                _ = InitiateDisconnectAsync(args.Player, TimeSpan.FromSeconds(10));
-                return;
-            }
-
-            if (!(queueable is LavaTrack track))
-            {
-                await player.TextChannel.SendMessageAsync("Next item in queue is not a track.");
-                return;
-            }
-
-            await args.Player.PlayAsync(track);
-            await args.Player.TextChannel.SendMessageAsync(
-                $"{args.Reason}: {args.Track.Title}\nNow playing: {track.Title}");
+            return arg.Player.TextChannel.SendMessageAsync($"Started playing {arg.Track}.");
         }
 
-        private async Task InitiateDisconnectAsync(LavaPlayer player, TimeSpan timeSpan)
+        private static Task OnTrackEndAsync(TrackEndEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
         {
-            if (!_disconnectTokens.TryGetValue(player.VoiceChannel.Id, out var value))
-            {
-                value = new CancellationTokenSource();
-                _disconnectTokens.TryAdd(player.VoiceChannel.Id, value);
-            }
-            else if (value.IsCancellationRequested)
-            {
-                _disconnectTokens.TryUpdate(player.VoiceChannel.Id, new CancellationTokenSource(), value);
-                value = _disconnectTokens[player.VoiceChannel.Id];
-            }
-
-            await player.TextChannel.SendMessageAsync($"Auto disconnect initiated! Disconnecting in {timeSpan}...");
-            var isCancelled = SpinWait.SpinUntil(() => value.IsCancellationRequested, timeSpan);
-            if (isCancelled)
-            {
-                return;
-            }
-
-            await _lavaNode.LeaveAsync(player.VoiceChannel);
-            await player.TextChannel.SendMessageAsync("Invite me again sometime, sugar.");
-        }
-
-        private async Task OnTrackException(TrackExceptionEventArgs arg)
-        {
-            _logger.LogError($"Track {arg.Track.Title} threw an exception. Please check Lavalink console/logs.");
-            arg.Player.Queue.Enqueue(arg.Track);
-            await arg.Player.TextChannel?.SendMessageAsync(
-                $"{arg.Track.Title} has been re-added to queue after throwing an exception.");
-        }
-
-        private async Task OnTrackStuck(TrackStuckEventArgs arg)
-        {
-            _logger.LogError(
-                $"Track {arg.Track.Title} got stuck for {arg.Threshold}ms. Please check Lavalink console/logs.");
-            arg.Player.Queue.Enqueue(arg.Track);
-            await arg.Player.TextChannel?.SendMessageAsync(
-                $"{arg.Track.Title} has been re-added to queue after getting stuck.");
-        }
-
-        private Task OnWebSocketClosed(WebSocketClosedEventArgs arg)
-        {
-            _logger.LogCritical($"Discord WebSocket connection closed with following reason: {arg.Reason}");
-            return Task.CompletedTask;
+            return arg.Player.TextChannel.SendMessageAsync($"Finished playing {arg.Track}.");
         }
     }
 }

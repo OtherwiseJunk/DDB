@@ -8,11 +8,14 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Victoria;
-using Victoria.Enums;
+using Victoria.Node;
+using Victoria.Player;
+using Victoria.Resolvers;
+using Victoria.Responses.Search;
 
 namespace DartsDiscordBots.Modules.Audio
 {
-    public class AudioModule : ModuleBase
+    public sealed class AudioModule : ModuleBase<SocketCommandContext>
     {
         private readonly LavaNode _lavaNode;
         private readonly AudioService _audioService;
@@ -87,71 +90,53 @@ namespace DartsDiscordBots.Modules.Audio
                 return;
             }
 
-            if (!_lavaNode.HasPlayer(Context.Guild))
+            if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
-                await ReplyAsync("I'm not connected to a voice channel.");
-                return;
-            }
-
-            var queries = searchQuery.Split(' ');
-            foreach (var query in queries)
-            {
-                var searchResponse = await _lavaNode.SearchAsync(query);
-                if (searchResponse.LoadStatus == LoadStatus.LoadFailed ||
-                    searchResponse.LoadStatus == LoadStatus.NoMatches)
+                var voiceState = Context.User as IVoiceState;
+                if (voiceState?.VoiceChannel == null)
                 {
-                    await ReplyAsync($"I wasn't able to find anything for `{query}`.");
+                    await ReplyAsync("You must be connected to a voice channel!");
                     return;
                 }
 
-                var player = _lavaNode.GetPlayer(Context.Guild);
-
-                if (player.PlayerState == PlayerState.Playing || player.PlayerState == PlayerState.Paused)
+                try
                 {
-                    if (!string.IsNullOrWhiteSpace(searchResponse.Playlist.Name))
-                    {
-                        foreach (var track in searchResponse.Tracks)
-                        {
-                            player.Queue.Enqueue(track);
-                        }
-
-                        await ReplyAsync($"Enqueued {searchResponse.Tracks.Count} tracks.");
-                    }
-                    else
-                    {
-                        var track = searchResponse.Tracks[0];
-                        player.Queue.Enqueue(track);
-                        await ReplyAsync($"Enqueued: {track.Title}");
-                    }
+                    player = await _lavaNode.JoinAsync(voiceState.VoiceChannel, Context.Channel as ITextChannel);
+                    await ReplyAsync($"Joined {voiceState.VoiceChannel.Name}!");
                 }
-                else
+                catch (Exception exception)
                 {
-                    var track = searchResponse.Tracks[0];
-
-                    if (!string.IsNullOrWhiteSpace(searchResponse.Playlist.Name))
-                    {
-                        for (var i = 0; i < searchResponse.Tracks.Count; i++)
-                        {
-                            if (i == 0)
-                            {
-                                await player.PlayAsync(track);
-                                await ReplyAsync($"Now Playing: {track.Title}");
-                            }
-                            else
-                            {
-                                player.Queue.Enqueue(searchResponse.Tracks[i]);
-                            }
-                        }
-
-                        await ReplyAsync($"Enqueued {searchResponse.Tracks.Count} tracks.");
-                    }
-                    else
-                    {
-                        await player.PlayAsync(track);
-                        await ReplyAsync($"Now Playing: {track.Title}");
-                    }
+                    await ReplyAsync(exception.Message);
                 }
             }
+
+            var searchResponse = await _lavaNode.SearchAsync(Uri.IsWellFormedUriString(searchQuery, UriKind.Absolute) ? SearchType.Direct : SearchType.YouTube, searchQuery);
+            if (searchResponse.Status is SearchStatus.LoadFailed or SearchStatus.NoMatches)
+            {
+                await ReplyAsync($"I wasn't able to find anything for `{searchQuery}`.");
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchResponse.Playlist.Name))
+            {
+                player.Vueue.Enqueue(searchResponse.Tracks);
+                await ReplyAsync($"Enqueued {searchResponse.Tracks.Count} songs.");
+            }
+            else
+            {
+                var track = searchResponse.Tracks.FirstOrDefault();
+                player.Vueue.Enqueue(track);
+
+                await ReplyAsync($"Enqueued {track?.Title}");
+            }
+
+            if (player.PlayerState is PlayerState.Playing or PlayerState.Paused)
+            {
+                return;
+            }
+
+            player.Vueue.TryDequeue(out var lavaTrack);
+            await player.PlayAsync(lavaTrack);
         }
 
         [Command("Pause")]
@@ -247,7 +232,9 @@ namespace DartsDiscordBots.Modules.Audio
                 return;
             }
 
-            var voiceChannelUsers = (player.VoiceChannel as SocketVoiceChannel).Users.Where(x => !x.IsBot).ToArray();
+            var voiceChannelUsers = (player.VoiceChannel.Guild as SocketGuild).Users
+                .Where(x => !x.IsBot)
+                .ToArray();
             if (_audioService.VoteQueue.Contains(Context.User.Id))
             {
                 await ReplyAsync("You can't vote again.");
@@ -264,9 +251,8 @@ namespace DartsDiscordBots.Modules.Audio
 
             try
             {
-                var oldTrack = player.Track;
-                var currenTrack = await player.SkipAsync();
-                await ReplyAsync($"Skipped: {oldTrack.Title}\nNow Playing: {currenTrack.Title}");
+                var (skipped, currenTrack) = await player.SkipAsync();
+                await ReplyAsync($"Skipped: {skipped.Title}\nNow Playing: {currenTrack.Title}");
             }
             catch (Exception exception)
             {
@@ -311,7 +297,7 @@ namespace DartsDiscordBots.Modules.Audio
 
             try
             {
-                await player.UpdateVolumeAsync(volume);
+                await player.SetVolumeAsync(volume);
                 await ReplyAsync($"I've changed the player volume to {volume}.");
             }
             catch (Exception exception)
@@ -336,17 +322,13 @@ namespace DartsDiscordBots.Modules.Audio
             }
 
             var track = player.Track;
-            var arttwerk = await track.FetchArtworkAsync();
+            var artwork = await track.FetchArtworkAsync();
 
-            var embed = new EmbedBuilder
-            {
-                Title = $"{track.Author} - {track.Title}",
-                ThumbnailUrl = arttwerk,
-                Url = track.Url
-            }
-                .AddField("Id", track.Id)
-                .AddField("Duration", track.Duration)
-                .AddField("Position", track.Position);
+            var embed = new EmbedBuilder()
+                .WithAuthor(track.Author, Context.Client.CurrentUser.GetAvatarUrl(), track.Url)
+                .WithTitle($"Now Playing: {track.Title}")
+                .WithImageUrl(artwork)
+                .WithFooter($"{track.Position}/{track.Duration}");
 
             await ReplyAsync(embed: embed.Build());
         }
@@ -366,14 +348,14 @@ namespace DartsDiscordBots.Modules.Audio
                 return;
             }
 
-            var lyrics = await player.Track.FetchLyricsFromGeniusAsync();
+            var lyrics = await LyricsResolver.SearchGeniusAsync(player.Track);
             if (string.IsNullOrWhiteSpace(lyrics))
             {
                 await ReplyAsync($"No lyrics found for {player.Track.Title}");
                 return;
             }
 
-            var splitLyrics = lyrics.Split('\n');
+            var splitLyrics = lyrics.Split(Environment.NewLine);
             var stringBuilder = new StringBuilder();
             foreach (var line in splitLyrics)
             {
@@ -384,7 +366,7 @@ namespace DartsDiscordBots.Modules.Audio
                 }
                 else
                 {
-                    stringBuilder.AppendLine(line);
+                    stringBuilder.AppendLine(line.TrimEnd('\n'));
                 }
             }
 
@@ -392,7 +374,7 @@ namespace DartsDiscordBots.Modules.Audio
         }
 
         [Command("OVH", RunMode = RunMode.Async)]
-        public async Task ShowOVHLyrics()
+        public async Task ShowOvhLyrics()
         {
             if (!_lavaNode.TryGetPlayer(Context.Guild, out var player))
             {
@@ -406,14 +388,14 @@ namespace DartsDiscordBots.Modules.Audio
                 return;
             }
 
-            var lyrics = await player.Track.FetchLyricsFromOVHAsync();
+            var lyrics = await LyricsResolver.SearchOvhAsync(player.Track);
             if (string.IsNullOrWhiteSpace(lyrics))
             {
                 await ReplyAsync($"No lyrics found for {player.Track.Title}");
                 return;
             }
 
-            var splitLyrics = lyrics.Split('\n');
+            var splitLyrics = lyrics.Split(Environment.NewLine);
             var stringBuilder = new StringBuilder();
             foreach (var line in splitLyrics)
             {
@@ -431,5 +413,4 @@ namespace DartsDiscordBots.Modules.Audio
             await ReplyAsync($"```{stringBuilder}```");
         }
     }
-
 }
