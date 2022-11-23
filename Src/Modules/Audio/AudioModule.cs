@@ -15,7 +15,7 @@ using Victoria.Responses.Search;
 
 namespace DartsDiscordBots.Modules.Audio
 {
-    public sealed class AudioModule : ModuleBase<SocketCommandContext>
+    public sealed class AudioModule : ModuleBase<CommandContext>
     {
         private readonly LavaNode _lavaNode;
         private readonly AudioService _audioService;
