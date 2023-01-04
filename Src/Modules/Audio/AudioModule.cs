@@ -28,6 +28,7 @@ namespace DartsDiscordBots.Modules.Audio
         }
 
         [Command("Join", RunMode = RunMode.Async)]
+        [RequireOwner()]
         public async Task JoinAsync()
         {
             if (_lavaNode.HasPlayer(Context.Guild))
@@ -45,7 +46,6 @@ namespace DartsDiscordBots.Modules.Audio
 
             try
             {
-                await voiceState.VoiceChannel.ConnectAsync();
                 await _lavaNode.JoinAsync(voiceState.VoiceChannel, Context.Channel as ITextChannel);
                 await ReplyAsync($"Joined {voiceState.VoiceChannel.Name}!");
             }
@@ -73,7 +73,6 @@ namespace DartsDiscordBots.Modules.Audio
 
             try
             {
-                await voiceChannel.DisconnectAsync();
                 await _lavaNode.LeaveAsync(voiceChannel);
                 await ReplyAsync($"I've left {voiceChannel.Name}!");
             }

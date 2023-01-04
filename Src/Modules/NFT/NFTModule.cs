@@ -36,7 +36,7 @@ namespace DartsDiscordBots.Modules.NFT
 				{
 					bmp = _imaging.GenerateMandlebrotSet(1028, 720, _imaging.BuildStandardPallette()).Result;
 				}
-				else if (mode.ToLower() == "mandelbrotrandom" || mode.ToLower() == "mr")
+				else if (mode.ToLower() == "mandelbrotrainbow" || mode.ToLower() == "mr")
 				{
 					bmp = _imaging.GenerateMandlebrotSet(1028, 720, _imaging.BuildRainbowPallette()).Result;
 				}
