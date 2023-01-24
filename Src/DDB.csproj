@@ -6,7 +6,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>7.0.4</Version>
+    <Version>7.0.5</Version>
     <Description>Victoria version 6.0 support</Description>
     <AssemblyVersion>7.0.4</AssemblyVersion>
     <PackageReleaseNotes>

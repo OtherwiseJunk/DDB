@@ -15,14 +15,10 @@ namespace DartsDiscordBots.Handlers
 		public static async Task HandleCommandWithSummaryOnError(SocketMessage messageParam, CommandContext context, CommandService commandService, IServiceProvider serviceProvider, char commandPrefix)
 		{
 			ILogger log = (ILogger)serviceProvider.GetService(typeof(ILogger));
-			log.Information("Handling command. Casting messageParam as SocketUserMessage...");
 			var message = messageParam as SocketUserMessage;
 			if (message == null) return;
-			log.Information("Cast successful!");
 			int argPos = 0;
-			log.Information("Checking if we're talking to a bot...");
 			if (!message.HasCharPrefix(commandPrefix, ref argPos) || messageParam.Author.IsBot) return;
-			log.Information("We're not!");
 			if (BotUtilities.ShouldDoAprilFoolsShenanigans())
 			{
 				log.Information("Aw yeah, time for some April Fools Day Pranks!");
@@ -33,9 +29,7 @@ namespace DartsDiscordBots.Handlers
 			{
 				try
                 {
-					log.Information("Attempting to execute command");
                     var result = await commandService.ExecuteAsync(context, argPos, serviceProvider);
-					log.Information($"Command success? {result.IsSuccess}");
 					if (!result.IsSuccess)
 					{
 						log.Error($"Error Type: {result.Error}");
