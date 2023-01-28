@@ -57,8 +57,8 @@ namespace DartsDiscordBots.Modules.LockedTomb
             "https://www.boredpanda.com/blog/wp-content/uploads/2021/11/6188f6f406e42_io2ob4n5b0h01__700.jpg",
             "https://www.boredpanda.com/blog/wp-content/uploads/2021/11/61a5f2320f33d_37jqkelbe8351__700.jpg",
             "https://img.atlasobscura.com/D2It7ft-b--puKuQiFyhxCIoLgD4-ANgi_HaAihxs8c/rt:fit/w:1280/q:81/sm:1/scp:1/ar:1/aHR0cHM6Ly9hdGxh/cy1kZXYuczMuYW1h/em9uYXdzLmNvbS91/cGxvYWRzL2Fzc2V0/cy84YTJmZjU1ZTEy/MWMyZGJjYTVfQ293/czEuanBn.jpg",
-            "https://images.theconversation.com/files/472297/original/file-20220704-12-7zgqd5.jpg?ixlib=rb-1.1.0&rect=0%2C5%2C3491%2C2294&q=45&auto=format&w=496&fit=clip",
-            "https://d.newsweek.com/en/full/1561066/holstein-cows.jpg?w=1600&h=1200&q=88&f=ac8de344849cc8ba0582245745aba203",
+            "https://images.theconversation.com/files/472297/original/file-20220704-12-7zgqd5.jpg",
+            "https://d.newsweek.com/en/full/1561066/holstein-cows.jpg",
             "https://scx1.b-cdn.net/csz/news/800a/2017/howdangerous.jpg",
             "https://cdn.mos.cms.futurecdn.net/S3zXzUDh4dS274tg3n9MBR-1200-80.jpg",
             "https://www.aces.edu/wp-content/uploads/2020/11/GettyImages-186501746-scaled.jpg",
@@ -70,7 +70,7 @@ namespace DartsDiscordBots.Modules.LockedTomb
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhh4Rnlqu7uKN61js-MEekX6sJzpo2vSxMA&usqp=CAU",
             "https://cdn.theatlantic.com/thumbor/XIWLh2nTvoG9waDIDKEB8hheItE=/442x1:2888x2447/1080x1080/media/img/mt/2017/08/Pineywood/original.jpg",
             "https://extension.sdstate.edu/sites/default/files/2021-08/W-01188-00-Cow-Pregnant-Reproduction-Beef.jpg",
-            "https://lp-cms-production.imgix.net/image_browser/Swiss%20Cow%20Festival%20-%20The%20cows%20coming%20down%20the%20mountain%20-Swiss%20Image%20Bank%20-%20Andreas%20Mueller.jpg?auto=format&q=75",
+            "https://lp-cms-production.imgix.net/image_browser/Swiss%20Cow%20Festival%20-%20The%20cows%20coming%20down%20the%20mountain%20-Swiss%20Image%20Bank%20-%20Andreas%20Mueller.jpg",
             "https://upload.wikimedia.org/wikipedia/commons/3/3b/Two_cows.jpg",
             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu7l_-LKRh98X_OGgoItaO5HIYshfH_FjZeIQ6koFLX6E0n0UCLgAELmVMjqef_aQ9rQ0&usqp=CAU",
             "https://i.pinimg.com/originals/f5/43/0c/f5430cece8c53d2e5dc613339a9f3d3b.jpg"
@@ -81,11 +81,8 @@ namespace DartsDiscordBots.Modules.LockedTomb
         {
             EmbedBuilder embed = new();
             embed.Title = "Did you know?";
-            string fact = CowFacts.GetRandom();
-            string image = CowPictures.GetRandom();
-            Console.WriteLine($"fact: {fact} image: {image}");
-            embed.Description = fact;
-            embed.ImageUrl = image;
+            embed.Description = CowFacts.GetRandom();
+            embed.ImageUrl = CowPictures.GetRandom();
             if (BotUtilities.PercentileCheck(1))
             {
                 embed.Description = "Cows make for excellent building material.";
