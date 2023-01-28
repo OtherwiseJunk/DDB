@@ -16,7 +16,16 @@ namespace DartsDiscordBots.Modules.LockedTomb
             "Cows exhibit mourning behaviour for other cows",
             "Cows recognize each other",
             "Cows watch sunsets",
-            "Cows have best friends and complex social relationships"
+            "Cows have best friends and complex social relationships",
+            "Not only are cows more calm when they're around a buddy, but they're actually smarter too",
+            "Cows panic when separated from their besties",
+            "Cows celebratie solving complex problems by jumping, wagging their tails, and running around",
+            "Cows display an ability to discriminate complex stimuli",
+            "Cows can differentiate between different humans",
+            "Cows can extrapolate the location of a hidden moving object",
+            "Cows have excellent long-term memories",
+            "Cows display emotional contagion; when one cow is stressed their packmates will also act stressed",
+            "Cows display a full range of personality, including boldness, shyness, sociability, gregariousness, and being tempermental",
         };
 
         private List<string> JohnGaiusPictures = new List<string>
@@ -33,38 +42,56 @@ namespace DartsDiscordBots.Modules.LockedTomb
         private List<string> CowPictures = new List<string>
         {
             "https://cdn.britannica.com/55/174255-050-526314B6/brown-Guernsey-cow.jpg",
-            "https://vegnews.com/media/W1siZiIsIjM0NjE3L1ZlZ05ld3MuQ293c0Jlc3RGcmllbmRzLkpha0pvbmVzLlBleGVscy5qcGciXSxbInAiLCJjcm9wX3Jlc2l6ZWQiLCIxNTk3eDk0NCsxKzAiLCIxNjAweDk0Nl4iLHsiZm9ybWF0IjoianBnIn1dLFsicCIsIm9wdGltaXplIl1d/VegNews.CowsBestFriends.JakJones.Pexels.jpg",
-            "https://images.ctfassets.net/ww1ie0z745y7/4nyO2E7VzBRMVBJpKQCCY8/f79691e5932d32b0eb65415fdaac6e6d/shutterstock_135944723.jpg?fm=webp&w=1280",
+            "https://images.ctfassets.net/ww1ie0z745y7/4nyO2E7VzBRMVBJpKQCCY8/f79691e5932d32b0eb65415fdaac6e6d/shutterstock_135944723.jpg",
             "https://charitypaws.com/wp-content/uploads/2020/12/cows-best-friends.jpg",
             "https://d2zupx01utsj9r.cloudfront.net/media/filer_public/fb/ae/fbae0234-2166-4657-9207-6dc60d7e408b/pearson_cowsinpasture.jpg",
-            "https://i.icanvas.com/TEJ72?d=2&sh=h&p=1&bg=g",
-            "https://media.istockphoto.com/id/538027668/photo/single-cow-on-a-meadow-happy-view.jpg?s=612x612&w=0&k=20&c=mPs7UbTQQmwRX3vkPJG2_XPfsSt6KIxdg5SAl1utGpA=",
+            "https://i.icanvas.com/TEJ72",
+            "https://media.istockphoto.com/id/538027668/photo/single-cow-on-a-meadow-happy-view.jpg",
             "https://live.staticflickr.com/1945/31116055738_bda0d22d12_b.jpg",
-            "https://images.squarespace-cdn.com/content/v1/5aac8c11b27e394b18225129/1577405961435-RXC7T4QQ97MPSWR5EB5B/_7R31352_2.jpg?format=2500w",
+            "https://images.squarespace-cdn.com/content/v1/5aac8c11b27e394b18225129/1577405961435-RXC7T4QQ97MPSWR5EB5B/_7R31352_2.jpg",
             "https://w0.peakpx.com/wallpaper/442/851/HD-wallpaper-cow-at-dark-sunset-cow-life-nature-sunset-animal.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ0vP3LM9s52KwdRSCLhfLeBXoRehwsDJCOvWP2vQZdF66P-KkCLO83Sr4uSbw4huxac0&usqp=CAU",
             "https://64.media.tumblr.com/29d64de155f921c769a448ee06c5bdb0/tumblr_n3fvn88z501tv8ffpo2_500.jpg",
             "https://static.boredpanda.com/blog/wp-content/uploads/2017/10/59d490df85312_lpj7hm6t9zly__700.jpg",
-            "https://external-preview.redd.it/Hiyig7sc66BT1R8ZjE39d6uzrW_9K2-cVGRLLaWHRL8.jpg?auto=webp&s=f536d292b9814aa22cdf6bf47751fb6a2775643c",
-            "https://preview.redd.it/9b3syi90njtz.jpg?auto=webp&s=f4ec05829294d23e33d8fa0083ae176dc14a9754",
-            "https://s.yimg.com/ny/api/res/1.2/NT_dcFWtZDbTz_golPQnVA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MA--/https://media.zenfs.com/en-US/best_life_342/857394ae0a2760064b9ace5af1bc9b2e",
+            "https://external-preview.redd.it/Hiyig7sc66BT1R8ZjE39d6uzrW_9K2-cVGRLLaWHRL8.jpg",
+            "https://preview.redd.it/9b3syi90njtz.jpg",
             "https://www.boredpanda.com/blog/wp-content/uploads/2021/11/6188f6f406e42_io2ob4n5b0h01__700.jpg",
             "https://www.boredpanda.com/blog/wp-content/uploads/2021/11/61a5f2320f33d_37jqkelbe8351__700.jpg",
+            "https://img.atlasobscura.com/D2It7ft-b--puKuQiFyhxCIoLgD4-ANgi_HaAihxs8c/rt:fit/w:1280/q:81/sm:1/scp:1/ar:1/aHR0cHM6Ly9hdGxh/cy1kZXYuczMuYW1h/em9uYXdzLmNvbS91/cGxvYWRzL2Fzc2V0/cy84YTJmZjU1ZTEy/MWMyZGJjYTVfQ293/czEuanBn.jpg",
+            "https://images.theconversation.com/files/472297/original/file-20220704-12-7zgqd5.jpg?ixlib=rb-1.1.0&rect=0%2C5%2C3491%2C2294&q=45&auto=format&w=496&fit=clip",
+            "https://d.newsweek.com/en/full/1561066/holstein-cows.jpg?w=1600&h=1200&q=88&f=ac8de344849cc8ba0582245745aba203",
+            "https://scx1.b-cdn.net/csz/news/800a/2017/howdangerous.jpg",
+            "https://cdn.mos.cms.futurecdn.net/S3zXzUDh4dS274tg3n9MBR-1200-80.jpg",
+            "https://www.aces.edu/wp-content/uploads/2020/11/GettyImages-186501746-scaled.jpg",
+            "https://assets.vogue.com/photos/5b23cca0dfb55f5d708a26ca/master/pass/00-promo-secret-life-cows.jpg",
+            "https://d1whtlypfis84e.cloudfront.net/guides/wp-content/uploads/2019/08/03134242/cow-1024x809.jpeg",
+            "https://nypost.com/wp-content/uploads/sites/2/2020/01/cow-feature.jpg?quality=75&strip=all",
+            "https://i.guim.co.uk/img/media/ff9af395ffc13511cb83a24f5052293187e4f298/0_415_4099_2460/master/4099.jpg",
+            "https://modernfarmer.com/wp-content/uploads/2014/09/innercowhero.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBhh4Rnlqu7uKN61js-MEekX6sJzpo2vSxMA&usqp=CAU",
+            "https://cdn.theatlantic.com/thumbor/XIWLh2nTvoG9waDIDKEB8hheItE=/442x1:2888x2447/1080x1080/media/img/mt/2017/08/Pineywood/original.jpg",
+            "https://extension.sdstate.edu/sites/default/files/2021-08/W-01188-00-Cow-Pregnant-Reproduction-Beef.jpg",
+            "https://lp-cms-production.imgix.net/image_browser/Swiss%20Cow%20Festival%20-%20The%20cows%20coming%20down%20the%20mountain%20-Swiss%20Image%20Bank%20-%20Andreas%20Mueller.jpg?auto=format&q=75",
+            "https://upload.wikimedia.org/wikipedia/commons/3/3b/Two_cows.jpg",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu7l_-LKRh98X_OGgoItaO5HIYshfH_FjZeIQ6koFLX6E0n0UCLgAELmVMjqef_aQ9rQ0&usqp=CAU",
+            "https://i.pinimg.com/originals/f5/43/0c/f5430cece8c53d2e5dc613339a9f3d3b.jpg"
         };
 
         [Command("cowfacts"), Alias("meatwall")]
-        public void GetRandomCowFactEmbed()
+        public async Task GetRandomCowFactEmbed()
         {
             EmbedBuilder embed = new();
             embed.Title = "Did you know?";
-            embed.Description = CowFacts.GetRandom();
-            embed.ImageUrl = CowPictures.GetRandom();
+            string fact = CowFacts.GetRandom();
+            string image = CowPictures.GetRandom();
+            Console.WriteLine($"fact: {fact} image: {image}");
+            embed.Description = fact;
+            embed.ImageUrl = image;
             if (BotUtilities.PercentileCheck(1))
             {
                 embed.Description = "Cows make for excellent building material.";
                 embed.ImageUrl = JohnGaiusPictures.GetRandom();
             }
-            Context.Message.ReplyAsync(embed: embed.Build(), allowedMentions: AllowedMentions.None);
+            _ = Context.Message.ReplyAsync(embed: embed.Build(), allowedMentions: AllowedMentions.None);
         }
     }
 }
