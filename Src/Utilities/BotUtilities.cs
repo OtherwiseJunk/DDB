@@ -9,6 +9,10 @@ namespace DartsDiscordBots.Utilities
 {
     public static class BotUtilities
 	{
+		public static bool PercentileCheck(int successCheck)
+		{
+			return CreateSeededRandom().Next(1, 100) <= successCheck;
+		}
 		public static bool isMentioningMe(SocketMessage message, Regex identificationRegex, ulong botId)
 		{
 			return identificationRegex.IsMatch(message.Content) || message.MentionedUsers.FirstOrDefault(u => u.Id == botId) != null;
