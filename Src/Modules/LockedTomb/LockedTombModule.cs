@@ -64,6 +64,7 @@ namespace DartsDiscordBots.Modules.LockedTomb
                 embed.Description = "Cows make for excellent building material.";
                 embed.ImageUrl = JohnGaiusPictures.GetRandom();
             }
+            Context.Message.ReplyAsync(embed: embed.Build(), allowedMentions: AllowedMentions.None);
         }
     }
 }
