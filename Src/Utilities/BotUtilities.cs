@@ -8,12 +8,18 @@ using static DartsDiscordBots.Constants.SharedConstants;
 namespace DartsDiscordBots.Utilities
 {
     public static class BotUtilities
-	{
-		public static bool PercentileCheck(int successCheck)
+    {
+        public static bool PercentileCheck(int successCheck)
+        {
+            return CreateSeededRandom().Next(1, 100) <= successCheck;
+        }
+
+		public static Random CreateSeededRandom()
 		{
-			return CreateSeededRandom().Next(1, 100) <= successCheck;
+			return new Random(Guid.NewGuid().GetHashCode());
 		}
-		public static bool isMentioningMe(SocketMessage message, Regex identificationRegex, ulong botId)
+
+        public static bool isMentioningMe(SocketMessage message, Regex identificationRegex, ulong botId)
 		{
 			return identificationRegex.IsMatch(message.Content) || message.MentionedUsers.FirstOrDefault(u => u.Id == botId) != null;
         }
