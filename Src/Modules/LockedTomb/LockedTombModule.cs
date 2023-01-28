@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DartsDiscordBots.Modules.LockedTomb
 {
-    internal class LockedTombModule : ModuleBase
+    public class LockedTombModule : ModuleBase
     {
         private List<string> CowFacts = new List<string>
         {
