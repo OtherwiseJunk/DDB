@@ -6,9 +6,9 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>7.2.0</Version>
-    <Description>Add Cow Facts</Description>
-    <AssemblyVersion>7.2.0</AssemblyVersion>
+    <Version>7.2.1</Version>
+    <Description>Add "Best Of" service interface, onReact handler, and models.</Description>
+    <AssemblyVersion>7.2.1</AssemblyVersion>
     <PackageReleaseNotes>
 		Add Best Of
 	</PackageReleaseNotes>

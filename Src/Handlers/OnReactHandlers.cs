@@ -16,7 +16,7 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-        public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong announcementChannelId, int voteThreadhold, List<string> votingEmojiIds)
+        public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, List<string> votingEmojiIds)
 		{
 			Guard.ArgumentNotNull(service, nameof(service));
 			Guard.ArgumentNotNull(message, nameof(message));
@@ -24,6 +24,7 @@ namespace DartsDiscordBots.Handlers
 
             IGuild guild = (message.Channel as IGuildChannel).Guild;
 			Guard.ArgumentNotNull(guild, nameof(guild));
+			if (guild.Id != guildId) return;
 
 			IGuildUser author = message.Author as IGuildUser;
             Guard.ArgumentNotNull(author, nameof(author));
