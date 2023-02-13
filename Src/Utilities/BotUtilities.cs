@@ -54,7 +54,7 @@ namespace DartsDiscordBots.Utilities
 			}
 			return defaultName;
 		}
-		public static string GetAvatarForUser(IGuildUser user, string defaultAvatarURL)
+		public static string GetAvatarForUser(IGuildUser user, string defaultAvatarURL= "https://cdn-icons-png.flaticon.com/512/3670/3670157.png")
 		{
 			if(user != null)
 			{
