@@ -10,6 +10,7 @@ namespace DartsDiscordBots.Models
     public class BestOf
     {
         [Key]
+        public int BestOdIf { get; set; }
         public ulong MessageId { get; set; }
         public DateTimeOffset MessageSentDate { get; set; }
         public ulong GuildId { get; set; }
