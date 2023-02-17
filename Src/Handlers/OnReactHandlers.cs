@@ -16,9 +16,17 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-		public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName)
+		public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName, bool allowNSFW=false)
 		{
-			Guard.ArgumentNotNull(service, nameof(service));
+            if ((message.Channel as ITextChannel).IsNsfw && !allowNSFW)
+            {
+                return;
+            }
+            if (String.IsNullOrEmpty(message.Content) && message.Attachments.Count != 1)
+            {
+                return;
+            }
+            Guard.ArgumentNotNull(service, nameof(service));
 			Guard.ArgumentNotNull(message, nameof(message));
 			if (service.IsBestOf(message.Id)) return;
 
@@ -40,6 +48,7 @@ namespace DartsDiscordBots.Handlers
 					embedBuilder.Title = $"<:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: Behold {BotUtilities.GetDisplayNameForUser(author)}'s genius!";
 					embedBuilder.ThumbnailUrl = BotUtilities.GetAvatarForUser(author);
 					embedBuilder.Description = $"<t:{message.Timestamp.ToUniversalTime().ToUnixTimeSeconds()}:f>: {message.Content}";
+					embedBuilder.ImageUrl = message.Attachments.Count == 1 ? message.Attachments.First().Url : null ;
 					embedBuilder.Url = message.GetJumpUrl();
 					embedBuilder.WithFooter($"{message.Id}");
 					IMessage bestOfMessage = await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());
