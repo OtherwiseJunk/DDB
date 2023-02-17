@@ -6,15 +6,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>7.2.4</Version>
+    <Version>7.2.5</Version>
     <Description>Add "Best Of" service interface, onReact handler, and models.</Description>
-    <AssemblyVersion>7.2.4</AssemblyVersion>
+    <AssemblyVersion>7.2.5</AssemblyVersion>
     <PackageReleaseNotes>
 		Add Best Of
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>7.2.4</FileVersion>
+    <FileVersion>7.2.5</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

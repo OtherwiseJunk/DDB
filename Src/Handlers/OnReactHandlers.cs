@@ -18,6 +18,10 @@ namespace DartsDiscordBots.Handlers
 	{
 		public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName, bool allowNSFW=false)
 		{
+			if (message.Author.IsBot)
+			{
+				return;
+			}
             if ((message.Channel as ITextChannel).IsNsfw && !allowNSFW)
             {
                 return;
