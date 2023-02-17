@@ -16,33 +16,33 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-        public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, List<string> votingEmojiIds)
+		public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName)
 		{
 			Guard.ArgumentNotNull(service, nameof(service));
 			Guard.ArgumentNotNull(message, nameof(message));
 			if (service.IsBestOf(message.Id)) return;
 
-            IGuild guild = (message.Channel as IGuildChannel).Guild;
+			IGuild guild = (message.Channel as IGuildChannel).Guild;
 			Guard.ArgumentNotNull(guild, nameof(guild));
 			if (guild.Id != guildId) return;
 
 			IGuildUser author = message.Author as IGuildUser;
-            Guard.ArgumentNotNull(author, nameof(author));
+			Guard.ArgumentNotNull(author, nameof(author));
 
-            IMessageChannel announcementChannel = await guild.GetChannelAsync(announcementChannelId) as IMessageChannel;
+			IMessageChannel announcementChannel = await guild.GetChannelAsync(announcementChannelId) as IMessageChannel;
 			Guard.ArgumentNotNull(announcementChannel, nameof(announcementChannel));
 
-            foreach (KeyValuePair<IEmote, ReactionMetadata> reaction in message.Reactions)
-            {
-                if (votingEmojiIds.Contains(reaction.Key.Name) && reaction.Value.ReactionCount == voteThreadhold)
-                {
+			foreach (KeyValuePair<IEmote, ReactionMetadata> reaction in message.Reactions)
+			{
+				if (votingEmojiIdsByName.Keys.Contains(reaction.Key.Name) && reaction.Value.ReactionCount == voteThreadhold)
+				{
 					EmbedBuilder embedBuilder = new();
-					embedBuilder.Title = BotUtilities.GetDisplayNameForUser(author);
-					embedBuilder.ImageUrl = BotUtilities.GetAvatarForUser(author);
-					embedBuilder.Description = message.Content;
+					embedBuilder.Title = $"<:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: Behold {BotUtilities.GetDisplayNameForUser(author)}'s genius!";
+					embedBuilder.ThumbnailUrl = BotUtilities.GetAvatarForUser(author);
+					embedBuilder.Description = $"<t:{message.Timestamp.ToUniversalTime().ToUnixTimeSeconds()}:f>: {message.Content}";
 					embedBuilder.Url = message.GetJumpUrl();
-					embedBuilder.WithFooter($"{message.Id} - <t:{message.Timestamp.ToUniversalTime().ToUnixTimeSeconds}:f>");
-					IMessage bestOfMessage = await announcementChannel.SendMessageAsync(reaction.Key.Name, embed: embedBuilder.Build());
+					embedBuilder.WithFooter($"{message.Id}");
+					IMessage bestOfMessage = await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());
 					BestOf bestOf = new BestOf
 					{
 						MessageId = message.Id,
@@ -55,9 +55,9 @@ namespace DartsDiscordBots.Handlers
 					service.CreateBestOf(bestOf);
 				}
 			}
-        }
+		}
 
-        public static async Task EmbedPagingHandler(SocketReaction reaction, IMessage message, SocketSelfUser currentUser, string embedTitle, Func<IMessage, IServiceProvider,int,bool,Embed> getUpdatedEmbed, IServiceProvider serviceProvider)
+		public static async Task EmbedPagingHandler(SocketReaction reaction, IMessage message, SocketSelfUser currentUser, string embedTitle, Func<IMessage, IServiceProvider,int,bool,Embed> getUpdatedEmbed, IServiceProvider serviceProvider)
 		{
 			//We only allow page changes for the first five minutes of a message.
 			if ((DateTime.Now - message.Timestamp.DateTime).Minutes >= 5)
