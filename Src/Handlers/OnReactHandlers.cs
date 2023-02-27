@@ -34,7 +34,7 @@ namespace DartsDiscordBots.Handlers
 
 			foreach (KeyValuePair<IEmote, ReactionMetadata> reaction in message.Reactions)
 			{
-				if (votingEmojiIdsByName.Keys.Contains(reaction.Key.Name) && reaction.Value.ReactionCount == voteThreadhold)
+				if (votingEmojiIdsByName.Keys.Contains(reaction.Key.Name) && reaction.Value.ReactionCount >= voteThreadhold)
 				{
 					EmbedBuilder embedBuilder = new();
 					embedBuilder.Title = $"<:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: Behold {BotUtilities.GetDisplayNameForUser(author)}'s genius!";
@@ -53,6 +53,7 @@ namespace DartsDiscordBots.Handlers
 						TriggeringEmoji = reaction.Key.Name
 					};
 					service.CreateBestOf(bestOf);
+					return;
 				}
 			}
 		}
