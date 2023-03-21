@@ -148,6 +148,15 @@ namespace DartsDiscordBots.Constants
                 }
             }    
         };
+        public static List<string> BestOfTitles = new()
+        {
+            "Behold {0}'s genuis!",
+            "Finally, a good take from {0}",
+            "I don't know what's worse, {0} saying it or you all liking it",
+            "I knew there was a reason I liked {0}",
+            "{0} walked a fine line here, and walked it admirably",
+            "We love to see it",
+        };
         #endregion
         #region Enums
         public enum TableFlipTier

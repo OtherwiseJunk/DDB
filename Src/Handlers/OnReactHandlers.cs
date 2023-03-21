@@ -16,7 +16,7 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-		public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName, bool allowNSFW=false)
+		public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName, IGuildUser triggeringUser, bool allowNSFW=false)
 		{
 			if (message.Author.IsBot)
 			{
@@ -48,14 +48,6 @@ namespace DartsDiscordBots.Handlers
 			{
 				if (votingEmojiIdsByName.Keys.Contains(reaction.Key.Name) && reaction.Value.ReactionCount >= voteThreadhold)
 				{
-					EmbedBuilder embedBuilder = new();
-					embedBuilder.Title = $"<:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: Behold {BotUtilities.GetDisplayNameForUser(author)}'s genius!";
-					embedBuilder.ThumbnailUrl = BotUtilities.GetAvatarForUser(author);
-					embedBuilder.Description = $"<t:{message.Timestamp.ToUniversalTime().ToUnixTimeSeconds()}:f>: {message.Content}";
-					embedBuilder.ImageUrl = message.Attachments.Count == 1 ? message.Attachments.First().Url : null ;
-					embedBuilder.Url = message.GetJumpUrl();
-					embedBuilder.WithFooter($"{message.Id}");
-					IMessage bestOfMessage = await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());
 					BestOf bestOf = new BestOf
 					{
 						MessageId = message.Id,
@@ -64,8 +56,20 @@ namespace DartsDiscordBots.Handlers
 						ChannelId = message.Channel.Id,
 						UserId = author.Id,
 						TriggeringEmoji = reaction.Key.Name
-					};
+					};					
+					EmbedBuilder embedBuilder = new();
+					string bestOfUsername = BotUtilities.GetDisplayNameForUser(author);
+					string title = $"<:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: {String.Format(SharedConstants.BestOfTitles.GetRandom(), bestOfUsername)}";
+
+					embedBuilder.Title = title;
+					embedBuilder.ThumbnailUrl = BotUtilities.GetAvatarForUser(author);
+					embedBuilder.Description = $"<t:{message.Timestamp.ToUniversalTime().ToUnixTimeSeconds()}:f>: {message.Content}";
+					embedBuilder.ImageUrl = message.Attachments.Count == 1 ? message.Attachments.First().Url : null ;
+					embedBuilder.Url = message.GetJumpUrl();
+					embedBuilder.WithFooter($"{message.Id} - Curated By: {BotUtilities.GetDisplayNameForUser(triggeringUser)} - {author.Id}");
+
 					service.CreateBestOf(bestOf);
+					await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());					
 					return;
 				}
 			}
