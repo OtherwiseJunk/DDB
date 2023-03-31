@@ -150,7 +150,7 @@ namespace DartsDiscordBots.Constants
         };
         public static List<string> BestOfTitles = new()
         {
-            "Behold {0}'s genuis!",
+            "Behold {0}'s genius!",
             "Finally, a good take from {0}",
             "I don't know what's worse, {0} saying it or you all liking it",
             "I knew there was a reason I liked {0}",
