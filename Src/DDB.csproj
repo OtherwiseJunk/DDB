@@ -7,7 +7,7 @@
     <Authors>Dart</Authors>
     <Company />
     <Version>7.3.2</Version>
-    <Description>Add "Best Of" title randomization</Description>
+    <Description>Fix pick bug that would remove `+` characters from within individual choices</Description>
     <AssemblyVersion>7.3.2</AssemblyVersion>
     <PackageReleaseNotes>
 		Add "Best Of" title randomization
