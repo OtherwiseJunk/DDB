@@ -1,4 +1,5 @@
-﻿using DartsDiscordBots.Services.Interfaces;
+﻿using DartsDiscordBots.Modules.AnimalCrossing.Models;
+using DartsDiscordBots.Services.Interfaces;
 using DartsDiscordBots.Utilities;
 using Discord;
 using Discord.Commands;
@@ -22,32 +23,54 @@ namespace DartsDiscordBots.Modules.Indecision
 		[Command("pick"), Summary("Picks a random value from a comma separated list. adding + to the end adds slight preference")]
 		public async Task Pick([Remainder, Summary("The comma separated list of items to pick from")] string items)
 		{
-			List<string> choices = items.Split(',').ToList();
-			Dictionary<string, int> ChoiceCountByName = new Dictionary<string, int>();
-			foreach (string choice in choices)
-			{
-				if (choice.EndsWith('+'))
-				{
-					int plusCount = choice.Count(cha => cha == '+');
-					ChoiceCountByName.Add(choice.Replace("+", string.Empty).Trim(), ++plusCount);
-				}
-				else
-				{
-					ChoiceCountByName.Add(choice.Trim(), 1);
-				}
-			}
+			
+            Dictionary<string, int> choiceCountByName = CalculateChoiceWeight(items);
+            List<string> choices = BuildWeightedList(choiceCountByName);
 
-			choices = new List<string>();
-			foreach ((string choiceName, int choiceCount) in ChoiceCountByName)
-			{
-				for (int i = 0; i < choiceCount; i++)
-				{
-					choices.Add(choiceName);
-				}
-			}
             MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
             await _messenger.SendMessageToChannel($"Rolling list: [`{string.Join("`,`", choices)}]`{Environment.NewLine}Winner:`{choices.GetRandom()}`", Context.Message, ",");           
 
+        }
+
+        public List<string> BuildWeightedList(Dictionary<string, int> choiceCountByName)
+        {
+            List<string> weightedChoices = new();
+            foreach ((string choiceName, int choiceCount) in choiceCountByName)
+            {
+                for (int i = 0; i < choiceCount; i++)
+                {
+                    weightedChoices.Add(choiceName);
+                }
+            }
+
+            return weightedChoices;
+        }
+
+        public Dictionary<string, int> CalculateChoiceWeight(string items)
+        {
+            List<string> choices = items.Split(',').ToList();
+            Dictionary <string, int> choiceCountByName = new();
+            foreach (string choice in choices)
+            {
+                if (choice.EndsWith('+'))
+                {
+                    int plusCount = 0;
+                    string choiceAndWeight = choice;
+                    do
+                    {
+                        plusCount++;
+                        choiceAndWeight = choiceAndWeight.Substring(0, choiceAndWeight.Length - 1);
+
+                    } while (choiceAndWeight.EndsWith("+"));
+                    choiceCountByName.Add(choiceAndWeight, ++plusCount);
+                }
+                else
+                {
+                    choiceCountByName.Add(choice.Trim(), 1);
+                }
+            }
+
+            return choiceCountByName;
         }
 
         [Command("roll"), Summary("Roll XdY+/-Z dice.")]
