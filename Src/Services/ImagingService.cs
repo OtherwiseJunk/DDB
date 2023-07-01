@@ -1,4 +1,5 @@
 ﻿using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using Microsoft.Extensions.Logging;
 using SkiaSharp;
@@ -12,29 +13,64 @@ using System.Threading.Tasks;
 
 namespace DartsDiscordBots.Services
 {
-    public  class ImagingService
-    {
+	public class ImagingService
+	{
 		public static string PublicKey { get; set; }
 		public static string SecretKey { get; set; }
 		public static string Url { get; set; }
 		public static string Bucket { get; set; }
 		public static Random _rand { get; set; }
+		public static AmazonS3Config s3ClientConfig { get; set; }
 
-		public ImagingService(string s3PublicKey, string s3SecretKey, string s3Url, string s3Bucket)
+
+        public ImagingService(string s3PublicKey, string s3SecretKey, string s3Url, string s3Bucket)
 		{
 			PublicKey = s3PublicKey;
 			SecretKey = s3SecretKey;
 			Url = s3Url;
 			Bucket = s3Bucket;
-			_rand = new Random(Guid.NewGuid().GetHashCode());
+			_rand = new Random(Guid.NewGuid().GetHashCode()); 
+			s3ClientConfig = new AmazonS3Config()
+            {
+                ServiceURL = $"{Url}",
+            };
+        }
+		public string[] GetAllFolderUrls(string folderName)
+		{
+			List<string> urls = new();
+			using (AmazonS3Client client = new AmazonS3Client(PublicKey, SecretKey, s3ClientConfig))
+			{
+				try
+				{
+                    var req = new ListObjectsV2Request()
+                    {
+                        BucketName = Bucket,
+                        Prefix = folderName,
+                        MaxKeys = 100,
+                    };
+                    ListObjectsV2Response response;
+
+                    do
+                    {
+                        response = client.ListObjectsV2Async(req).Result;
+                        urls.AddRange(response.S3Objects.Select(s3object => s3object.Key != $"{folderName}/" ? $"https://{Bucket}.nyc3.cdn.digitaloceanspaces.com/{s3object.Key}" : null).ToArray());
+                        req.ContinuationToken = response.NextContinuationToken;
+
+                    } while (response.IsTruncated);
+
+                    return urls.Where(url => url != null).Distinct().ToArray();
+                }				
+				catch(Exception ex)
+				{
+					Console.WriteLine($"Encountered error pulling all elements for {folderName} folder: {ex.Message}");
+				}
+			}
+			return null;
 		}
 		public string UploadImage(string folderName, Stream ImageStream)
 		{
 			string filename = $"{Guid.NewGuid()}.png";
-			AmazonS3Config s3ClientConfig = new AmazonS3Config()
-			{
-				ServiceURL = $"{Url}",
-			};
+			
 			using (AmazonS3Client client = new AmazonS3Client(PublicKey, SecretKey, s3ClientConfig))
 			{
 				using (TransferUtility fileTransferUtility = new TransferUtility(client))
@@ -65,10 +101,6 @@ namespace DartsDiscordBots.Services
 		}
 		public async void DeleteImage(string folderName, string key)
 		{
-			AmazonS3Config s3ClientConfig = new AmazonS3Config
-			{
-				ServiceURL = Url,
-			};
 			using (AmazonS3Client client = new AmazonS3Client(PublicKey, SecretKey, s3ClientConfig))
 			{
 				try

@@ -6,19 +6,19 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>7.3.0</Version>
+    <Version>7.4.0</Version>
     <Description>Add "Best Of" title randomization</Description>
-    <AssemblyVersion>7.3.0</AssemblyVersion>
+    <AssemblyVersion>7.4.0</AssemblyVersion>
     <PackageReleaseNotes>
 		Add "Best Of" title randomization
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>7.3.0</FileVersion>
+    <FileVersion>7.4.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.7.8.25" />
+    <PackageReference Include="AWSSDK.S3" Version="3.7.107" />
     <PackageReference Include="Discord.Net" Version="3.9.0" />
     <PackageReference Include="EnterpriseLibrary.Common" Version="6.0.1304" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
