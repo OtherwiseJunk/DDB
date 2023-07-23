@@ -7,27 +7,27 @@ namespace DartsDiscordBots.Modules.AnimalCrossing.Interfaces
 {
 	public interface IAnimalCrossingService
 	{
-		bool UserHasTown(ulong userId);
-		string SetHemisphere(ulong userId, bool isNorthern);
-		string SetNativeFruit(ulong userId, string fruitName);
-		string RegisterTown(ulong userId, string townName);
-		string RegisterFruit(ulong userId, string fruitName);
-		string RegisterTurnipSellPrice(ulong userId, int turnipPrice);
-		string RegisterTurnipBuyPrice(ulong userId, int turnipPrice);
-		string RegisterWishlistItem(ulong userId, string itemName);
-		string RemoveWishlistItemById(ulong userId, int itemId);
-		string RemoveWishlistItemByName(ulong userId, string itemName);
+		bool UserHasTown(ulong mayorDiscordUserId);
+		string SetHemisphere(ulong mayorDiscordUserId, bool isNorthern);
+		string SetNativeFruit(ulong mayorDiscordUserId, string fruitName);
+		string RegisterTown(ulong mayorDiscordUserId, string townName);
+		string RegisterFruit(ulong mayorDiscordUserId, string fruitName);
+		string RegisterTurnipSellPrice(ulong mayorDiscordUserId, int turnipPrice);
+		string RegisterTurnipBuyPrice(ulong mayorDiscordUserId, int turnipPrice);
+		string RegisterWishlistItem(ulong mayorDiscordUserId, string itemName);
+		string RemoveWishlistItemById(ulong mayorDiscordUserId, int itemId);
+		string RemoveWishlistItemByName(ulong mayorDiscordUserId, string itemName);
 		Embed GetWishlist(List<IGuildUser> users);
         Embed GetTownList(List<IGuildUser> users);
         Embed GetFruitList(List<IGuildUser> users);
 		void SendTurnipPriceList(List<IGuildUser> users, ICommandContext context);
-		string OpenTownBorder(ulong userId, string dodoCode);
-		string CloseTownBorder(ulong userId);
+		string OpenTownBorder(ulong mayorDiscordUserId, string dodoCode);
+		string CloseTownBorder(ulong mayorDiscordUserId);
 		Town GetTown(int townId);
 		Town GetTown(string townName);
-		Town GetTown(ulong mayorId);
-		string GetTurnipStats(ulong id);
-		string GetTurnipPricesForWeek(ulong id);
-		string SetRealName(ulong userId, string realName);
+		Town GetTown(ulong mayorDiscordUserId);
+		Embed GetTurnipStats(ulong mayorDiscordUserId);
+        Embed GetTurnipPricesForWeek(ulong mayorDiscordUserId);
+		string SetRealName(ulong mayorDiscordUserId, string realName);
 	}
 }

@@ -74,50 +74,54 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 		[Command("tstats"), Summary("Displays stats based on youre lifetime turnip prices.")]
 		public async Task TurnipStats([Remainder, Summary("The name of the town to display stats for. If not provided will default to the discord user's town."), Optional]string townName)
 		{
-			string message = "";
+			Embed messageEmbed = null;
 			if(townName == null)
 			{
-				message = _acService.GetTurnipStats(Context.User.Id);
+				messageEmbed = _acService.GetTurnipStats(Context.User.Id);
 			}
 			else
 			{
 				Town town = _acService.GetTown(townName);
 				if(town != null)
 				{
-					message = _acService.GetTurnipStats(town.MayorDiscordId);
+					messageEmbed = _acService.GetTurnipStats(town.MayorDiscordId);
 				}
 				else
 				{
-					message = $"Sorry, I couldn't find a town by the name of {townName}";
+					await Context.Message.ReplyAsync($"Sorry, I couldn't find a town by the name of {townName}");
 				}
 			}
-			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Message, " ");
+			if(messageEmbed != null)
+			{
+                await Context.Message.ReplyAsync(embed: messageEmbed);
+            }			
 		}
 
 		[Command("tweek"), Summary("Get your prices for the week. Goes back to the previous Sunday,  and will only show the days prices if executed on a Sunday.")]
 		public async Task TurnipWeek([Remainder, Summary("The name of the town to display prices for. If not provided will default to the discord user's town."), Optional]string townName)
 		{
-			string message = "";
+            Embed messageEmbed = null;
 			if (townName == null)
 			{
-				message = _acService.GetTurnipPricesForWeek(Context.User.Id);
+                messageEmbed = _acService.GetTurnipPricesForWeek(Context.User.Id);
 			}
 			else
 			{
 				Town town = _acService.GetTown(townName);
 				if (town != null)
 				{
-					message = _acService.GetTurnipPricesForWeek(town.MayorDiscordId);
+                    messageEmbed = _acService.GetTurnipPricesForWeek(town.MayorDiscordId);
 				}
 				else
 				{
-					message = $"Sorry, I couldn't find a town by the name of {townName}";
+                    _ = Context.Message.ReplyAsync($"Sorry, I couldn't find a town by the name of {townName}");
 				}
 			}
-			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(message, Context.Message, " ");
-		}
+            if (messageEmbed != null)
+            {
+                await Context.Message.ReplyAsync(embed: messageEmbed);
+            }
+        }
 
 		[Command("hemi"), Summary("Set your hemisphere, either to North or South.")]
 		public async Task SetHempisphere([Remainder, Summary("The Hemisphere your town is in. Accepts `n|s|north|south|southern|northern`")]string hemisphere)
