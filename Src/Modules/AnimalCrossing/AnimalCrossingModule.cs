@@ -144,13 +144,13 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 		public async Task ListTowns()
 		{
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(_acService.GetTownList(Context.Guild.GetUsersAsync().Result.ToList()), Context.Message, Environment.NewLine);					
+			await Context.Channel.SendMessageAsync(embed: _acService.GetTownList(Context.Guild.GetUsersAsync().Result.ToList()));
 		}
 		[Command("flist"), Summary("See list of each registered town's fruit.")]
 		public async Task ListTownsFruits()
 		{
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(_acService.GetFruitList(Context.Guild.GetUsersAsync().Result.ToList()), Context.Message, Environment.NewLine);
+            await Context.Channel.SendMessageAsync(embed: _acService.GetFruitList(Context.Guild.GetUsersAsync().Result.ToList()));
 		}
 		[Command("tlist"), Summary("See list of registered turnip prices.")]
 		public async Task ListTownsTurnipPrices()
@@ -332,7 +332,7 @@ namespace DartsDiscordBots.Modules.AnimalCrossing
 		[Command("wishlist"), Alias("wlist"), Summary("Lists out the items on each towns wishlist.")]
 		public async Task GetWishlist() {
 			MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-			await _messenger.SendMessageToChannel(_acService.GetWishlist(Context.Guild.GetUsersAsync().Result.ToList()), Context.Message, " ");
+            await Context.Channel.SendMessageAsync(embed: _acService.GetWishlist(Context.Guild.GetUsersAsync().Result.ToList()));
 		}
 		[Command("open"),  Summary("Marks your town as open in the town list. You can optionally provide a dodocode so non-switch friends can join.")]
 		public async Task OpenTownBorder([Summary("The Dodo Code needed to visit your town. Optional."), Remainder]string dodoCode = null) {

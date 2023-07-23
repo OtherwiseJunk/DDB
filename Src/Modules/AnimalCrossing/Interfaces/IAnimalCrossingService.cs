@@ -17,9 +17,9 @@ namespace DartsDiscordBots.Modules.AnimalCrossing.Interfaces
 		string RegisterWishlistItem(ulong userId, string itemName);
 		string RemoveWishlistItemById(ulong userId, int itemId);
 		string RemoveWishlistItemByName(ulong userId, string itemName);
-		string GetWishlist(List<IGuildUser> users);
-		string GetTownList(List<IGuildUser> users);
-		string GetFruitList(List<IGuildUser> users);
+		Embed GetWishlist(List<IGuildUser> users);
+        Embed GetTownList(List<IGuildUser> users);
+        Embed GetFruitList(List<IGuildUser> users);
 		void SendTurnipPriceList(List<IGuildUser> users, ICommandContext context);
 		string OpenTownBorder(ulong userId, string dodoCode);
 		string CloseTownBorder(ulong userId);
