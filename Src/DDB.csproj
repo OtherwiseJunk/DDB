@@ -6,12 +6,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>9.0.0</Version>
-    <Description>Add "Best Of" title randomization</Description>
-    <AssemblyVersion>9.0.0</AssemblyVersion>
+    <Version>9.1.0</Version>
+    <Description>Add Poll command to Indecision Module</Description>
+    <AssemblyVersion>9.1.0</AssemblyVersion>
     <PackageReleaseNotes>
-		Adds interface for AnimalCrossingDataService.
-		Updates additional service methods to return embeds.
+		Add Poll command to Indecision Module
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
