@@ -323,12 +323,12 @@ namespace DartsDiscordBots.Modules.Indecision
             if (guild.Emotes.Count >= optionCount)
             {
                 availableEmotes = guild.Emotes.ToArray();
+                availableEmotes.Shuffle();
             }
             else
             {
                 availableEmotes = DefaultUnicodePollEmotes.ToArray();
-            }
-            availableEmotes.Shuffle();
+            }            
 
             return availableEmotes.Take(optionCount).ToArray();
         }
