@@ -8,13 +8,13 @@
     <Company />
     <Version>9.1.1</Version>
     <Description>Add Poll command to Indecision Module</Description>
-    <AssemblyVersion>9.1.1</AssemblyVersion>
+    <AssemblyVersion>9.2.0</AssemblyVersion>
     <PackageReleaseNotes>
 		Add Poll command to Indecision Module
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>9.1.1</FileVersion>
+    <FileVersion>9.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
