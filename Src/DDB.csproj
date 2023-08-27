@@ -6,7 +6,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>9.1.1</Version>
+    <Version>9.2.0</Version>
     <Description>Add Poll command to Indecision Module</Description>
     <AssemblyVersion>9.2.0</AssemblyVersion>
     <PackageReleaseNotes>
