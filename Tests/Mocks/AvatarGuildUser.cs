@@ -86,6 +86,10 @@ namespace DDB.Tests.Mocks
 
         public DateTimeOffset? RequestToSpeakTimestamp => throw new NotImplementedException();
 
+        public GuildUserFlags Flags => throw new NotImplementedException();
+
+        public string GlobalName => throw new NotImplementedException();
+
         public Task AddRoleAsync(ulong roleId, RequestOptions options = null)
         {
             throw new NotImplementedException();

@@ -50,6 +50,11 @@ namespace DDB.Tests.Mocks
         public bool IsStreaming => throw new NotImplementedException();
         public bool IsVideoing => throw new NotImplementedException();
         public DateTimeOffset? RequestToSpeakTimestamp => throw new NotImplementedException();
+
+        public GuildUserFlags Flags => throw new NotImplementedException();
+
+        public string GlobalName => throw new NotImplementedException();
+
         public Task AddRoleAsync(ulong roleId, RequestOptions options = null)
         {
             throw new NotImplementedException();
