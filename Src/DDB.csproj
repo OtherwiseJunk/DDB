@@ -6,15 +6,15 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Dart</Authors>
     <Company />
-    <Version>9.2.0</Version>
-    <Description>Add Poll command to Indecision Module</Description>
-    <AssemblyVersion>9.2.0</AssemblyVersion>
+    <Version>9.3.0</Version>
+    <Description>Update Discord.Net version from 3.9 to 3.12e</Description>
+    <AssemblyVersion>9.3.0</AssemblyVersion>
     <PackageReleaseNotes>
-		Add Poll command to Indecision Module
+		Update Discord.Net version from 3.9 to 3.12e
 	</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <FileVersion>9.2.0</FileVersion>
+    <FileVersion>9.3.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
