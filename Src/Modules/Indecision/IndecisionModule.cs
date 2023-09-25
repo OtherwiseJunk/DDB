@@ -1,4 +1,5 @@
-﻿using DartsDiscordBots.Services.Interfaces;
+﻿using DartsDiscordBots.Constants;
+using DartsDiscordBots.Services.Interfaces;
 using DartsDiscordBots.Utilities;
 using Discord;
 using Discord.Commands;
@@ -301,7 +302,9 @@ namespace DartsDiscordBots.Modules.Indecision
 
         public async void PostPoll(string question, string[] options, IEmote[] optionsEmotes, IUserMessage message)
         {
-            StringBuilder stringBuilder = new($"**Probably Reddy (Actually {BotUtilities.GetDisplayNameForUser(message.Author as IGuildUser, "Someone Else, I forget to check who")})**:**{question}**{Environment.NewLine}");
+            IGuildUser author = message.Author as IGuildUser;
+            string name = author.DisplayName == author.Username ? author.Username : $"{author.DisplayName}({author.Username})";
+            StringBuilder stringBuilder = new($"**{name}**:_**{question}**_{Environment.NewLine}");
             for (int i = 0; i < options.Length; i++)
             {
                 stringBuilder.AppendLine($"{optionsEmotes[i]}: {options[i]}");
