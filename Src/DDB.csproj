@@ -1,36 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>DartsDiscordBots</RootNamespace>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Dart</Authors>
-    <Company />
-    <Version>9.3.3</Version>
-    <Description>Update Discord.Net version from 3.9 to 3.12e</Description>
-    <AssemblyVersion>9.3.3</AssemblyVersion>
-    <PackageReleaseNotes>
-		Update Discord.Net version from 3.9 to 3.12e
-	</PackageReleaseNotes>
-    <RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <FileVersion>9.3.3</FileVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<RootNamespace>DartsDiscordBots</RootNamespace>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>Dart</Authors>
+		<Company />
+		<Version>9.3.4</Version>
+		<Description>Update Discord.Net version from 3.9 to 3.12e</Description>
+		<AssemblyVersion>9.3.4</AssemblyVersion>
+		<PackageReleaseNotes>
+			Update Discord.Net version from 3.9 to 3.12e
+		</PackageReleaseNotes>
+		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<FileVersion>9.3.4</FileVersion>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AWSSDK.S3" Version="3.7.8.25" />
-    <PackageReference Include="Discord.Net" Version="3.12.0" />
-    <PackageReference Include="EnterpriseLibrary.Common" Version="6.0.1304" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
-    <PackageReference Include="NLog" Version="4.7.8" />
-    <PackageReference Include="Serilog" Version="2.11.0" />
-    <PackageReference Include="SkiaSharp" Version="2.88.6" />
-    <PackageReference Include="Victoria" Version="6.0.1026" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AWSSDK.S3" Version="3.7.8.25" />
+		<PackageReference Include="Discord.Net" Version="3.12.0" />
+		<PackageReference Include="EnterpriseLibrary.Common" Version="6.0.1304" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.0" />
+		<PackageReference Include="NLog" Version="4.7.8" />
+		<PackageReference Include="Serilog" Version="2.11.0" />
+		<PackageReference Include="SkiaSharp" Version="2.88.6" />
+		<PackageReference Include="Victoria" Version="6.0.1026" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\ServerManagement\Models\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Modules\ServerManagement\Models\" />
+	</ItemGroup>
 
 </Project>
