@@ -301,7 +301,7 @@ namespace DartsDiscordBots.Modules.Indecision
 
         public async void PostPoll(string question, string[] options, IEmote[] optionsEmotes, IUserMessage message)
         {
-            StringBuilder stringBuilder = new($"**{question}**{Environment.NewLine}");
+            StringBuilder stringBuilder = new($"**Probably Reddy (Actually {GetDisplayNameForUser(message.Author, "Someone Else, I forget to check who")})**:**{question}**{Environment.NewLine}");
             for (int i = 0; i < options.Length; i++)
             {
                 stringBuilder.AppendLine($"{optionsEmotes[i]}: {options[i]}");
@@ -315,6 +315,11 @@ namespace DartsDiscordBots.Modules.Indecision
                     await reply.AddReactionAsync(emote);
                 }
             }).Start();
+        }
+
+        private object GetDisplayNameForUser(IUser author, string v)
+        {
+            throw new NotImplementedException();
         }
 
         public IEmote[] GetEmoteOptions(IGuild guild, int optionCount)
