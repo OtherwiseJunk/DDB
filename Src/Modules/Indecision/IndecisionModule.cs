@@ -158,17 +158,17 @@ namespace DartsDiscordBots.Modules.Indecision
             return -1;
         }
 
-        public string BuildCommandParseError(DiceRollingParameters parameters, IMessage message)
+        public string BuildCommandParseError(DiceRollingParameters parameters)
         {
-            string operationState = parameters.Operation != Operation.None ? $"Detected Modifier Operation: {parameters.Operation.ToString()}" : String.Empty;
-            string modifierState = parameters.Operand != -1 ? $"Detected Modifier: {parameters.Operand}" : "Detected Modifier: Couldn't Parse.";
-            string sidesState = parameters.DiceFaceCount != -1 ? $"Detected Dice Face Count: {parameters.DiceFaceCount}" : "Detected Dice Face Count: Couldn't Parse.";
+            string operationState = parameters.Operation != Operation.None ? $"Detected Modifier Operation: {parameters.Operation.ToString()}." : String.Empty;
+            string modifierState = parameters.Operand != -1 ? $"Detected Modifier: {parameters.Operand}." : "Detected Modifier: Couldn't Parse.";
+            string sidesState = parameters.DiceFaceCount != -1 ? $"Detected Dice Face Count: {parameters.DiceFaceCount}." : "Detected Dice Face Count: Couldn't Parse.";
             string timesState = parameters.NumberOfDice != -1 ? $"Detected Roll Count: {parameters.NumberOfDice}." : "Detected Roll Count: Couldn't Parse.";
 
             return $"Sorry, I failed to parse your dice rolls. {sidesState} {timesState} {modifierState} {operationState}".Trim();
         }
 
-        public string BuildDiceResultAnnouncement(DiceRollingParameters parameters, DiceResult results, IMessage message)
+        public string BuildDiceResultAnnouncement(DiceRollingParameters parameters, DiceResult results)
         {
             StringBuilder builder = new();
 
@@ -186,7 +186,7 @@ namespace DartsDiscordBots.Modules.Indecision
             }
             if(parameters.NumberOfDice > 1)
             {
-                builder.AppendLine($"{Environment.NewLine}Individual Rolls: `[{string.Join(",", results.Rolls)}]`");
+                builder.Append($"{Environment.NewLine}Individual Rolls: `[{string.Join(",", results.Rolls)}]`");
             }
 
             return builder.ToString();
@@ -233,7 +233,7 @@ namespace DartsDiscordBots.Modules.Indecision
             {
                 if (rollingParameters.NumberOfDice == -1 || rollingParameters.DiceFaceCount == -1 || (rollingParameters.Operand == -1 && rollingParameters.Operation != Operation.None))
                 {
-                    await Context.Message.Channel.SendMessageAsync(BuildCommandParseError(rollingParameters, Context.Message));
+                    await Context.Message.Channel.SendMessageAsync(BuildCommandParseError(rollingParameters));
                 }
                 else if (rollingParameters.DiceFaceCount > MAXDICEVALUE)
                 {
@@ -247,7 +247,7 @@ namespace DartsDiscordBots.Modules.Indecision
                 {
                     Dice dice = new Dice(rollingParameters.DiceFaceCount);
                     DiceResult result = dice.Roll(rollingParameters.NumberOfDice);
-                    await Context.Message.Channel.SendMessageAsync(BuildDiceResultAnnouncement(rollingParameters, result, Context.Message));
+                    await Context.Message.Channel.SendMessageAsync(BuildDiceResultAnnouncement(rollingParameters, result));
                 }
             }
             else

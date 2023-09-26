@@ -1,6 +1,7 @@
 ﻿using DartsDiscordBots.Modules.Indecision;
 using DartsDiscordBots.Modules.Indecision.Models;
 using DartsDiscordBots.Services;
+using DartsDiscordBots.Utilities;
 using DDB.Tests.Constants;
 using Microsoft.VisualStudio.TestPlatform.Utilities;
 using NUnit.Framework;
@@ -181,6 +182,18 @@ namespace DDB.Tests
         {
             DiceRollingParameters actualParameters = module.BuildDiceRollingParameters(rollString);
             Assert.That(actualParameters, Is.EqualTo(null));
+        }
+
+        [TestCaseSource(typeof(DiceRollingConstants), nameof(DiceRollingConstants.DiceResultTestCases))]
+        public void BuildDiceResultAnnouncement_ReturnsExpectedString(DiceRollingParameters parameters, DiceResult result, string expectedString)
+        {
+            Assert.That(module.BuildDiceResultAnnouncement(parameters, result), Is.EqualTo(expectedString));
+        }
+
+        [TestCaseSource(typeof(DiceRollingConstants), nameof(DiceRollingConstants.DiceParametersParsingFailureTestCases))]
+        public void BuildCommandParseError_ReturnsExpectedString(DiceRollingParameters parameters, string expectedString)
+        {
+            Assert.That(module.BuildCommandParseError(parameters), Is.EqualTo(expectedString));
         }
 
         public static IEnumerable<TestCaseData> BuildWeightedListTestCases()
