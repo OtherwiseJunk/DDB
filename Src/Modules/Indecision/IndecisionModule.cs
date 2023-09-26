@@ -1,4 +1,6 @@
-﻿using DartsDiscordBots.Constants;
+﻿using Amazon.S3.Model;
+using DartsDiscordBots.Constants;
+using DartsDiscordBots.Modules.Indecision.Models;
 using DartsDiscordBots.Services.Interfaces;
 using DartsDiscordBots.Utilities;
 using Discord;
@@ -6,9 +8,11 @@ using Discord.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace DartsDiscordBots.Modules.Indecision
 {
@@ -88,192 +92,168 @@ namespace DartsDiscordBots.Modules.Indecision
             return choiceCountByName;
         }
 
+        public int ExtractDiceRollFaceCount(string argument, Operation operation)
+        {
+            try
+            {
+                switch (operation)
+                {
+                    case Operation.None:
+                        return Int32.Parse(argument);
+                    case Operation.Addition:
+                        return Int32.Parse(argument.Split("+")[0]);
+                    case Operation.Subtraction:
+                        return Int32.Parse(argument.Split("-")[0]);
+                }
+            }
+            catch
+            {
+                Console.WriteLine("[DDB Indecision Module] Failed to extract Dice Face from argument ({0}) with operation ({1})", argument, operation.ToString());
+            }
+            return -1;
+        }
+
+        public int ExtractDiceRollOperand(string argument, Operation operation)
+        {
+            try
+            {
+                switch (operation)
+                {
+                    case Operation.None:
+                        return -1;
+                    case Operation.Addition:
+                        return Int32.Parse(argument.Split("+")[1]);
+                    case Operation.Subtraction:
+                        return Int32.Parse(argument.Split("-")[1]);
+                }
+            }
+            catch
+            {
+                Console.WriteLine("[DDB Indecision Module] Failed to extract Operand from argument ({0}) with operation ({1})", argument, operation.ToString());
+            }
+            return -1;
+        }
+
+        public Operation ExtractDiceRollOperator(string argument)
+        {
+            Operation op = Operation.None;
+            if (argument.Contains("+"))
+            {
+                op = Operation.Addition;
+            }
+            if (argument.Contains("-"))
+            {
+                op = Operation.Subtraction;
+            }
+
+            return op;
+        }
+
+        public int ExtractNumberOfDiceRolls(string argument)
+        {
+            if(int.TryParse(argument, out int result))
+            {
+                return result;
+            }
+            return -1;
+        }
+
+        public string BuildCommandParseError(DiceRollingParameters parameters, IMessage message)
+        {
+            string operationState = parameters.Operation != Operation.None ? $"Detected Modifier Operation: {parameters.Operation.ToString()}" : String.Empty;
+            string modifierState = parameters.Operand != -1 ? $"Detected Modifier: {parameters.Operand}" : "Detected Modifier: Couldn't Parse.";
+            string sidesState = parameters.DiceFaceCount != -1 ? $"Detected Dice Face Count: {parameters.DiceFaceCount}" : "Detected Dice Face Count: Couldn't Parse.";
+            string timesState = parameters.NumberOfDice != -1 ? $"Detected Roll Count: {parameters.NumberOfDice}." : "Detected Roll Count: Couldn't Parse.";
+
+            return $"Sorry, I failed to parse your dice rolls. {sidesState} {timesState} {modifierState} {operationState}".Trim();
+        }
+
+        public string BuildDiceResultAnnouncement(DiceRollingParameters parameters, DiceResult results, IMessage message)
+        {
+            StringBuilder builder = new();
+
+            switch (parameters.Operation)
+            {
+                case Operation.None:
+                    builder.Append($"Rolled `{parameters.NumberOfDice}` `d{parameters.DiceFaceCount}` and got a total of `{results.Total}`");
+                    break;
+                case Operation.Addition:
+                    builder.Append($"Rolled `{parameters.NumberOfDice}` `d{parameters.DiceFaceCount}` plus `{parameters.Operand}` and got a total of `{results.Total + parameters.Operand}`");
+                    break;
+                case Operation.Subtraction:
+                    builder.Append($"Rolled `{parameters.NumberOfDice}` `d{parameters.DiceFaceCount}` minus `{parameters.Operand}` and got a total of `{results.Total - parameters.Operand}`");
+                    break;
+            }
+            if(parameters.NumberOfDice > 1)
+            {
+                builder.AppendLine($"{Environment.NewLine}Individual Rolls: `[{string.Join(",", results.Rolls)}]`");
+            }
+
+            return builder.ToString();
+        }
+
+        public DiceRollingParameters BuildDiceRollingParameters(string rollString)
+        {
+            List<string> diceArguments = new List<string>(rollString.ToLower().Split('d'));
+            DiceRollingParameters rollingParameters = null;
+            Operation operation = Operation.None;
+
+            if (diceArguments.Count == 1)
+            {
+                operation = ExtractDiceRollOperator(diceArguments[0]);
+                rollingParameters = new()
+                {
+                    NumberOfDice = 1,
+                    Operation = operation,
+                    Operand = ExtractDiceRollOperand(diceArguments[0], operation),
+                    DiceFaceCount = ExtractDiceRollFaceCount(diceArguments[0], operation)
+                };
+            }
+            else if (diceArguments.Count == 2)
+            {
+                operation = ExtractDiceRollOperator(diceArguments[1]);
+                rollingParameters = new()
+                {
+                    NumberOfDice = ExtractNumberOfDiceRolls(diceArguments[0]),
+                    Operation = operation,
+                    Operand = ExtractDiceRollOperand(diceArguments[1], operation),
+                    DiceFaceCount = ExtractDiceRollFaceCount(diceArguments[1], operation)
+                };
+            }
+
+            return rollingParameters;
+        }
+
         [Command("roll"), Summary("Roll XdY+/-Z dice.")]
         public async Task Roll([Remainder, Summary("What to roll. Can indicate the number of dice to roll, the number of sides on those dice, and a positive or negative modifier to add to the results. 3d6+2 would roll 3 6-sided dice and add 2 to the final result.")] string rollString)
         {
-            StringBuilder sb = new StringBuilder();
-            List<string> arguments = new List<string>(rollString.ToLower().Split('d'));
-            arguments.Remove("");
-            int sides, times, modifier;
+            DiceRollingParameters rollingParameters = BuildDiceRollingParameters(rollString);
 
-            if (arguments.Count == 1)
+            if(rollingParameters != null)
             {
-                if (arguments[0].Contains("+"))
+                if (rollingParameters.NumberOfDice == -1 || rollingParameters.DiceFaceCount == -1 || (rollingParameters.Operand == -1 && rollingParameters.Operation != Operation.None))
                 {
-                    arguments = new List<string>(arguments[0].Split('+'));
-                    if (int.TryParse(arguments[0], out sides))
-                    {
-                        if (sides > MAXDICEVALUE)
-                        {
-                            await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
-                            return;
-                        }
-                        var dice = new Dice(sides);
-                        var temp = dice.Roll();
-                        if (int.TryParse(arguments[1], out modifier))
-                        {
-                            sb.AppendLine(string.Format("Rolled one `d{0}` plus `{1}` and got a total of `{2}`", sides, modifier, temp + modifier));
-                        }
-                        else
-                        {
-                            sb.AppendLine("Sorry, I don't recognize that number.");
-
-                        }
-                    }
-                    else
-                    {
-                        sb.AppendLine("Sorry, I don't recognize that number.");
-
-                    }
+                    await Context.Message.Channel.SendMessageAsync(BuildCommandParseError(rollingParameters, Context.Message));
                 }
-                else if (arguments[0].Contains("-"))
+                else if (rollingParameters.DiceFaceCount > MAXDICEVALUE)
                 {
-                    arguments = new List<string>(arguments[0].Split('-'));
-                    if (int.TryParse(arguments[0], out sides))
-                    {
-                        if (sides > MAXDICEVALUE)
-                        {
-                            await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
-                            return;
-                        }
-                        var dice = new Dice(sides);
-                        var temp = dice.Roll();
-                        if (int.TryParse(arguments[1], out modifier))
-                        {
-                            sb.AppendLine(string.Format("Rolled one `d{0}` plus `{1}` and got a total of `{2}`", sides, modifier, temp + modifier));
-                            sb.AppendLine(string.Format("Rolled one `d{0}` minus `{1}` and got a total of `{2}`", sides, modifier, temp - modifier));
-                        }
-                        else
-                        {
-                            sb.AppendLine("Sorry, I don't recognize that number.");
-
-                        }
-                    }
-                    else
-                    {
-                        sb.AppendLine("Sorry, I don't recognize that number.");
-
-                    }
+                    await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
+                }
+                else if (rollingParameters.NumberOfDice > MAXDICEVALUE)
+                {
+                    await Context.Channel.SendMessageAsync("Sorry, I don't have that much time to be rolling bones.");
                 }
                 else
                 {
-                    if (int.TryParse(arguments[0], out sides))
-                    {
-                        if (sides > MAXDICEVALUE)
-                        {
-                            await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
-                            return;
-                        }
-                        var dice = new Dice(sides);
-
-                        sb.AppendLine(string.Format("Rolled one `d{0}` and got a total of `{1}`", sides, dice.Roll()));
-                    }
-                    else
-                    {
-                        sb.AppendLine("Sorry, I don't recognize that number.");
-
-                    }
+                    Dice dice = new Dice(rollingParameters.DiceFaceCount);
+                    DiceResult result = dice.Roll(rollingParameters.NumberOfDice);
+                    await Context.Message.Channel.SendMessageAsync(BuildDiceResultAnnouncement(rollingParameters, result, Context.Message));
                 }
             }
-            else if (arguments.Count == 2)
+            else
             {
-                if (int.TryParse(arguments[0], out times))
-                {
-                    if (arguments[1].Contains("+"))
-                    {
-                        arguments = new List<string>(arguments[1].Split('+'));
-                        if (int.TryParse(arguments[0], out sides))
-                        {
-                            if (sides > MAXDICEVALUE)
-                            {
-                                await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
-                                return;
-                            }
-                            if (times > MAXDICEVALUE)
-                            {
-                                await Context.Channel.SendMessageAsync("Sorry, I don't have that much time to be rolling bones.");
-                                return;
-                            }
-                            var dice = new Dice(sides);
-                            var temp = dice.Roll(times);
-                            if (int.TryParse(arguments[1], out modifier))
-                            {
-                                sb.AppendLine(string.Format("Rolled `{0}` `d{1}` plus `{2}` and got a total of `{3}`", times, sides, modifier, temp.Total + modifier));
-                                sb.AppendLine(string.Format("Individual Rolls: `[{0}]`", string.Join(",", temp.Rolls)));
-                            }
-                            else
-                            {
-                                sb.AppendLine("Sorry, I don't recognize that number.");
-
-                            }
-                        }
-                        else
-                        {
-                            sb.AppendLine("Sorry, I don't recognize that number.");
-
-                        }
-                    }
-                    else if (arguments[1].Contains("-"))
-                    {
-                        arguments = new List<string>(arguments[1].Split('-'));
-                        if (int.TryParse(arguments[0], out sides))
-                        {
-                            if (sides > MAXDICEVALUE)
-                            {
-                                await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
-                                return;
-                            }
-                            if (times > MAXDICEVALUE)
-                            {
-                                await Context.Channel.SendMessageAsync("Sorry, I don't have that much time to be rolling bones.");
-                                return;
-                            }
-                            var dice = new Dice(sides);
-                            var temp = dice.Roll(times);
-                            if (int.TryParse(arguments[1], out modifier))
-                            {
-                                sb.AppendLine(string.Format("Rolled `{0}` `d{1}` minus `{2}` and got a total of `{3}`", times, sides, modifier, temp.Total - modifier));
-                                sb.AppendLine(string.Format("Individual Rolls: `[{0}]`", string.Join(",", temp.Rolls)));
-                            }
-                            else
-                            {
-                                sb.AppendLine("Sorry, I don't recognize that number.");
-                            }
-                        }
-                        else
-                        {
-                            sb.AppendLine("Sorry, I don't recognize that number.");
-                        }
-                    }
-                    else
-                    {
-                        if (int.TryParse(arguments[1], out sides))
-                        {
-                            if (sides > MAXDICEVALUE)
-                            {
-                                await Context.Channel.SendMessageAsync("Sorry, I don't have a dice that big.");
-                                return;
-                            }
-                            if (times > MAXDICEVALUE)
-                            {
-                                await Context.Channel.SendMessageAsync("Sorry, I don't have that much time to be rolling bones.");
-                                return;
-                            }
-                            var dice = new Dice(sides);
-                            var temp = dice.Roll(times);
-                            sb.AppendLine(string.Format("Rolled `{0}` `d{1}` and got a total of `{2}`", times, sides, temp.Total));
-                            sb.AppendLine(string.Format("Individual Rolls: `[{0}]`", string.Join(",", temp.Rolls)));
-                        }
-                        else
-                        {
-                            sb.AppendLine("Sorry, I don't recognize that number.");
-
-                        }
-                    }
-                }
+                await Context.Message.Channel.SendMessageAsync("Sorry, you sent too many d's in that message.");
             }
-            MessageReference reference = Context.Message.Reference ?? new MessageReference(Context.Message.Id);
-            await _messenger.SendMessageToChannel(sb.ToString(), Context.Message, ",");
         }
 
         [Command("poll"), Summary("Allow users to run a poll. All paramters are `|` separated, with the first argument being the question. If no options are provided after teh question will be a Yes/No poll with thumbs up thumbs down.")]
@@ -303,8 +283,8 @@ namespace DartsDiscordBots.Modules.Indecision
         public async void PostPoll(string question, string[] options, IEmote[] optionsEmotes, IUserMessage message)
         {
             IGuildUser author = message.Author as IGuildUser;
-            string name = author.DisplayName == author.Username ? author.Username : $"{author.DisplayName}({author.Username})";
-            StringBuilder stringBuilder = new($"**{name}**:_**{question}**_{Environment.NewLine}");
+            string name = author.DisplayName == author.Username ? author.Username : $"{author.DisplayName} ({author.Username})";
+            StringBuilder stringBuilder = new($"**{name}**: **{question}**{Environment.NewLine}");
             for (int i = 0; i < options.Length; i++)
             {
                 stringBuilder.AppendLine($"{optionsEmotes[i]}: {options[i]}");
