@@ -262,7 +262,9 @@ namespace DartsDiscordBots.Modules.Indecision
             string[] arguments = questionParametersString.Split("|");
             if (arguments.Length == 1)
             {
-                IUserMessage reply = Context.Message.ReplyAsync(arguments[0]).Result;
+                IGuildUser author = Context.Message.Author as IGuildUser;
+                string name = author.DisplayName == author.Username ? author.Username : $"{author.DisplayName} ({author.Username})";
+                IUserMessage reply = Context.Message.ReplyAsync($"**{name}**: **{arguments[0]}**").Result;
                 _ = reply.AddReactionAsync(Emoji.Parse("👍"));
                 _ = reply.AddReactionAsync(Emoji.Parse("👎"));
                 return;
@@ -272,7 +274,7 @@ namespace DartsDiscordBots.Modules.Indecision
             if (options.Length >= 2 && options.Length <= DefaultUnicodePollEmotes.Count)
             {
                 IEmote[] emotes = GetEmoteOptions(Context.Guild, options.Length);
-                PostPoll(arguments[0], options, emotes, Context.Message);
+                PostMultipleChoicePoll(arguments[0], options, emotes, Context.Message);
             }
             else
             {
@@ -280,7 +282,7 @@ namespace DartsDiscordBots.Modules.Indecision
             }
         }
 
-        public async void PostPoll(string question, string[] options, IEmote[] optionsEmotes, IUserMessage message)
+        public async void PostMultipleChoicePoll(string question, string[] options, IEmote[] optionsEmotes, IUserMessage message)
         {
             IGuildUser author = message.Author as IGuildUser;
             string name = author.DisplayName == author.Username ? author.Username : $"{author.DisplayName} ({author.Username})";
