@@ -256,7 +256,7 @@ namespace DartsDiscordBots.Modules.Indecision
             }
         }
 
-        [Command("poll"), Summary("Allow users to run a poll. All paramters are `|` separated, with the first argument being the question. If no options are provided after teh question will be a Yes/No poll with thumbs up thumbs down.")]
+        [Command("poll"), Summary("Allow users to run a poll. All paramters are `|` separated, with the first argument being the question. If no options are provided after the question will be a Yes/No poll with thumbs up thumbs down.")]
         public async Task Poll([Remainder, Summary("a Pipe (`|`) separate list of arguments. First argument is a question, all subsequent paramters will be used as options.")] string questionParametersString)
         {
             string[] arguments = questionParametersString.Split("|");
