@@ -12,14 +12,14 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnMessageHandlers
 	{
-		public static async Task HandleCommandWithSummaryOnError(SocketMessage messageParam, CommandContext context, CommandService commandService, IServiceProvider serviceProvider, char commandPrefix)
+		public static async Task HandleCommandWithSummaryOnError(SocketMessage messageParam, CommandContext context, CommandService commandService, IServiceProvider serviceProvider, char commandPrefix, bool doAprilFools = true, int aprilFoolsChance = 33)
 		{
 			ILogger log = (ILogger)serviceProvider.GetService(typeof(ILogger));
 			var message = messageParam as SocketUserMessage;
 			if (message == null) return;
 			int argPos = 0;
 			if (!message.HasCharPrefix(commandPrefix, ref argPos) || messageParam.Author.IsBot) return;
-			if (BotUtilities.ShouldDoAprilFoolsShenanigans())
+			if (BotUtilities.ShouldDoAprilFoolsShenanigans(aprilFoolsChance) && doAprilFools)
 			{
 				log.Information("Aw yeah, time for some April Fools Day Pranks!");
 				await message.Channel.SendMessageAsync("Oh sure let me get that for you one sec...");

@@ -6,15 +6,15 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>9.3.7</Version>
+		<Version>9.3.8</Version>
 		<Description>Update Discord.Net version from 3.9 to 3.12e</Description>
-		<AssemblyVersion>9.3.7</AssemblyVersion>
+		<AssemblyVersion>9.3.8</AssemblyVersion>
 		<PackageReleaseNotes>
 			Update Discord.Net version from 3.9 to 3.12e
 		</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>9.3.7</FileVersion>
+		<FileVersion>9.3.8</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
