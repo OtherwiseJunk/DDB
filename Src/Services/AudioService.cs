@@ -1,79 +1,85 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Discord.WebSocket;
+using Discord;
 using Microsoft.Extensions.Logging;
 using Victoria;
-using Victoria.Node;
-using Victoria.Node.EventArgs;
-using Victoria.Player;
+using Victoria.WebSocket.EventArgs;
 
 namespace DartsDiscordBots.Services
 {
     public sealed class AudioService
     {
-        private readonly LavaNode _lavaNode;
+        private readonly LavaNode<LavaPlayer<LavaTrack>, LavaTrack> _lavaNode;
+        private readonly DiscordSocketClient _socketClient;
         private readonly ILogger _logger;
         public readonly HashSet<ulong> VoteQueue;
         private readonly ConcurrentDictionary<ulong, CancellationTokenSource> _disconnectTokens;
+        public readonly ConcurrentDictionary<ulong, ulong> TextChannels;
 
-        public AudioService(LavaNode lavaNode, ILoggerFactory loggerFactory)
+        public AudioService(
+            LavaNode<LavaPlayer<LavaTrack>, LavaTrack> lavaNode,
+            DiscordSocketClient socketClient,
+            ILogger<AudioService> logger)
         {
             _lavaNode = lavaNode;
-            _logger = loggerFactory.CreateLogger<LavaNode>();
+            _socketClient = socketClient;
             _disconnectTokens = new ConcurrentDictionary<ulong, CancellationTokenSource>();
-
-            VoteQueue = new HashSet<ulong>();
-
+            _logger = logger;
+            TextChannels = new ConcurrentDictionary<ulong, ulong>();
+            VoteQueue = [];
+            _lavaNode.OnWebSocketClosed += OnWebSocketClosedAsync;
+            _lavaNode.OnStats += OnStatsAsync;
+            _lavaNode.OnPlayerUpdate += OnPlayerUpdateAsync;
             _lavaNode.OnTrackEnd += OnTrackEndAsync;
             _lavaNode.OnTrackStart += OnTrackStartAsync;
-            _lavaNode.OnStatsReceived += OnStatsReceivedAsync;
-            _lavaNode.OnUpdateReceived += OnUpdateReceivedAsync;
-            _lavaNode.OnWebSocketClosed += OnWebSocketClosedAsync;
-            _lavaNode.OnTrackStuck += OnTrackStuckAsync;
-            _lavaNode.OnTrackException += OnTrackExceptionAsync;
         }
 
-        private static Task OnTrackExceptionAsync(TrackExceptionEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
+        private Task OnTrackStartAsync(TrackStartEventArg arg)
         {
-            arg.Player.Vueue.Enqueue(arg.Track);
-            return arg.Player.TextChannel.SendMessageAsync($"{arg.Track} has been requeued because it threw an exception.");
+            return SendAndLogMessageAsync(arg.GuildId,
+                $"Now playing: {arg.Track.Title}");
         }
 
-        private static Task OnTrackStuckAsync(TrackStuckEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
+        private Task OnTrackEndAsync(TrackEndEventArg arg)
         {
-            arg.Player.Vueue.Enqueue(arg.Track);
-            return arg.Player.TextChannel.SendMessageAsync($"{arg.Track} has been requeued because it got stuck.");
+            return SendAndLogMessageAsync(arg.GuildId, $"{arg.Track.Title} ended with reason: {arg.Reason}");
+        }
+
+        private Task OnPlayerUpdateAsync(PlayerUpdateEventArg arg)
+        {
+            _logger.LogInformation("Guild latency: {}", arg.Ping);
+            return Task.CompletedTask;
+        }
+
+        private Task OnStatsAsync(StatsEventArg arg)
+        {
+            _logger.LogInformation("{}", JsonSerializer.Serialize(arg));
+            return Task.CompletedTask;
         }
 
         private Task OnWebSocketClosedAsync(WebSocketClosedEventArg arg)
         {
-            _logger.LogCritical($"{arg.Code} {arg.Reason}");
+            _logger.LogCritical("{}", JsonSerializer.Serialize(arg));
             return Task.CompletedTask;
         }
 
-        private Task OnStatsReceivedAsync(StatsEventArg arg)
+        private Task SendAndLogMessageAsync(ulong guildId,
+                                            string message)
         {
-            _logger.LogInformation(JsonSerializer.Serialize(arg));
-            return Task.CompletedTask;
-        }
+            _logger.LogInformation(message);
+            if (!TextChannels.TryGetValue(guildId, out var textChannelId))
+            {
+                return Task.CompletedTask;
+            }
 
-        private static Task OnUpdateReceivedAsync(UpdateEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
-        {
-            return arg.Player.TextChannel.SendMessageAsync(
-                $"Player update received: {arg.Position}/{arg.Track?.Duration}");
-        }
-
-        private static Task OnTrackStartAsync(TrackStartEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
-        {
-            return arg.Player.TextChannel.SendMessageAsync($"Started playing {arg.Track}.");
-        }
-
-        private static Task OnTrackEndAsync(TrackEndEventArg<LavaPlayer<LavaTrack>, LavaTrack> arg)
-        {
-            return arg.Player.TextChannel.SendMessageAsync($"Finished playing {arg.Track}.");
+            return (_socketClient
+                    .GetGuild(guildId)
+                    .GetChannel(textChannelId) as ITextChannel)
+                .SendMessageAsync(message);
         }
     }
 }

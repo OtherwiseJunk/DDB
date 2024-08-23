@@ -23,8 +23,8 @@ namespace DDB.Tests
         public void VerifyIsUserFlippingTableReturnsTrueForMessageContainingTableflip(string msg)
         {
             TableFlipType? type;
-            Assert.IsTrue(BotUtilities.isUserFlippingTable(msg, out type));
-            Assert.IsNotNull(type);
+            Assert.That(BotUtilities.isUserFlippingTable(msg, out type), Is.True);
+            Assert.That(type, Is.Not.Null);
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace DDB.Tests
         public void VerifyIsUserFlippingTableReturnsExpectedTableFlipTypeForMessageContainingTableflip(string msg, TableFlipType expectedType)
         {
             TableFlipType? type;
-            Assert.IsTrue(BotUtilities.isUserFlippingTable(msg, out type));
-            Assert.IsTrue(type == expectedType);
+            Assert.That(BotUtilities.isUserFlippingTable(msg, out type), Is.True);
+            Assert.That(type == expectedType);
         }
 
         [Test]
@@ -50,14 +50,14 @@ namespace DDB.Tests
         public void VerifyGetDisplayNameForUserReturnsUsernameWhenNoNicknameIsPresent(IGuildUser user, string expectedName)
         {
             string name = BotUtilities.GetDisplayNameForUser(user);
-            Assert.AreEqual(expectedName, name);
+            Assert.Equals(expectedName, name);
         }
 
         [Test]
         public void VerifyGetDisplayNameForUserReturnsDefaultNameWhenUserIsNull()
         {
             string name = BotUtilities.GetDisplayNameForUser(null);
-            Assert.AreEqual(BotUtilitiesTestConstants.DefaultDisplayName, name);
+            Assert.Equals(BotUtilitiesTestConstants.DefaultDisplayName, name);
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace DDB.Tests
         public void VerifyGetDisplayNameForUserReturnsNicknameWhenNicknameIsPresent(IGuildUser user, string expectedName)
         {
             string name = BotUtilities.GetDisplayNameForUser(user);
-            Assert.AreEqual(expectedName, name);
+            Assert.Equals(expectedName, name);
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace DDB.Tests
         public void VerifyGetDisplayNameForUserReturnsPassedInDefaultNameWhenUserIsNull(string passedInUser)
         {
             string name = BotUtilities.GetDisplayNameForUser(null, passedInUser);
-            Assert.AreEqual(passedInUser, name);
+            Assert.Equals(passedInUser, name);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace DDB.Tests
         public void VerifyGetAvatarForUserReturnsDefaultAvatarWhenGuildAndAvatarIDsAreNull(IGuildUser user, string expectedAvatarId)
         {
             string avatarId = BotUtilities.GetAvatarForUser(user, expectedAvatarId);
-            Assert.AreEqual(avatarId, expectedAvatarId);
+            Assert.Equals(avatarId, expectedAvatarId);
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace DDB.Tests
         public void VerifyGetAvatarForUserReturnsAvatarIdWhenGuildAvatarIDIsNull(IGuildUser user, string expectedAvatarId)
         {
             string avatarId = BotUtilities.GetAvatarForUser(user, expectedAvatarId);
-            Assert.AreEqual(avatarId, expectedAvatarId);
+            Assert.Equals(avatarId, expectedAvatarId);
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace DDB.Tests
         public void VerifyGetAvatarForUserReturnsGuildAvatarWhenGuildAvatarIDIsNotNull(IGuildUser user, string expectedAvatarId)
         {
             string avatarId = BotUtilities.GetAvatarForUser(user, expectedAvatarId);
-            Assert.AreEqual(avatarId, expectedAvatarId);
+            Assert.Equals(avatarId, expectedAvatarId);
         }
     }
 
