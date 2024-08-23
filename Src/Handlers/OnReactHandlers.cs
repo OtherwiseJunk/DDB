@@ -59,7 +59,7 @@ namespace DartsDiscordBots.Handlers
 					};					
 					EmbedBuilder embedBuilder = new();
 					string bestOfUsername = BotUtilities.GetDisplayNameForUser(author);
-					string title = $"<:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: {String.Format(SharedConstants.BestOfTitles.GetRandom(), bestOfUsername)}";
+					string title = $"{message.Channel.Name} - <:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: {String.Format(SharedConstants.BestOfTitles.GetRandom(), bestOfUsername)}";
 
 					embedBuilder.Title = title;
 					embedBuilder.ThumbnailUrl = BotUtilities.GetAvatarForUser(author);
