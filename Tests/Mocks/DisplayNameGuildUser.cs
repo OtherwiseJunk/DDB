@@ -55,6 +55,10 @@ namespace DDB.Tests.Mocks
 
         public string GlobalName => throw new NotImplementedException();
 
+        public string AvatarDecorationHash => throw new NotImplementedException();
+
+        public ulong? AvatarDecorationSkuId => throw new NotImplementedException();
+
         public Task AddRoleAsync(ulong roleId, RequestOptions options = null)
         {
             throw new NotImplementedException();
@@ -75,6 +79,12 @@ namespace DDB.Tests.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public string GetAvatarDecorationUrl()
+        {
+            throw new NotImplementedException();
+        }
+
         public string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
         {
             throw new NotImplementedException();

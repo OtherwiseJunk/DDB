@@ -90,6 +90,10 @@ namespace DDB.Tests.Mocks
 
         public string GlobalName => throw new NotImplementedException();
 
+        public string AvatarDecorationHash => throw new NotImplementedException();
+
+        public ulong? AvatarDecorationSkuId => throw new NotImplementedException();
+
         public Task AddRoleAsync(ulong roleId, RequestOptions options = null)
         {
             throw new NotImplementedException();
@@ -111,6 +115,11 @@ namespace DDB.Tests.Mocks
         }
 
         public Task<IDMChannel> CreateDMChannelAsync(RequestOptions options = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetAvatarDecorationUrl()
         {
             throw new NotImplementedException();
         }
