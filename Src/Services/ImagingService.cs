@@ -73,30 +73,27 @@ namespace DartsDiscordBots.Services
 			
 			using (AmazonS3Client client = new AmazonS3Client(PublicKey, SecretKey, s3ClientConfig))
 			{
-				using (TransferUtility fileTransferUtility = new TransferUtility(client))
-				{
-					try
-					{
-						TransferUtilityUploadRequest request = new TransferUtilityUploadRequest
-						{
-							BucketName = $"{Bucket}/{folderName}",
-							InputStream = ImageStream,
-							Key = filename,
-							CannedACL = S3CannedACL.PublicRead
-						};
-						fileTransferUtility.Upload(request);
-						return $"https://{Bucket}.nyc3.cdn.digitaloceanspaces.com/{folderName}/{filename}";
-					}
-					catch (AmazonS3Exception e)
-					{
-						Console.WriteLine("Error encountered ***. Message:'{0}' when writing an object", e.Message);
-					}
-					catch (Exception e)
-					{
-						Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
-					}
-				}
-			}
+                try
+                {
+                    PutObjectRequest request = new PutObjectRequest
+                    {
+                        BucketName = $"{Bucket}/{folderName}",
+                        InputStream = ImageStream,
+                        Key = filename,
+                        CannedACL = S3CannedACL.PublicRead
+                    };
+                    client.PutObjectAsync(request);
+                    return $"https://{Bucket}.nyc3.cdn.digitaloceanspaces.com/{folderName}/{filename}";
+                }
+                catch (AmazonS3Exception e)
+                {
+                    Console.WriteLine("Error encountered ***. Message:'{0}' when writing an object", e.Message);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
+                }
+            }
 			return null;
 		}
 		public async void DeleteImage(string folderName, string key)
