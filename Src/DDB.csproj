@@ -6,13 +6,13 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>10.0.1</Version>
+		<Version>10.0.2</Version>
 		<Description>fix issue with AWS S3 uploads.</Description>
-		<AssemblyVersion>10.0.1</AssemblyVersion>
+		<AssemblyVersion>10.0.2</AssemblyVersion>
 		<PackageReleaseNotes>fix issue with AWS S3 uploads.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>10.0.1</FileVersion>
+		<FileVersion>10.0.2</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
