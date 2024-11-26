@@ -6,13 +6,13 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>10.2.0</Version>
+		<Version>10.2.1</Version>
 		<Description>Add roleemote command.</Description>
-		<AssemblyVersion>10.2.0</AssemblyVersion>
+		<AssemblyVersion>10.2.1</AssemblyVersion>
 		<PackageReleaseNotes>fix issue with AWS S3 uploads.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>10.2.0</FileVersion>
+		<FileVersion>10.2.1</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
