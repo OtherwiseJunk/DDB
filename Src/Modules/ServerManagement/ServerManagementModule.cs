@@ -1,6 +1,7 @@
 ﻿using DartsDiscordBots.Modules.ServerManagement.Interfaces;
 using Discord;
 using Discord.Commands;
+using System;
 using System.Threading.Tasks;
 
 namespace DartsDiscordBots.Modules.ServerManagement
@@ -22,6 +23,19 @@ namespace DartsDiscordBots.Modules.ServerManagement
 			{
 				await this.Context.Channel.SendMessageAsync("Sorry, I can't recognize that hexcode. Maybe I'm an idiot, iunno.");
 			}
+		}
+
+		[Command("roleemote"), Summary("Creates or updates a role with your name with the specified emoji. Ex) `roleemoji :emoji:`")]
+		public async Task RoleEmojiChange([Remainder, Summary("The emoji for your desired role.")] Emote emote)
+		{
+			var serverEmote = await Context.Guild.GetEmoteAsync(emote.Id);
+			if (serverEmote == null)
+			{
+				Console.WriteLine("Sorry, the emoji should be in the server. I can't guarantee I can access it otherwise.");
+				return;
+			}
+            var role = _server.ModifyUserRoleEmoji(serverEmote, this.Context.User, Context).Result;
+            await (this.Context.User as IGuildUser).AddRoleAsync(role);
 		}
 
 		[Command("avatar"), Summary("get mentioned user's avatar")]

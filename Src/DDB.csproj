@@ -6,13 +6,13 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>10.1.0</Version>
-		<Description>Add Sudoers role for hardcoded permissions.</Description>
-		<AssemblyVersion>10.1.0</AssemblyVersion>
+		<Version>10.2.0</Version>
+		<Description>Add roleemote command.</Description>
+		<AssemblyVersion>10.2.0</AssemblyVersion>
 		<PackageReleaseNotes>fix issue with AWS S3 uploads.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>10.1.0</FileVersion>
+		<FileVersion>10.2.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
