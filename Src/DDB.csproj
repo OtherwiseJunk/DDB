@@ -8,16 +8,16 @@
 		<Company />
 		<Version>10.0.2</Version>
 		<Description>fix issue with AWS S3 uploads.</Description>
-		<AssemblyVersion>10.0.2</AssemblyVersion>
+		<AssemblyVersion>11.0.0</AssemblyVersion>
 		<PackageReleaseNotes>fix issue with AWS S3 uploads.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>10.0.2</FileVersion>
+		<FileVersion>11.0.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AWSSDK.S3" Version="3.7.402.2" />
-		<PackageReference Include="Discord.Net" Version="3.15.3" />
+		<PackageReference Include="Discord.Net" Version="3.16.0" />
 		<PackageReference Include="EnterpriseLibrary.Common" Version="6.0.1304" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
