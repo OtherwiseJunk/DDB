@@ -6,8 +6,8 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>10.0.2</Version>
-		<Description>fix issue with AWS S3 uploads.</Description>
+		<Version>11.0.0</Version>
+		<Description>Update to Discord.Net 3.16, a breaking change.</Description>
 		<AssemblyVersion>11.0.0</AssemblyVersion>
 		<PackageReleaseNotes>fix issue with AWS S3 uploads.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
