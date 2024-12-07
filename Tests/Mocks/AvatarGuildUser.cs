@@ -23,6 +23,7 @@ namespace DDB.Tests.Mocks
         public string DisplayAvatarId => throw new NotImplementedException();
 
         public string? GuildAvatarId { get; set; }
+        public string GuildBannerHash { get; }
 
         public GuildPermissions GuildPermissions => throw new NotImplementedException();
 
@@ -142,6 +143,11 @@ namespace DDB.Tests.Mocks
         public string GetGuildAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
         {
             return this.GuildAvatarId;
+        }
+
+        public string GetGuildBannerUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
+        {
+            throw new NotImplementedException();
         }
 
         public ChannelPermissions GetPermissions(IGuildChannel channel)
