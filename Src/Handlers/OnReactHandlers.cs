@@ -68,7 +68,7 @@ namespace DartsDiscordBots.Handlers
 					embedBuilder.Url = message.GetJumpUrl();
 					embedBuilder.WithFooter($"{message.Id} - Curated By: {BotUtilities.GetDisplayNameForUser(triggeringUser)} - {author.Id}");
 
-					service.CreateBestOf(bestOf);
+					service.CreateBestOf(bestOf, message);
 					await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());					
 					return;
 				}
