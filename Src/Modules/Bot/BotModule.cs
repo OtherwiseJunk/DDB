@@ -3,7 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
-using Discord.Interactions;
+using DartsDiscordBots.Permissions;
 
 namespace DartsDiscordBots.Modules.Bot
 {
@@ -11,8 +11,8 @@ namespace DartsDiscordBots.Modules.Bot
 	{
 		public const string PrivilegedUserGroup = "Privileged";
 		public IBotInformation _info { get; set; }
-		[Command("listchnl"), RequireTeam]
-		public async Task listChannels()
+		[Command("listchnl"), RequireSudoer]
+		public async Task ListChannels()
 		{
 			string msg = "I'm in these guilds/channels:" + Environment.NewLine + Environment.NewLine;
 			foreach (var guild in Context.Client.GetGuildsAsync().Result)
@@ -31,20 +31,20 @@ namespace DartsDiscordBots.Modules.Bot
 			await Context.Channel.SendMessageAsync(msg);
 		}
 
-		[Command("playing"), RequireTeamAttribute]
-		public async Task setPlaying([Remainder] string playing)
+		[Command("playing"), RequireSudoer]
+		public async Task SetPlaying([Remainder] string playing)
 		{
 			var client = Context.Client as DiscordSocketClient;
-			await client.SetGameAsync(playing);
+			await client!.SetGameAsync(playing);
 		}
 
 		[Command("say"), Discord.Commands.Summary("Echos a message.")]
-		[RequireTeamAttribute(Group = PrivilegedUserGroup), Discord.Commands.RequireUserPermission(Discord.GuildPermission.Administrator, Group = PrivilegedUserGroup)]
+		[RequireSudoer(Group = PrivilegedUserGroup), Discord.Commands.RequireUserPermission(Discord.GuildPermission.Administrator, Group = PrivilegedUserGroup)]
 		public async Task Say([Remainder, Discord.Commands.Summary("The text to echo")] string echo)
 		{
 			// ReplyAsync is a method on ModuleBase
 			await ReplyAsync(echo);
-			Context.Message.DeleteAsync();
+			await Context.Message.DeleteAsync();
 		}
 
 		[Command("link"), Alias("install"), Discord.Commands.Summary("Provides a link for installing the bot on other servers. You must be an admin of the target server to use the provided link.")]
@@ -58,7 +58,7 @@ namespace DartsDiscordBots.Modules.Bot
 		{
 			await Context.Channel.SendMessageAsync(_info.GithubRepo);
 		}
-		[Command("renick"), RequireTeamAttribute, Discord.Commands.Summary("Renames the bot")]
+		[Command("renick"), Discord.Commands.Summary("Renames the bot")]
 		public async Task ChangeNickname([Remainder, Discord.Commands.Summary("what to rename the bot")] string newNick)
 		{
 			await Context.Guild.GetCurrentUserAsync().Result.ModifyAsync(b => b.Nickname = newNick);

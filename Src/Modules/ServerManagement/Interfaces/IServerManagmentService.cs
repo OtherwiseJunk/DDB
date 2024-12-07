@@ -12,5 +12,7 @@ namespace DartsDiscordBots.Modules.ServerManagement.Interfaces
 		Color ParseDiscordColor(string hexText);
 		bool RoleExists(IReadOnlyCollection<IRole> roles, string username, out IRole usernameRole);
 		Task<IRole> ModifyUserRoleColor(string hexText, IUser user, ICommandContext Context);
-	}
+		Task<IRole> ModifyUserRoleEmoji(Emote emote, IUser user, ICommandContext Context);
+
+    }
 }
