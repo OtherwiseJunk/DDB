@@ -10,7 +10,7 @@ namespace DartsDiscordBots.Services.Interfaces
         public bool IsBestOf(ulong messageId);
         public void CreateBestOf(BestOf bestOf, IMessage message);
         public List<BestOf> GetBestOfsForGuild(ulong guildId);
-        public Task<List<BestOfWithMessage>> RetrieveMessagesForBestOfs(List<BestOf> bestOfs, IGuild guild);
+        public Task<List<BestOf>> RetrieveMessagesForBestOfs(List<BestOf> bestOfs, IGuild guild);
 
     }
 }
