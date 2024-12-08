@@ -55,7 +55,8 @@ namespace DartsDiscordBots.Handlers
 						GuildId = guild.Id,
 						ChannelId = message.Channel.Id,
 						UserId = author.Id,
-						TriggeringEmoji = reaction.Key.Name
+						TriggeringEmoji = reaction.Key.Name,
+						Content = message.Content
 					};					
 					EmbedBuilder embedBuilder = new();
 					string bestOfUsername = BotUtilities.GetDisplayNameForUser(author);
@@ -68,7 +69,7 @@ namespace DartsDiscordBots.Handlers
 					embedBuilder.Url = message.GetJumpUrl();
 					embedBuilder.WithFooter($"{message.Id} - Curated By: {BotUtilities.GetDisplayNameForUser(triggeringUser)} - {author.Id}");
 
-					service.CreateBestOf(bestOf, message);
+					service.CreateBestOf(bestOf);
 					await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());					
 					return;
 				}
