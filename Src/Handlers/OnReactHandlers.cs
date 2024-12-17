@@ -17,7 +17,7 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-        static string linkPattern = @"https?://[^\s]+"
+		static string linkPattern = @"https?://[^\s]+";
 
         public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName, IGuildUser triggeringUser, bool allowNSFW=false)
 		{
