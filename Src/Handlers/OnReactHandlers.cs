@@ -10,13 +10,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Versioning;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DartsDiscordBots.Handlers
 {
 	public static class OnReactHandlers
 	{
-		public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName, IGuildUser triggeringUser, bool allowNSFW=false)
+        static string linkPattern = @"https?://[^\s]+"
+
+        public static async Task BestOfChecker(IMessage message, IBestOfService service, ulong guildId, ulong announcementChannelId, int voteThreadhold, Dictionary<string, ulong> votingEmojiIdsByName, IGuildUser triggeringUser, bool allowNSFW=false)
 		{
 			if (message.Author.IsBot)
 			{
@@ -70,7 +73,14 @@ namespace DartsDiscordBots.Handlers
 					embedBuilder.WithFooter($"{message.Id} - Curated By: {BotUtilities.GetDisplayNameForUser(triggeringUser)} - {author.Id}");
 
 					service.CreateBestOf(bestOf);
-					await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());					
+					await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());
+					var linkMatches = Regex.Matches(message.Content, linkPattern);
+					
+					foreach (Match match in linkMatches)
+					{
+						await announcementChannel.SendMessageAsync(match.Value);
+					}
+
 					return;
 				}
 			}
