@@ -6,17 +6,17 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>11.1.0</Version>
-		<Description>Update to Discord.Net 3.16, a breaking change.</Description>
-		<AssemblyVersion>11.1.0</AssemblyVersion>
+		<Version>12.0.0</Version>
+		<Description>Downgrade to aws s3 library 3.7.102.2</Description>
+		<AssemblyVersion>12.0.0</AssemblyVersion>
 		<PackageReleaseNotes>fix issue with AWS S3 uploads.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>11.1.0</FileVersion>
+		<FileVersion>12.0.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AWSSDK.S3" Version="3.7.402.2" />
+		<PackageReference Include="AWSSDK.S3" Version="3.7.102.2" />
 		<PackageReference Include="Discord.Net" Version="3.16.0" />
 		<PackageReference Include="EnterpriseLibrary.Common" Version="6.0.1304" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
