@@ -6,13 +6,13 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>12.0.0</Version>
+		<Version>12.1.0</Version>
 		<Description>Downgrade to aws s3 library 3.7.102.2</Description>
-		<AssemblyVersion>12.0.0</AssemblyVersion>
-		<PackageReleaseNotes>fix issue with AWS S3 uploads.</PackageReleaseNotes>
+		<AssemblyVersion>12.1.0</AssemblyVersion>
+		<PackageReleaseNotes>Add WhoIs command to chat module.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>12.0.0</FileVersion>
+		<FileVersion>12.1.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
