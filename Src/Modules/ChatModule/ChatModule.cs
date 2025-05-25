@@ -18,45 +18,59 @@ namespace DartsDiscordBots.Modules.Chat
 			_messenger = messageReliability;
 		}
 
-		[Command("whois"), Summary("Returns information about the user mentioned (or user ID provided). Supplements with additional information from current server if they are a member.")]
+		[Command("whois"), Summary("Returns information about the user ID provided. Supplements with additional information from current server if they are a member.")]
 		public async Task WhoIs([Remainder, Summary("The user to get information about.")] ulong userId = 0)
 		{
-			ulong mentionedUserId = Context.Message.MentionedUserIds.FirstOrDefault();
-			if (userId == 0 || mentionedUserId == 0)
+			if (userId == 0)
 			{
 				await _messenger.SendMessageToChannel("Please provide a user to get information about.", Context.Message, " ");
 				return;
 			}
-			IUser user = await Context.Guild.GetUserAsync(userId) ?? await Context.Guild.GetUserAsync(mentionedUserId);
-			if (user == null)
-			{
-				await _messenger.SendMessageToChannel("Failed to find user, check the provided ID or mentioned user", Context.Message, " ");
-			}
 
-			var embedBuilder = new EmbedBuilder();
-			embedBuilder.Title = $"Whois Lookup: ${user.Username}";
-			embedBuilder.WithImageUrl(user.GetAvatarUrl());
-			embedBuilder.AddField("Global Name", user.GlobalName);
-			embedBuilder.AddField("Is Bot?", user.IsBot);
-			embedBuilder.AddField("Is Webhook?", user.IsWebhook);
-
-			IGuildUser guildUser = await Context.Guild.GetUserAsync(userId) ?? await Context.Guild.GetUserAsync(mentionedUserId);
-
-			if (guildUser != null)
-			{
-				if (user.Username != guildUser.DisplayName)
-				{
-					embedBuilder.AddField("Guild Display name", guildUser.DisplayName);
-				}
-				embedBuilder.AddField("Status", guildUser.Status);
-				embedBuilder.AddField("Joined", guildUser.JoinedAt);
-				embedBuilder.AddField("Heirarchy", guildUser.Hierarchy);
-			}
-
-			await Context.Message.ReplyAsync(embed: embedBuilder.Build());
+			await SendWhoIsResponse(Context, userId);
 		}
 
-		[Command("8ball"), Alias("magicconch","conch","8conch"), Summary("Ask the bot a true or false question.")]
+        [Command("whois"), Summary("Returns information about the user mentioned. Supplements with additional information from current server if they are a member.")]
+        public async Task WhoIs([Remainder, Summary("The user to get information about.")] IUser mentionedUser)
+        {
+            await SendWhoIsResponse(Context, mentionedUser.Id);
+        }
+
+        private async Task SendWhoIsResponse(ICommandContext context, ulong userId)
+        {
+            IUser user = await Context.Guild.GetUserAsync(userId);
+            if (user == null)
+            {
+                await _messenger.SendMessageToChannel("Failed to find user, check the provided ID or mentioned user", Context.Message, " ");
+            }
+
+            var embedBuilder = new EmbedBuilder();
+            embedBuilder.Title = $"Whois Lookup: ${user.Username}";
+            embedBuilder.WithImageUrl(user.GetAvatarUrl());
+			if(user.GlobalName != null)
+			{
+                embedBuilder.AddField("Global Name", user.GlobalName);
+            }            
+            embedBuilder.AddField("Is Bot?", user.IsBot);
+            embedBuilder.AddField("Is Webhook?", user.IsWebhook);
+
+            IGuildUser guildUser = await Context.Guild.GetUserAsync(userId);
+
+            if (guildUser != null)
+            {
+                if (user.Username != guildUser.DisplayName)
+                {
+                    embedBuilder.AddField("Guild Display name", guildUser.DisplayName);
+                }
+                embedBuilder.AddField("Status", guildUser.Status);
+                embedBuilder.AddField("Joined", guildUser.JoinedAt);
+                embedBuilder.AddField("Heirarchy", guildUser.Hierarchy);
+            }
+
+            await Context.Message.ReplyAsync(embed: embedBuilder.Build());
+        }
+
+        [Command("8ball"), Alias("magicconch","conch","8conch"), Summary("Ask the bot a true or false question.")]
 		public async Task Send8BallResponse([Remainder, Summary("The question!")] string question = "")
 		{
 			await _messenger.SendMessageToChannel(ResponseCollections.EightBallResponses.GetRandom(), Context.Message, " ");
