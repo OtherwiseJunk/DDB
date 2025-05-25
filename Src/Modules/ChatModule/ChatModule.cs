@@ -45,7 +45,7 @@ namespace DartsDiscordBots.Modules.Chat
             }
 
             var embedBuilder = new EmbedBuilder();
-            embedBuilder.Title = $"Whois Lookup: ${user.Username}";
+            embedBuilder.Title = $"Whois Lookup: {user.Username}";
             embedBuilder.WithImageUrl(user.GetAvatarUrl());
 			if(user.GlobalName != null)
 			{
