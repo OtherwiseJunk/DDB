@@ -19,7 +19,7 @@ namespace DartsDiscordBots.Modules.LockedTomb
             "Cows have best friends and complex social relationships",
             "Not only are cows more calm when they're around a buddy, but they're actually smarter too",
             "Cows panic when separated from their besties",
-            "Cows celebratie solving complex problems by jumping, wagging their tails, and running around",
+            "Cows celebrate solving complex problems by jumping, wagging their tails, and running around",
             "Cows display an ability to discriminate complex stimuli",
             "Cows can differentiate between different humans",
             "Cows can extrapolate the location of a hidden moving object",
