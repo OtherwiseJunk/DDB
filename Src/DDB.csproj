@@ -6,13 +6,13 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>12.3.0</Version>
-		<Description>Use SocketCommandContext in HandleCommandWithSummaryOnError to fix AudioModule context type mismatch</Description>
-		<AssemblyVersion>12.3.0</AssemblyVersion>
+		<Version>13.0.0</Version>
+		<Description>BREAKING: Migrate audio module from Victoria to Lavalink4NET for Lavalink v4 support. Remove RequirePlayer precondition. Fix skip vote integer division bug.</Description>
+		<AssemblyVersion>13.0.0</AssemblyVersion>
 		<PackageReleaseNotes>Add WhoIs command to chat module.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>12.3.0</FileVersion>
+		<FileVersion>13.0.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,7 +24,7 @@
 		<PackageReference Include="NLog" Version="5.3.3" />
 		<PackageReference Include="Serilog" Version="4.0.1" />
 		<PackageReference Include="SkiaSharp" Version="2.88.8" />
-		<PackageReference Include="Victoria" Version="7.0.5" />
+		<PackageReference Include="Lavalink4NET.Discord.Net" Version="4.0.22" />
 	</ItemGroup>
 
 	<ItemGroup>
