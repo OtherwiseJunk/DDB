@@ -6,13 +6,13 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Dart</Authors>
 		<Company />
-		<Version>12.2.0</Version>
-		<Description>Adds a stopwatch to Help command, and allow default discord emotes to be used as BestOf vote reacts</Description>
-		<AssemblyVersion>12.2.0</AssemblyVersion>
+		<Version>12.3.0</Version>
+		<Description>Use SocketCommandContext in HandleCommandWithSummaryOnError to fix AudioModule context type mismatch</Description>
+		<AssemblyVersion>12.3.0</AssemblyVersion>
 		<PackageReleaseNotes>Add WhoIs command to chat module.</PackageReleaseNotes>
 		<RepositoryUrl>https://github.com/OtherwiseJunk/DDB</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<FileVersion>12.2.0</FileVersion>
+		<FileVersion>12.3.0</FileVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

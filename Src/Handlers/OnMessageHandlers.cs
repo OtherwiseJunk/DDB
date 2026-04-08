@@ -12,7 +12,7 @@ namespace DartsDiscordBots.Handlers
 {
 	public static class OnMessageHandlers
 	{
-		public static async Task HandleCommandWithSummaryOnError(SocketMessage messageParam, CommandContext context, CommandService commandService, IServiceProvider serviceProvider, char commandPrefix, bool doAprilFools = true, int aprilFoolsChance = 33)
+		public static async Task HandleCommandWithSummaryOnError(SocketMessage messageParam, SocketCommandContext context, CommandService commandService, IServiceProvider serviceProvider, char commandPrefix, bool doAprilFools = true, int aprilFoolsChance = 33)
 		{
 			ILogger log = (ILogger)serviceProvider.GetService(typeof(ILogger));
 			var message = messageParam as SocketUserMessage;
