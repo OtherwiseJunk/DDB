@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Diagnostics;
 using Discord;
 using Discord.Commands;
 using System.Threading.Tasks;
@@ -32,12 +33,24 @@ namespace DartsDiscordBots.Modules.Help
                 Description = "These are the commands you can use"
             };
 
+            var totalSw = Stopwatch.StartNew();
+            var timingLines = new System.Collections.Generic.List<string>();
+
             foreach (var module in _service.Modules)
             {
                 string description = null;
                 foreach (var cmd in module.Commands)
                 {
+                    var cmdSw = Stopwatch.StartNew();
                     var result = await cmd.CheckPreconditionsAsync(Context, _provider);
+                    cmdSw.Stop();
+                    var elapsed = cmdSw.ElapsedMilliseconds;
+
+                    if (elapsed > 100)
+                    {
+                        timingLines.Add($"[SLOW] {module.Name}.{cmd.Name}: {elapsed}ms (success={result.IsSuccess})");
+                    }
+
                     if (result.IsSuccess)
                         description += $"{prefix}{cmd.Aliases.First()}\n";
                 }
@@ -51,6 +64,13 @@ namespace DartsDiscordBots.Modules.Help
                         x.IsInline = false;
                     });
                 }
+            }
+
+            totalSw.Stop();
+            Console.WriteLine($"[HelpModule] Total precondition check time: {totalSw.ElapsedMilliseconds}ms");
+            foreach (var line in timingLines)
+            {
+                Console.WriteLine($"[HelpModule] {line}");
             }
 
             await ReplyAsync("", false, builder.Build());
