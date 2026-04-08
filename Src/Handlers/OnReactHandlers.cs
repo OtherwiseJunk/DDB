@@ -60,10 +60,15 @@ namespace DartsDiscordBots.Handlers
 						UserId = author.Id,
 						TriggeringEmoji = reaction.Key.Name,
 						Content = message.Content
-					};					
+					};
 					EmbedBuilder embedBuilder = new();
 					string bestOfUsername = BotUtilities.GetDisplayNameForUser(author);
-					string title = $"{message.Channel.Name} - <:{reaction.Key.Name}:{votingEmojiIdsByName[reaction.Key.Name]}>: {String.Format(SharedConstants.BestOfTitles.GetRandom(), bestOfUsername)}";
+
+					ulong emoteId = votingEmojiIdsByName[reaction.Key.Name];
+					string emoteDisplay = emoteId == 0
+						? reaction.Key.Name
+						: $"<:{reaction.Key.Name}:{emoteId}>";
+					string title = $"{message.Channel.Name} - {emoteDisplay}: {String.Format(SharedConstants.BestOfTitles.GetRandom(), bestOfUsername)}";
 
 					embedBuilder.Title = title;
 					embedBuilder.ThumbnailUrl = BotUtilities.GetAvatarForUser(author);
@@ -75,7 +80,7 @@ namespace DartsDiscordBots.Handlers
 					service.CreateBestOf(bestOf);
 					await announcementChannel.SendMessageAsync("", embed: embedBuilder.Build());
 					var linkMatches = Regex.Matches(message.Content, linkPattern);
-					
+
 					foreach (Match match in linkMatches)
 					{
 						await announcementChannel.SendMessageAsync(match.Value);
